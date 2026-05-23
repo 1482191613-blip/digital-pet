@@ -36,7 +36,7 @@ html, body {
 #app {
   width: 100%; max-width: 420px; height: 100vh;
   margin: 0 auto; position: relative; overflow: hidden;
-  background: var(--bg);
+  background: linear-gradient(180deg, #120820 0%, #1a0a2e 40%, #1e0d35 100%);
 }
 .screen {
   position: absolute; inset: 0;
@@ -165,12 +165,12 @@ html, body {
   margin-bottom: 24px;
 }
 .egg-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 16px; flex: 1;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px; flex: 1;
 }
 .egg-card {
   background: var(--card); border: 2px solid var(--border);
-  border-radius: var(--r); padding: 20px 16px;
+  border-radius: var(--r); padding: 12px 8px;
   display: flex; flex-direction: column; align-items: center;
   cursor: pointer; transition: all 0.2s; position: relative;
 }
@@ -185,8 +185,8 @@ html, body {
   font-size: 14px;
 }
 .egg-emoji { font-size: 48px; margin-bottom: 8px; }
-.egg-name { font-size: 13px; color: var(--text); margin-bottom: 4px; }
-.egg-personality { font-size: 10px; color: var(--text3); }
+.egg-name { font-size: 11px; color: var(--text); margin-bottom: 3px; }
+.egg-personality { font-size: 9px; color: var(--text3); line-height: 1.4; text-align: center; }
 .egg-select-btn {
   margin-top: 20px;
   background: linear-gradient(135deg, #ff6eb4, #ff4488);
@@ -223,31 +223,60 @@ html, body {
 #home { background: var(--bg); }
 .home-header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 20px 8px;
+  padding: 10px 16px 6px; flex-shrink: 0;
 }
-.home-title { font-size: 18px; color: var(--accent); letter-spacing: 2px; }
-.home-coins {
-  display: flex; align-items: center; gap: 6px;
-  background: var(--card); border-radius: 20px; padding: 6px 12px;
-  font-size: 12px; color: var(--accent2);
+.home-title {
+  font-size: 16px; color: var(--accent); letter-spacing: 3px;
+  text-shadow: 0 0 12px rgba(255,110,180,0.5);
 }
-.home-greeting {
-  margin: 0 20px 12px;
-  background: var(--card); border-radius: var(--r2);
-  padding: 12px 16px; font-size: 12px; color: var(--text2);
-  border-left: 3px solid var(--accent); line-height: 1.6;
+.home-currency-row { display: flex; align-items: center; gap: 6px; }
+.currency-chip {
+  display: flex; align-items: center; gap: 4px;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 4px 10px;
+  font-size: 11px; backdrop-filter: blur(4px);
 }
+.currency-chip.gem { color: #c9b1ff; }
+.currency-chip.coin { color: var(--accent2); }
+.streak-chip {
+  background: linear-gradient(135deg, #ff6b35, #ff4e00);
+  border-radius: 20px; padding: 4px 9px;
+  font-size: 11px; color: white; font-weight: 900;
+}
+.home-greeting { display: none; }
+
+/* Pet stage — big & centered */
 .pet-stage {
   flex: 1; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  position: relative; min-height: 200px;
+  position: relative; min-height: 260px;
+}
+.pet-bg-glow {
+  position: absolute; width: 180px; height: 180px;
+  border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(255,110,180,0.18) 0%, transparent 70%);
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+  0%,100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+.pet-info-row {
+  display: flex; align-items: center; gap: 8px; margin-top: 6px;
+}
+.pet-name-badge { font-size: 15px; color: var(--text); letter-spacing: 1px; }
+.pet-level-pill {
+  background: linear-gradient(135deg, var(--accent), #c026d3);
+  border-radius: 12px; padding: 2px 10px;
+  font-size: 10px; color: white; letter-spacing: 1px;
 }
 .pet-canvas-wrap {
   position: relative; cursor: pointer;
 }
 .pet-canvas-wrap canvas {
   image-rendering: pixelated;
-  filter: drop-shadow(0 8px 20px rgba(255,110,180,0.4));
+  width: 240px; height: 240px;
+  filter: drop-shadow(0 0 24px rgba(255,110,180,0.5));
 }
 .pet-name-badge {
   margin-top: 8px; font-size: 14px; color: var(--text);
@@ -272,58 +301,70 @@ html, body {
   transform: translateX(-50%);
   border: 4px solid transparent; border-top-color: var(--border);
 }
-.stats-bar {
-  padding: 0 20px 12px;
-  display: flex; flex-direction: column; gap: 8px;
+.stats-bar { display: none; } /* replaced by stats-compact */
+.stats-compact {
+  display: flex; gap: 8px; padding: 0 16px 10px; flex-shrink: 0;
 }
-.stat-row {
-  display: flex; align-items: center; gap: 10px;
+.stat-pill {
+  flex: 1; display: flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px; padding: 5px 8px; backdrop-filter: blur(4px);
 }
-.stat-icon { font-size: 14px; width: 20px; text-align: center; }
-.stat-label { font-size: 10px; color: var(--text3); width: 28px; }
-.stat-track {
-  flex: 1; height: 8px; background: var(--bg3);
-  border-radius: 4px; overflow: hidden;
+.stat-pill-icon { font-size: 12px; flex-shrink: 0; }
+.stat-pill-bar {
+  flex: 1; height: 5px; background: rgba(255,255,255,0.1);
+  border-radius: 3px; overflow: hidden;
 }
 .stat-fill {
-  height: 100%; border-radius: 4px;
+  height: 100%; border-radius: 3px;
   transition: width 0.5s ease;
 }
 .stat-fill.hunger { background: linear-gradient(90deg, #ff6eb4, #ff4488); }
 .stat-fill.happy { background: linear-gradient(90deg, #ffb347, #ff8c00); }
 .stat-fill.energy { background: linear-gradient(90deg, #7ee8fa, #4fc3f7); }
 .stat-fill.exp { background: linear-gradient(90deg, #a8ff78, #78ff44); }
-.stat-val { font-size: 10px; color: var(--text3); width: 28px; text-align: right; }
+.exp-pill { flex: 1.4; }
+.exp-pill-text { font-size: 9px; color: var(--text3); white-space: nowrap; flex-shrink: 0; }
+.stat-val { display: none; }
 
 .quick-actions {
   display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 10px; padding: 0 20px 12px;
+  gap: 8px; padding: 0 16px 12px; flex-shrink: 0;
 }
 .qa-btn {
-  background: var(--card); border: 2px solid var(--border);
-  border-radius: var(--r2); padding: 12px 4px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px; padding: 12px 4px;
   display: flex; flex-direction: column; align-items: center;
-  gap: 4px; cursor: pointer; transition: all 0.15s;
+  gap: 5px; cursor: pointer; transition: all 0.15s;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
 }
-.qa-btn:active { background: var(--card2); border-color: var(--accent); transform: scale(0.95); }
-.qa-btn .qa-icon { font-size: 22px; }
-.qa-btn .qa-label { font-size: 9px; color: var(--text3); }
+.qa-btn:active { transform: scale(0.93); box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+.qa-btn .qa-icon { font-size: 24px; }
+.qa-btn .qa-label { font-size: 9px; color: var(--text3); letter-spacing: 0.5px; }
 
 /* ===== BOTTOM NAV ===== */
 .bottom-nav {
-  display: flex; background: var(--card);
-  border-top: 2px solid var(--border);
-  padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+  display: flex;
+  background: rgba(26,10,46,0.85);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 6px 0 max(6px, env(safe-area-inset-bottom));
+  backdrop-filter: blur(20px);
+  flex-shrink: 0;
 }
 .nav-btn {
   flex: 1; display: flex; flex-direction: column;
   align-items: center; gap: 3px; cursor: pointer;
-  padding: 6px 0; transition: all 0.15s;
+  padding: 6px 0; transition: all 0.2s;
 }
-.nav-btn .nav-icon { font-size: 20px; }
+.nav-btn .nav-icon { font-size: 20px; transition: transform 0.2s; }
 .nav-btn .nav-label { font-size: 9px; color: var(--text3); }
 .nav-btn.active .nav-label { color: var(--accent); }
-.nav-btn.active .nav-icon { filter: drop-shadow(0 0 6px var(--accent)); }
+.nav-btn.active .nav-icon {
+  filter: drop-shadow(0 0 8px var(--accent));
+  transform: translateY(-2px) scale(1.1);
+}
 
 /* ===== LIBRARY ===== */
 #library { background: var(--bg); }
@@ -337,7 +378,7 @@ html, body {
 .screen-title { font-size: 16px; color: var(--accent); letter-spacing: 2px; }
 .library-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 12px; padding: 16px; overflow-y: auto; flex: 1;
+  gap: 10px; padding: 12px; overflow-y: auto; flex: 1;
 }
 .lib-card {
   background: var(--card); border: 2px solid var(--border);
@@ -346,9 +387,45 @@ html, body {
   gap: 6px; cursor: pointer; transition: all 0.2s;
 }
 .lib-card.unlocked { border-color: var(--accent3); }
-.lib-card.active-pet { border-color: var(--accent); box-shadow: 0 0 12px var(--shadow); }
-.lib-card .lib-canvas-wrap { width: 64px; height: 64px; display:flex; align-items:center; justify-content:center; }
+.lib-card.active-pet { border-color: var(--accent); box-shadow: 0 0 16px var(--shadow); }
+.lib-card .lib-canvas-wrap { width: 80px; height: 80px; display:flex; align-items:center; justify-content:center; }
 .lib-card.locked .lib-canvas-wrap { filter: grayscale(1) opacity(0.4); }
+
+/* Mystery locked card */
+.mystery-card {
+  background: linear-gradient(135deg, #1a0a2e, #2d1b4e);
+  border: 2px dashed var(--border) !important;
+  opacity: 0.85;
+}
+.mystery-silhouette {
+  width: 80px; height: 80px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 32px; color: var(--text3);
+  border: 2px dashed rgba(255,255,255,0.1);
+  animation: mystery-pulse 2.5s ease-in-out infinite;
+}
+@keyframes mystery-pulse {
+  0%,100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.05); }
+}
+.mystery-name { color: var(--text3) !important; }
+.mystery-hint {
+  font-size: 9px; color: var(--accent2); text-align: center;
+  line-height: 1.4; padding: 0 2px;
+  animation: mystery-pulse 2.5s ease-in-out infinite;
+}
+
+/* Evolution tease */
+.lib-evo-tease {
+  font-size: 9px; color: var(--text3); text-align: center;
+  line-height: 1.5; margin-top: 2px;
+  animation: tease-glow 2s ease-in-out infinite;
+}
+@keyframes tease-glow {
+  0%,100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
 .lib-card .lib-name { font-size: 10px; color: var(--text2); }
 .lib-card .lib-stage { font-size: 9px; color: var(--text3); }
 .lib-card.locked .lib-name { color: var(--text3); }
@@ -693,58 +770,61 @@ html, body {
 
 <!-- ===== HOME ===== -->
 <div id="home" class="screen">
+  <!-- 顶部极简 header -->
   <div class="home-header">
     <div class="home-title">萌芽星</div>
-    <div style="display:flex;gap:8px">
-      <div class="home-coins">🌟 <span id="homeGems">0</span></div>
-      <div class="home-coins" style="color:var(--accent2)">🪙 <span id="homeCoins">0</span></div>
+    <div class="home-currency-row">
+      <div class="currency-chip gem">🌟 <span id="homeGems">0</span></div>
+      <div class="currency-chip coin">🪙 <span id="homeCoins">0</span></div>
+      <div class="streak-chip" id="streakChip">🔥1</div>
     </div>
   </div>
-  <div class="streak-banner" id="streakBanner">
-    <div class="streak-fire">🔥</div>
-    <div class="streak-text" id="streakText">连续登录 1 天！继续保持～</div>
-  </div>
-  <div class="home-greeting" id="homeGreeting">你的宠物正在等你...</div>
+
+  <!-- 宠物主舞台 -->
   <div class="pet-stage">
+    <div class="pet-bg-glow" id="petBgGlow"></div>
     <div class="pet-canvas-wrap" onclick="petTap()">
       <div class="pet-mood-bubble" id="moodBubble">开心！</div>
-      <canvas id="petCanvas" width="128" height="128"></canvas>
+      <canvas id="petCanvas" width="320" height="320"></canvas>
     </div>
-    <div class="pet-name-badge" id="petNameBadge">---</div>
-    <div class="pet-level-badge" id="petLevelBadge">Lv.1 · 蛋宝宝</div>
+    <div class="pet-info-row">
+      <div class="pet-name-badge" id="petNameBadge">---</div>
+      <div class="pet-level-pill" id="petLevelBadge">Lv.1</div>
+    </div>
     <div class="pet-speech" id="petSpeech"></div>
   </div>
-  <div class="exp-bar-wrap">
-    <div class="exp-bar-label">EXP</div>
-    <div class="exp-bar-track"><div class="exp-bar-fill" id="expBarFill" style="width:0%"></div></div>
-    <div class="exp-bar-next" id="expBarNext">0/100</div>
-  </div>
-  <div class="stats-bar">
-    <div class="stat-row">
-      <div class="stat-icon">🍖</div>
-      <div class="stat-label">饱食</div>
-      <div class="stat-track"><div class="stat-fill hunger" id="statHunger" style="width:80%"></div></div>
-      <div class="stat-val" id="statHungerVal">80</div>
+
+  <!-- 状态条（紧凑） -->
+  <div class="stats-compact">
+    <div class="stat-pill">
+      <span class="stat-pill-icon">🍖</span>
+      <div class="stat-pill-bar"><div class="stat-fill hunger" id="statHunger" style="width:80%"></div></div>
     </div>
-    <div class="stat-row">
-      <div class="stat-icon">😊</div>
-      <div class="stat-label">心情</div>
-      <div class="stat-track"><div class="stat-fill happy" id="statHappy" style="width:80%"></div></div>
-      <div class="stat-val" id="statHappyVal">80</div>
+    <div class="stat-pill">
+      <span class="stat-pill-icon">😊</span>
+      <div class="stat-pill-bar"><div class="stat-fill happy" id="statHappy" style="width:80%"></div></div>
     </div>
-    <div class="stat-row">
-      <div class="stat-icon">⚡</div>
-      <div class="stat-label">精力</div>
-      <div class="stat-track"><div class="stat-fill energy" id="statEnergy" style="width:80%"></div></div>
-      <div class="stat-val" id="statEnergyVal">80</div>
+    <div class="stat-pill">
+      <span class="stat-pill-icon">⚡</span>
+      <div class="stat-pill-bar"><div class="stat-fill energy" id="statEnergy" style="width:80%"></div></div>
+    </div>
+    <div class="stat-pill exp-pill">
+      <span class="stat-pill-icon">✨</span>
+      <div class="stat-pill-bar"><div class="stat-fill exp" id="expBarFill" style="width:0%"></div></div>
+      <span class="exp-pill-text" id="expBarNext">0/100</span>
     </div>
   </div>
+
+  <!-- 操作按钮 -->
   <div class="quick-actions">
     <div class="qa-btn" onclick="openFeedModal()"><div class="qa-icon">🍖</div><div class="qa-label">喂食</div></div>
-    <div class="qa-btn" onclick="playWithPet()"><div class="qa-icon">🎮</div><div class="qa-label">玩耍</div></div>
+    <div class="qa-btn" onclick="playWithPet()"><div class="qa-icon">🎾</div><div class="qa-label">玩耍</div></div>
     <div class="qa-btn" onclick="petSleep()"><div class="qa-icon">💤</div><div class="qa-label">休息</div></div>
     <div class="qa-btn" onclick="showScreen('story-screen')"><div class="qa-icon">📖</div><div class="qa-label">故事</div></div>
   </div>
+
+  <!-- 今日问候（小字弱化） -->
+  <div class="home-greeting" id="homeGreeting" style="display:none"></div>
   <div class="bottom-nav">
     <div class="nav-btn active" onclick="showScreen('home')"><div class="nav-icon">🏠</div><div class="nav-label">主页</div></div>
     <div class="nav-btn" onclick="showScreen('map-screen')"><div class="nav-icon">🗺️</div><div class="nav-label">地图</div></div>
@@ -761,6 +841,9 @@ html, body {
     <div class="screen-title">宠物图鉴</div>
     <div style="font-size:11px;color:var(--text3);margin-left:auto" id="libCount">0/0 已解锁</div>
   </div>
+  <div id="libHookBanner" style="margin:0 12px 8px;background:linear-gradient(135deg,#2d1b4e,#3d1a3a);border:1px solid rgba(255,110,180,0.3);border-radius:12px;padding:10px 14px;font-size:11px;color:var(--text2);line-height:1.7;display:none">
+    <span id="libHookText"></span>
+  </div>'''
   <div class="library-grid" id="libraryGrid"></div>
   <div style="padding:12px 20px;border-top:2px solid var(--border)">
     <button class="breed-btn" style="width:100%;padding:14px" onclick="showScreen('breed-screen')">💕 去配对繁殖</button>
@@ -1005,6 +1088,93 @@ const CONFIG = {
       hungerDecay: 1, happyDecay: 1, energyDecay: 2,
     },
     {
+      id: 'fox',
+      name: '小狐狸',
+      personality: '机灵',
+      personalityDesc: '聪明又调皮，总是想出各种鬼点子！',
+      catchphrase: '嘿嘿～',
+      locked: false,
+      stages: [
+        { name: '狐狸崽',   emoji: '🦊', expNeeded: 100 },
+        { name: '小狐仙',   emoji: '🌙', expNeeded: 300 },
+        { name: '九尾狐',   emoji: '✨', expNeeded: 999999 },
+      ],
+      greetings: [
+        '嘿嘿～主人，我又想到一个好主意！',
+        '今天我偷偷藏了一颗星星，要给你看吗？',
+        '嘿嘿，我才不是在等你，只是刚好在这里！',
+        '主人，我们去探险吧！我知道一个秘密地方！',
+        '嘿嘿～今天的我特别特别可爱，你发现了吗？',
+      ],
+      surprises: ['🦊', '⭐', '🌙', '✨', '💫', '🍂', '🎭'],
+      extraLines: [
+        '嘿嘿，我在想坏主意...',
+        '尾巴尾巴，今天特别蓬松！',
+        '嘿嘿～偷偷告诉你一个秘密...',
+        '我的耳朵听到了什么！嘿嘿！',
+        '今天要不要一起捉弄谁？嘿嘿～',
+      ],
+      hungerDecay: 1, happyDecay: 1, energyDecay: 2,
+    },
+    {
+      id: 'penguin',
+      name: '企鹅',
+      personality: '呆萌',
+      personalityDesc: '走路摇摇摆摆，但内心超级温暖！',
+      catchphrase: '咕噜～',
+      locked: false,
+      stages: [
+        { name: '企鹅蛋',   emoji: '🥚', expNeeded: 100 },
+        { name: '小企鹅',   emoji: '🐧', expNeeded: 300 },
+        { name: '冰雪王子', emoji: '❄️', expNeeded: 999999 },
+      ],
+      greetings: [
+        '咕噜～主人！（摇摇摆摆跑过来）',
+        '咕噜咕噜，今天我学会了滑冰！',
+        '主人，我给你带了一条小鱼！咕噜～',
+        '咕噜...今天有点冷，可以抱抱吗？',
+        '咕噜咕噜！我超级喜欢你！',
+      ],
+      surprises: ['🐧', '❄️', '🐟', '💙', '⛄', '🌊', '💫'],
+      extraLines: [
+        '咕噜～（摇摇摆摆）',
+        '咕噜...鱼鱼鱼，好想吃鱼...',
+        '（滑倒了）咕噜！没事没事！',
+        '咕噜咕噜，肚子好圆好圆～',
+        '今天的冰好滑！咕噜～',
+      ],
+      hungerDecay: 2, happyDecay: 1, energyDecay: 1,
+    },
+    {
+      id: 'totoro',
+      name: '龙猫',
+      personality: '治愈',
+      personalityDesc: '软软大大的，靠近它就会感到平静。',
+      catchphrase: '呜～',
+      locked: true,
+      stages: [
+        { name: '小龙猫',   emoji: '🌿', expNeeded: 100 },
+        { name: '灰龙猫',   emoji: '🌳', expNeeded: 300 },
+        { name: '大龙猫',   emoji: '🌟', expNeeded: 999999 },
+      ],
+      greetings: [
+        '呜～（慢慢睁开眼睛）主人来了...',
+        '呜呜～今天的雨声好好听，一起听吗？',
+        '（把一颗橡果推给你）呜～给你的。',
+        '呜～我梦见了一片大森林，好美...',
+        '呜呜，靠着我睡一会儿吧，我不介意的。',
+      ],
+      surprises: ['🌿', '🍃', '🌳', '🌱', '☁️', '🌧️', '✨'],
+      extraLines: [
+        '呜～（打了个大哈欠）',
+        '呜呜...树叶沙沙沙...',
+        '（慢慢转了个圈）呜～',
+        '呜...今天的风好温柔...',
+        '（把你轻轻抱住）呜～',
+      ],
+      hungerDecay: 1, happyDecay: 1, energyDecay: 1,
+    },
+    {
       id: 'bunny',
       name: '兔兔',
       personality: '害羞',
@@ -1032,6 +1202,64 @@ const CONFIG = {
         '（小声）...我喜欢你...',
       ],
       hungerDecay: 1, happyDecay: 2, energyDecay: 1,
+    },
+    {
+      id: 'valentine',
+      name: '华伦天捷',
+      personality: '谄媚',
+      personalityDesc: '踩着高跟鞋的拟人宠物，甜言蜜语信手拈来！',
+      catchphrase: '么么哒～',
+      locked: false,
+      stages: [
+        { name: '小高跟',   emoji: '👠', expNeeded: 100 },
+        { name: '魅力精灵', emoji: '💋', expNeeded: 300 },
+        { name: '爱神降临', emoji: '💘', expNeeded: 999999 },
+      ],
+      greetings: [
+        '么么哒～主人你今天真的超级好看！比昨天还好看！',
+        '哎呀～你一来我的心跳就加速了呢，么么哒！',
+        '主人主人～你知道吗，你是全宇宙最棒的主人！',
+        '么么哒～我特意为你准备了一个飞吻，接好了！',
+        '哇主人你今天的气质绝了！我都看呆了，么么哒～',
+      ],
+      surprises: ['💋', '💕', '💘', '👠', '🌹', '💄', '✨'],
+      extraLines: [
+        '么么哒～主人你最好了！',
+        '（踩着高跟鞋转圈圈）咔哒咔哒～',
+        '主人，你有没有觉得我今天特别可爱？',
+        '么么哒！飞吻送给你！',
+        '（抛了个媚眼）嘻嘻，喜欢吗？',
+      ],
+      hungerDecay: 1, happyDecay: 2, energyDecay: 1,
+    },
+    {
+      id: 'jjcup',
+      name: '杰杰杯',
+      personality: '暖心',
+      personalityDesc: '粉嫩肉感的杯子精灵，专治生活中的小烦恼！',
+      catchphrase: '咕嘟～',
+      locked: false,
+      stages: [
+        { name: '小杯崽',   emoji: '🥛', expNeeded: 100 },
+        { name: '暖心杯',   emoji: '☕', expNeeded: 300 },
+        { name: '魔法杯王', emoji: '✨', expNeeded: 999999 },
+      ],
+      greetings: [
+        '咕嘟～主人，今天喝水了吗？我来提醒你！',
+        '咕嘟咕嘟～我给你装满了今天的好心情！',
+        '主人，累了就喝一口我，我有魔法的！咕嘟～',
+        '咕嘟～今天的任务完成了吗？喝杯水再继续！',
+        '咕嘟咕嘟，我在这里，有什么烦恼都告诉我！',
+      ],
+      surprises: ['💧', '☕', '🫖', '💕', '✨', '🌸', '🥛'],
+      extraLines: [
+        '咕嘟～（冒出一个小泡泡）',
+        '今天记得多喝水哦，咕嘟咕嘟！',
+        '（轻轻晃动）咕嘟～里面是秘密！',
+        '咕嘟...主人你今天辛苦了...',
+        '我给你装了满满的元气！咕嘟～',
+      ],
+      hungerDecay: 1, happyDecay: 1, energyDecay: 1,
     },
   ],
 
@@ -1173,6 +1401,11 @@ const CONFIG = {
     puppy:    { body: '#F5D5A0', fur: '#C8954A', eye: '#3D2000', shine: '#FFF', blush: '#FFCBA4', accent: '#FFB347', nose: '#4A2800', inner: '#FFE0B2' },
     bearbear: { body: '#D4956A', fur: '#A0623A', eye: '#2D1500', shine: '#FFF', blush: '#FFAA80', accent: '#FFD700', nose: '#1A0800', inner: '#F5C6A0' },
     bunny:    { body: '#F0E6FF', fur: '#D4B8FF', eye: '#5C2D9A', shine: '#FFF', blush: '#FFB3D4', accent: '#C084FC', nose: '#FF8FAB', inner: '#EDD6FF' },
+    fox:      { body: '#FF8C42', fur: '#CC5500', eye: '#2D1500', shine: '#FFF', blush: '#FFB3A0', accent: '#FFF', nose: '#1A0800', inner: '#FFD4A8' },
+    penguin:  { body: '#2D3A4A', fur: '#1A2530', eye: '#FFF', shine: '#AAD4FF', blush: '#AAD4FF', accent: '#4FC3F7', nose: '#FF8C00', inner: '#F0F4F8' },
+    totoro:    { body: '#8A9BA8', fur: '#6B7C8A', eye: '#2D3A4A', shine: '#FFF', blush: '#C8D8E0', accent: '#A8FF78', nose: '#4A5A6A', inner: '#C8D8E0' },
+    valentine: { body: '#FF6EB4', fur: '#FF4488', eye: '#5C0030', shine: '#FFF', blush: '#FFB3D4', accent: '#FFD700', nose: '#C0005A', inner: '#FFE0EF' },
+    jjcup:     { body: '#FFB3C6', fur: '#FF8FAB', eye: '#5C1A2E', shine: '#FFF', blush: '#FFCCD5', accent: '#FF6EB4', nose: '#FF4D6D', inner: '#FFE8EE' },
   },
 };
 
@@ -1619,9 +1852,9 @@ function drawPet(canvasId, petId, stage) {
   const frame = Math.floor(t / 500) % 2;
   const bobY = frame === 0 ? 0 : -3;
   const tailWag = Math.sin(t / 300) * 0.3;
-  const cx = W / 2, cy = H / 2 + 8 + bobY;
-  const s = stage === 0 ? 0.75 : stage === 1 ? 1.0 : 1.25;
-  const R = 30 * s; // body radius
+  const cx = W / 2, cy = H / 2 + 10 + bobY;
+  const s = stage === 0 ? 0.82 : stage === 1 ? 1.0 : 1.18;
+  const R = 72 * s; // body radius — fills ~80% of 200px canvas
 
   // ── ground shadow ──
   ctx.save();
@@ -1635,6 +1868,11 @@ function drawPet(canvasId, petId, stage) {
   else if (petId === 'puppy') drawPuppy(ctx, cx, cy, R, s, c, stage, frame, tailWag);
   else if (petId === 'bearbear') drawBear(ctx, cx, cy, R, s, c, stage, frame);
   else if (petId === 'bunny') drawBunny(ctx, cx, cy, R, s, c, stage, frame, tailWag);
+  else if (petId === 'fox') drawFox(ctx, cx, cy, R, s, c, stage, frame, tailWag);
+  else if (petId === 'penguin') drawPenguin(ctx, cx, cy, R, s, c, stage, frame);
+  else if (petId === 'totoro') drawTotoro(ctx, cx, cy, R, s, c, stage, frame);
+  else if (petId === 'valentine') drawValentine(ctx, cx, cy, R, s, c, stage, frame);
+  else if (petId === 'jjcup') drawJJCup(ctx, cx, cy, R, s, c, stage, frame);
   else drawKitten(ctx, cx, cy, R, s, c, stage, frame, tailWag);
 }
 
@@ -1945,6 +2183,825 @@ function drawBunny(ctx, cx, cy, R, s, c, stage, frame, tailWag) {
   }
 }
 
+/* ══════════════════════════════════════
+   🦊 FOX
+══════════════════════════════════════ */
+function drawFox(ctx, cx, cy, R, s, c, stage, frame, tailWag) {
+  // big fluffy tail
+  ctx.save(); ctx.translate(cx + R*0.9, cy + R*0.4); ctx.rotate(tailWag * 1.2 + 0.5);
+  const tg = ctx.createLinearGradient(0, 0, R*0.4, -R*1.1);
+  tg.addColorStop(0, c.fur); tg.addColorStop(0.7, c.body); tg.addColorStop(1, '#FFF');
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo(R*0.5, -R*0.2, R*0.7, -R*0.7, R*0.3, -R*1.1);
+  ctx.bezierCurveTo(R*0.1, -R*1.3, -R*0.3, -R*1.1, -R*0.1, -R*0.8);
+  ctx.bezierCurveTo(-R*0.2, -R*0.4, -R*0.1, -R*0.1, 0, 0);
+  ctx.fillStyle = tg; ctx.fill();
+  // white tail tip
+  ctx.beginPath(); ctx.ellipse(R*0.25, -R*1.05, R*0.18, R*0.22, -0.3, 0, Math.PI*2);
+  ctx.fillStyle = '#FFF'; ctx.fill();
+  ctx.restore();
+
+  // pointy ears
+  ctx.save(); ctx.translate(cx - R*0.5, cy - R*0.8); ctx.rotate(-0.2);
+  ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-R*0.22, -R*0.5); ctx.lineTo(R*0.22, -R*0.08); ctx.closePath();
+  ctx.fillStyle = c.fur; ctx.fill();
+  ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-R*0.12, -R*0.32); ctx.lineTo(R*0.12, -R*0.05); ctx.closePath();
+  ctx.fillStyle = '#FF6B6B'; ctx.fill();
+  ctx.restore();
+  ctx.save(); ctx.translate(cx + R*0.5, cy - R*0.8); ctx.rotate(0.2);
+  ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(R*0.22, -R*0.5); ctx.lineTo(-R*0.22, -R*0.08); ctx.closePath();
+  ctx.fillStyle = c.fur; ctx.fill();
+  ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(R*0.12, -R*0.32); ctx.lineTo(-R*0.12, -R*0.05); ctx.closePath();
+  ctx.fillStyle = '#FF6B6B'; ctx.fill();
+  ctx.restore();
+
+  // body
+  drawBodyGrad(ctx, cx, cy, R, c);
+  // white chest
+  fillEllipse(ctx, cx, cy + R*0.2, R*0.42, R*0.36, '#FFF8F0');
+  // white face mask
+  fillEllipse(ctx, cx, cy + R*0.05, R*0.38, R*0.3, '#FFF8F0');
+
+  drawBlush(ctx, cx - R*0.44, cy + R*0.12, R*0.2, R*0.13, c);
+  drawBlush(ctx, cx + R*0.44, cy + R*0.12, R*0.2, R*0.13, c);
+  drawEye(ctx, cx - R*0.27, cy - R*0.12, R*0.13, c);
+  drawEye(ctx, cx + R*0.27, cy - R*0.12, R*0.13, c);
+  drawNose(ctx, cx, cy + R*0.06, R*0.1, c);
+  drawSmile(ctx, cx, cy + R*0.2, R*0.14, c.nose);
+
+  // stage accessories
+  if (stage === 0) {
+    // tiny leaf 🍂
+    ctx.save(); ctx.translate(cx + R*0.55, cy - R*0.6); ctx.rotate(0.5);
+    ctx.fillStyle = '#FF8C00';
+    ctx.beginPath(); ctx.ellipse(0, 0, R*0.14, R*0.1, 0, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#CC5500'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(-R*0.14, 0); ctx.lineTo(R*0.14, 0); ctx.stroke();
+    ctx.restore();
+  } else if (stage === 1) {
+    // moon hairpin
+    ctx.save(); ctx.translate(cx + R*0.4, cy - R*0.9);
+    ctx.fillStyle = '#FFD700';
+    ctx.beginPath(); ctx.arc(0, 0, R*0.14, 0.5, Math.PI*2 - 0.5); ctx.fill();
+    ctx.restore();
+  } else {
+    // 9 tails hint (3 extra tail wisps)
+    for (let i = 0; i < 3; i++) {
+      ctx.save(); ctx.translate(cx + R*0.7, cy + R*0.5);
+      ctx.rotate((i - 1) * 0.4 + tailWag * 0.8);
+      ctx.strokeStyle = c.body; ctx.lineWidth = R*0.12; ctx.lineCap = 'round'; ctx.globalAlpha = 0.5;
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(R*0.3, -R*0.8); ctx.stroke();
+      ctx.restore();
+    }
+  }
+}
+
+/* ══════════════════════════════════════
+   🐧 PENGUIN
+══════════════════════════════════════ */
+function drawPenguin(ctx, cx, cy, R, s, c, stage, frame) {
+  const waddle = Math.sin(Date.now() / 400) * 0.08;
+
+  // body (egg-shaped, dark)
+  ctx.save(); ctx.translate(cx, cy); ctx.rotate(waddle);
+  ctx.beginPath(); ctx.ellipse(0, 0, R*0.75, R, 0, 0, Math.PI*2);
+  const bg = ctx.createRadialGradient(-R*0.2, -R*0.3, R*0.1, 0, 0, R);
+  bg.addColorStop(0, '#3D4F60'); bg.addColorStop(1, c.fur);
+  ctx.fillStyle = bg; ctx.fill();
+  // white belly
+  ctx.beginPath(); ctx.ellipse(0, R*0.1, R*0.45, R*0.6, 0, 0, Math.PI*2);
+  ctx.fillStyle = c.inner; ctx.fill();
+  ctx.restore();
+
+  // wings
+  ctx.save(); ctx.translate(cx - R*0.72, cy); ctx.rotate(-0.2 + waddle);
+  fillEllipse(ctx, 0, 0, R*0.22, R*0.45, c.fur, 0.3);
+  ctx.restore();
+  ctx.save(); ctx.translate(cx + R*0.72, cy); ctx.rotate(0.2 - waddle);
+  fillEllipse(ctx, 0, 0, R*0.22, R*0.45, c.fur, -0.3);
+  ctx.restore();
+
+  // feet
+  ctx.save(); ctx.translate(cx - R*0.25, cy + R + 2);
+  fillEllipse(ctx, 0, 0, R*0.2, R*0.1, c.nose);
+  ctx.restore();
+  ctx.save(); ctx.translate(cx + R*0.25, cy + R + 2);
+  fillEllipse(ctx, 0, 0, R*0.2, R*0.1, c.nose);
+  ctx.restore();
+
+  // face
+  fillCircle(ctx, cx, cy - R*0.3, R*0.38, c.inner);
+  // beak
+  ctx.save(); ctx.translate(cx, cy - R*0.22);
+  ctx.beginPath(); ctx.moveTo(0, -R*0.06); ctx.lineTo(-R*0.1, R*0.06); ctx.lineTo(R*0.1, R*0.06); ctx.closePath();
+  ctx.fillStyle = c.nose; ctx.fill();
+  ctx.restore();
+
+  drawBlush(ctx, cx - R*0.3, cy - R*0.28, R*0.16, R*0.1, c);
+  drawBlush(ctx, cx + R*0.3, cy - R*0.28, R*0.16, R*0.1, c);
+  drawEye(ctx, cx - R*0.2, cy - R*0.42, R*0.12, c);
+  drawEye(ctx, cx + R*0.2, cy - R*0.42, R*0.12, c);
+
+  // stage accessories
+  if (stage === 0) {
+    // tiny fish 🐟
+    ctx.save(); ctx.translate(cx + R*0.6, cy + R*0.3); ctx.rotate(-0.3);
+    ctx.fillStyle = '#4FC3F7';
+    ctx.beginPath(); ctx.ellipse(0, 0, R*0.2, R*0.1, 0, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(R*0.2, 0); ctx.lineTo(R*0.35, -R*0.1); ctx.lineTo(R*0.35, R*0.1); ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  } else if (stage === 1) {
+    // scarf
+    ctx.save(); ctx.translate(cx, cy + R*0.55);
+    ctx.fillStyle = '#FF6EB4';
+    ctx.beginPath(); ctx.roundRect(-R*0.5, -R*0.08, R, R*0.16, R*0.08); ctx.fill();
+    ctx.fillStyle = '#FF4488';
+    ctx.beginPath(); ctx.moveTo(-R*0.1, R*0.08); ctx.lineTo(R*0.1, R*0.08); ctx.lineTo(R*0.06, R*0.28); ctx.lineTo(-R*0.06, R*0.28); ctx.closePath(); ctx.fill();
+    ctx.restore();
+  } else {
+    // ice crown
+    ctx.save(); ctx.translate(cx, cy - R - R*0.1);
+    ctx.fillStyle = '#AAD4FF';
+    for (let i = -2; i <= 2; i++) {
+      ctx.beginPath(); ctx.moveTo(i*R*0.18 - R*0.08, 0); ctx.lineTo(i*R*0.18, -R*(0.15 + Math.abs(i)*0.08)); ctx.lineTo(i*R*0.18 + R*0.08, 0); ctx.closePath(); ctx.fill();
+    }
+    ctx.restore();
+  }
+}
+
+/* ══════════════════════════════════════
+   🌿 TOTORO
+══════════════════════════════════════ */
+function drawTotoro(ctx, cx, cy, R, s, c, stage, frame) {
+  const breathe = Math.sin(Date.now() / 1200) * 0.02;
+
+  // ears (pointy cat-like)
+  fillEllipse(ctx, cx - R*0.5, cy - R*0.88, R*0.2, R*0.32, c.fur, -0.2);
+  fillEllipse(ctx, cx + R*0.5, cy - R*0.88, R*0.2, R*0.32, c.fur, 0.2);
+  fillEllipse(ctx, cx - R*0.5, cy - R*0.88, R*0.1, R*0.2, c.inner, -0.2);
+  fillEllipse(ctx, cx + R*0.5, cy - R*0.88, R*0.1, R*0.2, c.inner, 0.2);
+
+  // big round body (slightly breathing)
+  ctx.save(); ctx.scale(1 + breathe, 1 - breathe*0.5);
+  const bg = ctx.createRadialGradient(cx*0.98, cy*0.98, R*0.1, cx, cy, R*1.1);
+  bg.addColorStop(0, c.body); bg.addColorStop(1, c.fur);
+  ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI*2); ctx.fillStyle = bg; ctx.fill();
+  ctx.restore();
+
+  // belly (cream with chevron marks)
+  fillEllipse(ctx, cx, cy + R*0.15, R*0.58, R*0.5, c.inner);
+  // belly chevrons
+  ctx.save(); ctx.strokeStyle = c.fur; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.4;
+  for (let i = 0; i < 3; i++) {
+    const y = cy + R*0.05 + i * R*0.14;
+    ctx.beginPath(); ctx.moveTo(cx - R*0.22, y); ctx.lineTo(cx, y - R*0.08); ctx.lineTo(cx + R*0.22, y); ctx.stroke();
+  }
+  ctx.restore();
+
+  // face
+  drawBlush(ctx, cx - R*0.42, cy + R*0.05, R*0.22, R*0.14, c);
+  drawBlush(ctx, cx + R*0.42, cy + R*0.05, R*0.22, R*0.14, c);
+  // big round eyes
+  fillCircle(ctx, cx - R*0.28, cy - R*0.18, R*0.16, c.eye);
+  fillCircle(ctx, cx + R*0.28, cy - R*0.18, R*0.16, c.eye);
+  fillCircle(ctx, cx - R*0.28 + R*0.06, cy - R*0.18 - R*0.06, R*0.07, c.shine);
+  fillCircle(ctx, cx + R*0.28 + R*0.06, cy - R*0.18 - R*0.06, R*0.07, c.shine);
+  // small nose
+  fillCircle(ctx, cx, cy + R*0.02, R*0.06, c.nose);
+  // wide gentle smile
+  ctx.save(); ctx.strokeStyle = c.nose; ctx.lineWidth = 2; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.arc(cx, cy + R*0.08, R*0.22, 0.2, Math.PI - 0.2); ctx.stroke();
+  ctx.restore();
+  // whiskers
+  ctx.save(); ctx.strokeStyle = c.fur; ctx.lineWidth = 1; ctx.globalAlpha = 0.5;
+  [[-1,0.1],[-1,-0.15],[1,0.1],[1,-0.15]].forEach(([dir, angle]) => {
+    ctx.save(); ctx.translate(cx + dir*R*0.1, cy + R*0.04); ctx.rotate(angle * dir);
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(dir*R*0.5, 0); ctx.stroke();
+    ctx.restore();
+  });
+  ctx.restore();
+
+  // stage accessories
+  if (stage === 0) {
+    // tiny acorn 🌰
+    ctx.save(); ctx.translate(cx - R*0.6, cy + R*0.5);
+    ctx.fillStyle = '#8B4513';
+    ctx.beginPath(); ctx.ellipse(0, R*0.06, R*0.1, R*0.14, 0, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#5C3317';
+    ctx.beginPath(); ctx.ellipse(0, -R*0.06, R*0.12, R*0.1, 0, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#3D2000'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0, -R*0.16); ctx.lineTo(0, -R*0.28); ctx.stroke();
+    ctx.restore();
+  } else if (stage === 1) {
+    // leaf umbrella
+    ctx.save(); ctx.translate(cx + R*0.65, cy - R*0.2);
+    ctx.strokeStyle = '#5C8A3C'; ctx.lineWidth = 2; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(0, R*0.4); ctx.lineTo(0, -R*0.1); ctx.stroke();
+    ctx.fillStyle = '#7BC950';
+    ctx.beginPath(); ctx.ellipse(0, -R*0.2, R*0.3, R*0.2, -0.3, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+  } else {
+    // forest spirit glow
+    ctx.save(); ctx.globalAlpha = 0.3;
+    for (let i = 0; i < 4; i++) {
+      const angle = (Date.now() / 2000 + i * Math.PI / 2);
+      const px = cx + Math.cos(angle) * (R + 12);
+      const py = cy + Math.sin(angle) * (R + 8);
+      fillCircle(ctx, px, py, 4, '#A8FF78');
+    }
+    ctx.restore();
+  }
+}
+
+/* ══════════════════════════════════════
+   👠 VALENTINE — 华伦天捷
+   谄媚拟人高跟鞋宠物
+══════════════════════════════════════ */
+function drawValentine(ctx, cx, cy, R, s, c, stage, frame) {
+  const t = Date.now();
+  const sway = Math.sin(t / 700) * 0.06;   // 身体轻摇
+  const wink = Math.floor(t / 3000) % 8 === 0; // 偶尔眨眼
+
+  // ── 高跟鞋（在身体下方） ──
+  const shoeY = cy + R + 2;
+  ctx.save(); ctx.translate(cx, shoeY); ctx.rotate(sway * 0.5);
+  // 鞋跟
+  ctx.fillStyle = c.accent;
+  ctx.beginPath();
+  ctx.moveTo(R*0.1, 0); ctx.lineTo(R*0.18, R*0.35); ctx.lineTo(R*0.28, R*0.35); ctx.lineTo(R*0.22, 0);
+  ctx.closePath(); ctx.fill();
+  // 鞋底
+  ctx.fillStyle = c.fur;
+  ctx.beginPath(); ctx.roundRect(-R*0.38, -R*0.08, R*0.56, R*0.18, R*0.06); ctx.fill();
+  // 鞋面
+  ctx.fillStyle = c.body;
+  ctx.beginPath();
+  ctx.moveTo(-R*0.38, -R*0.08);
+  ctx.bezierCurveTo(-R*0.38, -R*0.38, R*0.1, -R*0.38, R*0.18, -R*0.08);
+  ctx.lineTo(R*0.18, 0); ctx.lineTo(-R*0.38, 0); ctx.closePath(); ctx.fill();
+  // 鞋面高光
+  ctx.save(); ctx.globalAlpha = 0.35;
+  ctx.fillStyle = '#FFF';
+  ctx.beginPath(); ctx.ellipse(-R*0.1, -R*0.2, R*0.12, R*0.07, -0.3, 0, Math.PI*2); ctx.fill();
+  ctx.restore();
+  // 蝴蝶结装饰
+  ctx.fillStyle = c.accent;
+  ctx.beginPath(); ctx.ellipse(-R*0.28, -R*0.16, R*0.1, R*0.07, -0.5, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(-R*0.28, -R*0.16, R*0.1, R*0.07, 0.5, 0, Math.PI*2); ctx.fill();
+  fillCircle(ctx, -R*0.28, -R*0.16, R*0.04, '#FFF');
+  ctx.restore();
+
+  // ── 腿（细长拟人腿） ──
+  ctx.save(); ctx.strokeStyle = c.inner; ctx.lineWidth = R*0.18; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(cx - R*0.15, cy + R*0.85); ctx.lineTo(cx - R*0.12, shoeY - R*0.05); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx + R*0.15, cy + R*0.85); ctx.lineTo(cx + R*0.1, shoeY - R*0.05); ctx.stroke();
+  ctx.restore();
+
+  // ── 裙子 ──
+  ctx.save(); ctx.translate(cx, cy + R*0.5); ctx.rotate(sway);
+  const skirtGrad = ctx.createLinearGradient(0, -R*0.3, 0, R*0.4);
+  skirtGrad.addColorStop(0, c.body); skirtGrad.addColorStop(1, c.fur);
+  ctx.beginPath();
+  ctx.moveTo(-R*0.45, -R*0.3);
+  ctx.bezierCurveTo(-R*0.6, 0, -R*0.75, R*0.3, -R*0.55, R*0.4);
+  ctx.lineTo(R*0.55, R*0.4);
+  ctx.bezierCurveTo(R*0.75, R*0.3, R*0.6, 0, R*0.45, -R*0.3);
+  ctx.closePath(); ctx.fillStyle = skirtGrad; ctx.fill();
+  // 裙摆蕾丝
+  ctx.save(); ctx.globalAlpha = 0.4;
+  for (let i = -3; i <= 3; i++) {
+    ctx.beginPath();
+    ctx.arc(i * R*0.18, R*0.38, R*0.08, 0, Math.PI);
+    ctx.fillStyle = '#FFF'; ctx.fill();
+  }
+  ctx.restore();
+  ctx.restore();
+
+  // ── 身体 ──
+  ctx.save(); ctx.translate(cx, cy); ctx.rotate(sway);
+  drawBodyGrad(ctx, 0, 0, R*0.72, c);
+  ctx.restore();
+
+  // ── 手臂（小短手，stage1+有手持玫瑰） ──
+  ctx.save(); ctx.translate(cx - R*0.72, cy - R*0.1); ctx.rotate(-0.3 + sway);
+  fillEllipse(ctx, 0, 0, R*0.16, R*0.32, c.inner, 0.2);
+  ctx.restore();
+  ctx.save(); ctx.translate(cx + R*0.72, cy - R*0.1); ctx.rotate(0.3 - sway);
+  fillEllipse(ctx, 0, 0, R*0.16, R*0.32, c.inner, -0.2);
+  if (stage >= 1) {
+    // 手持玫瑰
+    ctx.strokeStyle = '#2D8A00'; ctx.lineWidth = 1.5; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(0, R*0.32); ctx.lineTo(0, -R*0.2); ctx.stroke();
+    fillCircle(ctx, 0, -R*0.28, R*0.12, '#FF2255');
+    fillCircle(ctx, -R*0.06, -R*0.22, R*0.07, '#FF4477');
+  }
+  ctx.restore();
+
+  // ── 头 ──
+  ctx.save(); ctx.translate(cx, cy - R*0.72); ctx.rotate(sway * 0.5);
+  fillCircle(ctx, 0, 0, R*0.42, c.body);
+  // 刘海
+  ctx.fillStyle = c.fur;
+  ctx.beginPath();
+  ctx.ellipse(0, -R*0.28, R*0.38, R*0.22, 0, Math.PI, Math.PI*2);
+  ctx.fill();
+  // 发型（波浪卷发）
+  for (let i = -2; i <= 2; i++) {
+    ctx.beginPath();
+    ctx.arc(i * R*0.18, -R*0.38, R*0.14, Math.PI, Math.PI*2);
+    ctx.fillStyle = c.fur; ctx.fill();
+  }
+  // 腮红
+  drawBlush(ctx, -R*0.3, R*0.08, R*0.18, R*0.11, c);
+  drawBlush(ctx, R*0.3, R*0.08, R*0.18, R*0.11, c);
+  // 眼睛（大眼睛，stage1+有睫毛）
+  if (wink) {
+    // 眨眼
+    ctx.save(); ctx.strokeStyle = c.eye; ctx.lineWidth = 2; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.arc(-R*0.18, -R*0.06, R*0.12, 0.1, Math.PI - 0.1); ctx.stroke();
+    ctx.beginPath(); ctx.arc(R*0.18, -R*0.06, R*0.12, 0.1, Math.PI - 0.1); ctx.stroke();
+    ctx.restore();
+  } else {
+    fillCircle(ctx, -R*0.18, -R*0.06, R*0.13, c.eye);
+    fillCircle(ctx, R*0.18, -R*0.06, R*0.13, c.eye);
+    fillCircle(ctx, -R*0.18 + R*0.05, -R*0.06 - R*0.05, R*0.055, c.shine);
+    fillCircle(ctx, R*0.18 + R*0.05, -R*0.06 - R*0.05, R*0.055, c.shine);
+    // 睫毛
+    if (stage >= 1) {
+      ctx.save(); ctx.strokeStyle = c.eye; ctx.lineWidth = 1.5; ctx.lineCap = 'round';
+      [[-R*0.28,-R*0.16,-0.5],[-R*0.18,-R*0.19,0],[-R*0.08,-R*0.16,0.5]].forEach(([ex,ey,rot]) => {
+        ctx.save(); ctx.translate(ex, ey); ctx.rotate(rot);
+        ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0,-R*0.1); ctx.stroke();
+        ctx.restore();
+      });
+      [[R*0.08,-R*0.16,-0.5],[R*0.18,-R*0.19,0],[R*0.28,-R*0.16,0.5]].forEach(([ex,ey,rot]) => {
+        ctx.save(); ctx.translate(ex, ey); ctx.rotate(rot);
+        ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0,-R*0.1); ctx.stroke();
+        ctx.restore();
+      });
+      ctx.restore();
+    }
+  }
+  // 嘴巴（性感小嘴）
+  ctx.fillStyle = c.nose;
+  ctx.beginPath(); ctx.ellipse(0, R*0.12, R*0.1, R*0.06, 0, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#FFF'; ctx.globalAlpha = 0.4;
+  ctx.beginPath(); ctx.ellipse(-R*0.03, R*0.1, R*0.04, R*0.025, 0, 0, Math.PI*2); ctx.fill();
+  ctx.globalAlpha = 1;
+  ctx.restore();
+
+  // ── stage 专属配件 ──
+  if (stage === 0) {
+    // 头上小蝴蝶结
+    ctx.save(); ctx.translate(cx + R*0.28, cy - R*1.08);
+    ctx.fillStyle = c.accent;
+    ctx.beginPath(); ctx.ellipse(-R*0.12, 0, R*0.12, R*0.08, -0.4, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(R*0.12, 0, R*0.12, R*0.08, 0.4, 0, Math.PI*2); ctx.fill();
+    fillCircle(ctx, 0, 0, R*0.05, '#FFF');
+    ctx.restore();
+  } else if (stage === 1) {
+    // 小皇冠 + 爱心
+    ctx.save(); ctx.translate(cx, cy - R*1.1);
+    ctx.fillStyle = c.accent;
+    ctx.beginPath();
+    ctx.moveTo(-R*0.28, R*0.06); ctx.lineTo(-R*0.28, -R*0.06);
+    ctx.lineTo(-R*0.14, -R*0.18); ctx.lineTo(0, -R*0.06);
+    ctx.lineTo(R*0.14, -R*0.18); ctx.lineTo(R*0.28, -R*0.06);
+    ctx.lineTo(R*0.28, R*0.06); ctx.closePath(); ctx.fill();
+    // 爱心
+    ctx.fillStyle = '#FF2255';
+    ctx.beginPath();
+    ctx.moveTo(0, R*0.22);
+    ctx.bezierCurveTo(-R*0.22, 0, -R*0.28, R*0.1, 0, R*0.28);
+    ctx.bezierCurveTo(R*0.28, R*0.1, R*0.22, 0, 0, R*0.22);
+    ctx.fill();
+    ctx.restore();
+  } else {
+    // 爱神光环 + 飞翔小翅膀
+    ctx.save(); ctx.translate(cx, cy - R*1.15);
+    ctx.strokeStyle = c.accent; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.ellipse(0, 0, R*0.38, R*0.1, 0, 0, Math.PI*2); ctx.stroke();
+    ctx.restore();
+    // 翅膀
+    ctx.save(); ctx.translate(cx - R*0.85, cy - R*0.2); ctx.globalAlpha = 0.7;
+    ctx.fillStyle = '#FFE0EF';
+    ctx.beginPath(); ctx.ellipse(0, 0, R*0.35, R*0.22, 0.4, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+    ctx.save(); ctx.translate(cx + R*0.85, cy - R*0.2); ctx.globalAlpha = 0.7;
+    ctx.fillStyle = '#FFE0EF';
+    ctx.beginPath(); ctx.ellipse(0, 0, R*0.35, R*0.22, -0.4, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+    // 飘散爱心
+    ctx.save(); ctx.globalAlpha = 0.5 + Math.sin(t/600)*0.3;
+    ctx.fillStyle = '#FF2255'; ctx.font = (R*0.3) + 'px serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('💕', cx + R*1.1, cy - R*0.6);
+    ctx.restore();
+  }
+}
+
+/* ══════════════════════════════════════
+   👠 VALENTINE — 高跟鞋拟人宠物
+══════════════════════════════════════ */
+function drawValentine(ctx, cx, cy, R, s, c, stage, frame) {
+  const t = Date.now();
+  const sway = Math.sin(t / 700) * 0.06;   // 身体轻轻摇摆
+  const wink = Math.floor(t / 3000) % 8 === 0; // 偶尔眨眼
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(sway);
+
+  // ── 高跟鞋（身体主体）──
+  // 鞋底
+  ctx.save();
+  ctx.translate(0, R * 0.55);
+  // 鞋跟
+  ctx.fillStyle = c.fur;
+  ctx.beginPath();
+  ctx.moveTo(R*0.18, R*0.1);
+  ctx.lineTo(R*0.28, R*0.42);
+  ctx.lineTo(R*0.38, R*0.42);
+  ctx.lineTo(R*0.38, R*0.48);
+  ctx.lineTo(R*0.12, R*0.48);
+  ctx.lineTo(R*0.12, R*0.1);
+  ctx.closePath();
+  ctx.fill();
+  // 鞋底板
+  const shoeGrad = ctx.createLinearGradient(-R*0.45, 0, R*0.45, 0);
+  shoeGrad.addColorStop(0, c.fur);
+  shoeGrad.addColorStop(0.5, c.body);
+  shoeGrad.addColorStop(1, c.fur);
+  ctx.beginPath();
+  ctx.moveTo(-R*0.45, R*0.08);
+  ctx.bezierCurveTo(-R*0.45, -R*0.05, R*0.2, -R*0.05, R*0.2, R*0.08);
+  ctx.lineTo(R*0.2, R*0.28);
+  ctx.bezierCurveTo(R*0.2, R*0.38, -R*0.45, R*0.38, -R*0.45, R*0.28);
+  ctx.closePath();
+  ctx.fillStyle = shoeGrad;
+  ctx.fill();
+  // 鞋面高光
+  ctx.save(); ctx.globalAlpha = 0.35;
+  ctx.fillStyle = '#FFF';
+  ctx.beginPath();
+  ctx.ellipse(-R*0.1, R*0.1, R*0.22, R*0.1, -0.2, 0, Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+  ctx.restore(); // end shoe
+
+  // ── 身体（从鞋里长出来的可爱小人）──
+  // 腿
+  ctx.fillStyle = c.inner;
+  ctx.beginPath();
+  ctx.roundRect(-R*0.12, R*0.1, R*0.24, R*0.5, R*0.12);
+  ctx.fill();
+
+  // 裙子
+  const skirtGrad = ctx.createLinearGradient(0, -R*0.1, 0, R*0.2);
+  skirtGrad.addColorStop(0, c.body);
+  skirtGrad.addColorStop(1, c.fur);
+  ctx.beginPath();
+  ctx.moveTo(-R*0.18, R*0.1);
+  ctx.bezierCurveTo(-R*0.5, R*0.15, -R*0.55, R*0.45, -R*0.42, R*0.55);
+  ctx.lineTo(R*0.42, R*0.55);
+  ctx.bezierCurveTo(R*0.55, R*0.45, R*0.5, R*0.15, R*0.18, R*0.1);
+  ctx.closePath();
+  ctx.fillStyle = skirtGrad;
+  ctx.fill();
+  // 裙子亮片
+  ctx.save(); ctx.globalAlpha = 0.4;
+  for (let i = 0; i < 6; i++) {
+    const sx = -R*0.3 + i * R*0.12;
+    const sy = R*0.3 + Math.sin(i*1.3)*R*0.08;
+    fillCircle(ctx, sx, sy, R*0.03, c.accent);
+  }
+  ctx.restore();
+
+  // 身体上半
+  const bodyGrad = ctx.createRadialGradient(-R*0.1, -R*0.2, R*0.05, 0, -R*0.1, R*0.45);
+  bodyGrad.addColorStop(0, c.inner);
+  bodyGrad.addColorStop(1, c.body);
+  ctx.beginPath();
+  ctx.ellipse(0, -R*0.1, R*0.32, R*0.38, 0, 0, Math.PI*2);
+  ctx.fillStyle = bodyGrad;
+  ctx.fill();
+
+  // 小手（举着爱心）
+  // 左手
+  fillCircle(ctx, -R*0.42, -R*0.05, R*0.1, c.inner);
+  // 右手举爱心
+  fillCircle(ctx, R*0.42, -R*0.18, R*0.1, c.inner);
+  // 爱心
+  ctx.save(); ctx.translate(R*0.52, -R*0.38); ctx.scale(R*0.018, R*0.018);
+  ctx.fillStyle = '#FF2D6B';
+  ctx.beginPath();
+  ctx.moveTo(0, 4);
+  ctx.bezierCurveTo(-10, -4, -18, 2, -10, 10);
+  ctx.lineTo(0, 18); ctx.lineTo(10, 10);
+  ctx.bezierCurveTo(18, 2, 10, -4, 0, 4);
+  ctx.closePath(); ctx.fill();
+  ctx.restore();
+
+  // 头
+  const headGrad = ctx.createRadialGradient(-R*0.1, -R*0.55, R*0.05, 0, -R*0.48, R*0.3);
+  headGrad.addColorStop(0, c.inner); headGrad.addColorStop(1, c.body);
+  ctx.beginPath(); ctx.arc(0, -R*0.48, R*0.28, 0, Math.PI*2);
+  ctx.fillStyle = headGrad; ctx.fill();
+
+  // 腮红
+  ctx.save(); ctx.globalAlpha = 0.55;
+  fillEllipse(ctx, -R*0.18, -R*0.42, R*0.1, R*0.07, c.blush);
+  fillEllipse(ctx, R*0.18, -R*0.42, R*0.1, R*0.07, c.blush);
+  ctx.restore();
+
+  // 眼睛（媚眼）
+  if (wink) {
+    // 眨眼
+    ctx.save(); ctx.strokeStyle = c.eye; ctx.lineWidth = 2; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.arc(-R*0.12, -R*0.5, R*0.08, Math.PI, Math.PI*2); ctx.stroke();
+    ctx.restore();
+  } else {
+    // 左眼（带睫毛）
+    fillCircle(ctx, -R*0.12, -R*0.5, R*0.09, c.eye);
+    fillCircle(ctx, -R*0.12 + R*0.03, -R*0.5 - R*0.03, R*0.04, c.shine);
+    // 睫毛
+    ctx.save(); ctx.strokeStyle = c.eye; ctx.lineWidth = 1.5; ctx.lineCap = 'round';
+    for (let i = -2; i <= 2; i++) {
+      ctx.beginPath();
+      ctx.moveTo(-R*0.12 + i*R*0.04, -R*0.59);
+      ctx.lineTo(-R*0.12 + i*R*0.05, -R*0.66 - Math.abs(i)*R*0.02);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+  // 右眼（媚眼半闭）
+  ctx.save();
+  ctx.beginPath(); ctx.ellipse(R*0.12, -R*0.5, R*0.09, R*0.07, 0, 0, Math.PI*2);
+  ctx.fillStyle = c.eye; ctx.fill();
+  fillCircle(ctx, R*0.12 + R*0.03, -R*0.5 - R*0.02, R*0.035, c.shine);
+  // 右眼睫毛
+  ctx.strokeStyle = c.eye; ctx.lineWidth = 1.5; ctx.lineCap = 'round';
+  for (let i = -2; i <= 2; i++) {
+    ctx.beginPath();
+    ctx.moveTo(R*0.12 + i*R*0.04, -R*0.57);
+    ctx.lineTo(R*0.12 + i*R*0.05, -R*0.64 - Math.abs(i)*R*0.02);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // 嘴（性感小嘴）
+  ctx.save();
+  ctx.fillStyle = c.nose;
+  ctx.beginPath();
+  ctx.ellipse(0, -R*0.36, R*0.08, R*0.05, 0, 0, Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle = '#FF6EB4';
+  ctx.beginPath();
+  ctx.arc(0, -R*0.36, R*0.06, 0, Math.PI);
+  ctx.fill();
+  ctx.restore();
+
+  // 头发
+  ctx.fillStyle = c.fur;
+  ctx.beginPath();
+  ctx.ellipse(0, -R*0.7, R*0.28, R*0.14, 0, Math.PI, Math.PI*2);
+  ctx.fill();
+  // 刘海
+  ctx.beginPath();
+  ctx.moveTo(-R*0.28, -R*0.56);
+  ctx.bezierCurveTo(-R*0.32, -R*0.72, -R*0.1, -R*0.78, 0, -R*0.7);
+  ctx.bezierCurveTo(R*0.1, -R*0.78, R*0.32, -R*0.72, R*0.28, -R*0.56);
+  ctx.fill();
+
+  // stage 专属配件
+  if (stage === 0) {
+    // 小蝴蝶结发卡
+    ctx.save(); ctx.translate(-R*0.22, -R*0.78);
+    ctx.fillStyle = c.accent;
+    ctx.beginPath(); ctx.ellipse(-R*0.1, 0, R*0.1, R*0.06, -0.4, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(R*0.1, 0, R*0.1, R*0.06, 0.4, 0, Math.PI*2); ctx.fill();
+    fillCircle(ctx, 0, 0, R*0.04, '#FFF');
+    ctx.restore();
+  } else if (stage === 1) {
+    // 皇冠 + 口红
+    ctx.save(); ctx.translate(0, -R*0.82);
+    ctx.fillStyle = c.accent;
+    ctx.beginPath();
+    ctx.moveTo(-R*0.22, R*0.06); ctx.lineTo(-R*0.22, -R*0.04);
+    ctx.lineTo(-R*0.12, -R*0.14); ctx.lineTo(0, -R*0.04);
+    ctx.lineTo(R*0.12, -R*0.14); ctx.lineTo(R*0.22, -R*0.04);
+    ctx.lineTo(R*0.22, R*0.06); ctx.closePath(); ctx.fill();
+    fillCircle(ctx, 0, -R*0.04, R*0.04, '#FF6EB4');
+    ctx.restore();
+  } else {
+    // 翅膀（爱神）
+    ctx.save(); ctx.globalAlpha = 0.7;
+    // 左翅
+    ctx.fillStyle = '#FFE0EF';
+    ctx.beginPath();
+    ctx.moveTo(-R*0.32, -R*0.15);
+    ctx.bezierCurveTo(-R*0.8, -R*0.5, -R*0.9, -R*0.1, -R*0.5, R*0.1);
+    ctx.bezierCurveTo(-R*0.35, R*0.15, -R*0.32, R*0.05, -R*0.32, -R*0.15);
+    ctx.fill();
+    // 右翅
+    ctx.beginPath();
+    ctx.moveTo(R*0.32, -R*0.15);
+    ctx.bezierCurveTo(R*0.8, -R*0.5, R*0.9, -R*0.1, R*0.5, R*0.1);
+    ctx.bezierCurveTo(R*0.35, R*0.15, R*0.32, R*0.05, R*0.32, -R*0.15);
+    ctx.fill();
+    ctx.restore();
+    // 飘散的爱心
+    ctx.save(); ctx.globalAlpha = 0.6;
+    const heartT = t / 1500;
+    [[-R*0.6, -R*0.3, 0.8], [R*0.65, -R*0.25, 1.4], [0, -R*0.85, 2.1]].forEach(([hx, hy, offset]) => {
+      const floatY = Math.sin(heartT + offset) * R*0.08;
+      ctx.save(); ctx.translate(hx, hy + floatY); ctx.scale(R*0.012, R*0.012);
+      ctx.fillStyle = '#FF2D6B';
+      ctx.beginPath();
+      ctx.moveTo(0,4); ctx.bezierCurveTo(-8,-3,-14,2,-8,9); ctx.lineTo(0,16); ctx.lineTo(8,9); ctx.bezierCurveTo(14,2,8,-3,0,4); ctx.closePath(); ctx.fill();
+      ctx.restore();
+    });
+    ctx.restore();
+  }
+
+  ctx.restore(); // end sway
+}
+
+/* ══════════════════════════════════════
+   🥛 JJCUP — 粉嫩肉感杯子精灵
+══════════════════════════════════════ */
+function drawJJCup(ctx, cx, cy, R, s, c, stage, frame) {
+  const t = Date.now();
+  const wobble = Math.sin(t / 600) * 0.04;   // 轻轻摇晃
+  const bubble = Math.floor(t / 1200) % 3;   // 冒泡节奏
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(wobble);
+
+  // ── 杯身（主体，圆润肉感）──
+  // 杯底圆角
+  const cupGrad = ctx.createLinearGradient(-R*0.5, -R*0.3, R*0.5, R*0.6);
+  cupGrad.addColorStop(0, c.inner);
+  cupGrad.addColorStop(0.4, c.body);
+  cupGrad.addColorStop(1, c.fur);
+  ctx.beginPath();
+  ctx.moveTo(-R*0.42, -R*0.3);
+  ctx.bezierCurveTo(-R*0.5, -R*0.3, -R*0.55, R*0.55, -R*0.38, R*0.62);
+  ctx.bezierCurveTo(-R*0.2, R*0.7, R*0.2, R*0.7, R*0.38, R*0.62);
+  ctx.bezierCurveTo(R*0.55, R*0.55, R*0.5, -R*0.3, R*0.42, -R*0.3);
+  ctx.closePath();
+  ctx.fillStyle = cupGrad;
+  ctx.fill();
+
+  // 杯身高光（肉感质感）
+  ctx.save();
+  ctx.globalAlpha = 0.35;
+  const shineGrad = ctx.createLinearGradient(-R*0.35, -R*0.2, -R*0.05, R*0.3);
+  shineGrad.addColorStop(0, '#FFF');
+  shineGrad.addColorStop(1, 'transparent');
+  ctx.beginPath();
+  ctx.moveTo(-R*0.35, -R*0.22);
+  ctx.bezierCurveTo(-R*0.4, -R*0.2, -R*0.38, R*0.25, -R*0.2, R*0.28);
+  ctx.bezierCurveTo(-R*0.05, R*0.28, -R*0.04, -R*0.15, -R*0.18, -R*0.22);
+  ctx.closePath();
+  ctx.fillStyle = shineGrad;
+  ctx.fill();
+  ctx.restore();
+
+  // 杯口边缘（厚厚的软边）
+  const rimGrad = ctx.createLinearGradient(0, -R*0.42, 0, -R*0.25);
+  rimGrad.addColorStop(0, c.inner);
+  rimGrad.addColorStop(1, c.body);
+  ctx.beginPath();
+  ctx.ellipse(0, -R*0.3, R*0.46, R*0.14, 0, 0, Math.PI*2);
+  ctx.fillStyle = rimGrad;
+  ctx.fill();
+  // 杯口内侧暗面
+  ctx.save(); ctx.globalAlpha = 0.2;
+  ctx.beginPath();
+  ctx.ellipse(0, -R*0.28, R*0.38, R*0.1, 0, 0, Math.PI*2);
+  ctx.fillStyle = c.fur; ctx.fill();
+  ctx.restore();
+
+  // 杯内液体（波动的）
+  const liquidY = -R*0.22 + Math.sin(t/800)*R*0.03;
+  ctx.save();
+  ctx.beginPath();
+  ctx.ellipse(0, liquidY, R*0.36, R*0.09, 0, 0, Math.PI*2);
+  ctx.fillStyle = c.accent;
+  ctx.globalAlpha = 0.5;
+  ctx.fill();
+  ctx.restore();
+
+  // 把手（软乎乎的圆弧）
+  ctx.save();
+  ctx.strokeStyle = c.fur;
+  ctx.lineWidth = R*0.12;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  ctx.moveTo(R*0.44, -R*0.05);
+  ctx.bezierCurveTo(R*0.85, -R*0.08, R*0.85, R*0.4, R*0.44, R*0.38);
+  ctx.stroke();
+  // 把手高光
+  ctx.strokeStyle = c.inner;
+  ctx.lineWidth = R*0.04;
+  ctx.globalAlpha = 0.5;
+  ctx.beginPath();
+  ctx.moveTo(R*0.5, -R*0.02);
+  ctx.bezierCurveTo(R*0.82, -R*0.04, R*0.82, R*0.3, R*0.5, R*0.3);
+  ctx.stroke();
+  ctx.restore();
+
+  // 气泡（从液面冒出）
+  const bubblePositions = [[-R*0.1, -R*0.32], [R*0.08, -R*0.36], [R*0.22, -R*0.3]];
+  bubblePositions.forEach(([bx, by], i) => {
+    const active = (bubble + i) % 3 === 0;
+    if (!active) return;
+    ctx.save();
+    ctx.globalAlpha = 0.7;
+    ctx.strokeStyle = c.accent;
+    ctx.lineWidth = 1.5;
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.beginPath();
+    ctx.arc(bx, by - Math.sin(t/400 + i)*R*0.08, R*0.05, 0, Math.PI*2);
+    ctx.fill(); ctx.stroke();
+    ctx.restore();
+  });
+
+  // 脸（贴在杯身上）
+  const faceY = R*0.12;
+  // 腮红
+  ctx.save(); ctx.globalAlpha = 0.5;
+  fillEllipse(ctx, -R*0.22, faceY + R*0.08, R*0.14, R*0.09, c.blush);
+  fillEllipse(ctx, R*0.22, faceY + R*0.08, R*0.14, R*0.09, c.blush);
+  ctx.restore();
+  // 眼睛（圆滚滚的）
+  fillCircle(ctx, -R*0.17, faceY, R*0.1, c.eye);
+  fillCircle(ctx, R*0.17, faceY, R*0.1, c.eye);
+  fillCircle(ctx, -R*0.17 + R*0.04, faceY - R*0.04, R*0.04, c.shine);
+  fillCircle(ctx, R*0.17 + R*0.04, faceY - R*0.04, R*0.04, c.shine);
+  // 嘴（开心小嘴）
+  ctx.save(); ctx.strokeStyle = c.nose; ctx.lineWidth = 2.2; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.arc(0, faceY + R*0.12, R*0.12, 0.2, Math.PI-0.2); ctx.stroke();
+  ctx.restore();
+
+  // 小手（杯壁两侧伸出的圆手）
+  fillCircle(ctx, -R*0.58, R*0.08, R*0.1, c.body);
+  fillCircle(ctx, -R*0.58, R*0.08, R*0.05, c.inner);
+  fillCircle(ctx, R*0.58, R*0.08, R*0.1, c.body);
+  fillCircle(ctx, R*0.58, R*0.08, R*0.05, c.inner);
+  // 小脚（圆圆的）
+  fillEllipse(ctx, -R*0.22, R*0.72, R*0.14, R*0.1, c.body);
+  fillEllipse(ctx, R*0.22, R*0.72, R*0.14, R*0.1, c.body);
+
+  // stage 专属配件
+  if (stage === 0) {
+    // 吸管 🥤
+    ctx.save(); ctx.translate(R*0.28, -R*0.55);
+    ctx.strokeStyle = c.accent; ctx.lineWidth = R*0.08; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(0, R*0.25); ctx.lineTo(-R*0.1, -R*0.45); ctx.stroke();
+    ctx.strokeStyle = '#FFF'; ctx.lineWidth = R*0.03; ctx.globalAlpha = 0.5;
+    ctx.beginPath(); ctx.moveTo(-R*0.02, R*0.2); ctx.lineTo(-R*0.1, -R*0.4); ctx.stroke();
+    ctx.restore();
+  } else if (stage === 1) {
+    // 热气 ☕
+    ctx.save(); ctx.strokeStyle = 'rgba(255,200,180,0.7)'; ctx.lineWidth = 2; ctx.lineCap = 'round';
+    [[-R*0.15, 0], [0, 0], [R*0.15, 0]].forEach(([hx, hy]) => {
+      const steamOffset = Math.sin(t/500 + hx)*R*0.04;
+      ctx.beginPath();
+      ctx.moveTo(hx, -R*0.5 + hy);
+      ctx.bezierCurveTo(hx + R*0.06, -R*0.62, hx - R*0.06, -R*0.72, hx + steamOffset, -R*0.82);
+      ctx.stroke();
+    });
+    ctx.restore();
+  } else {
+    // 魔法光环 ✨
+    ctx.save(); ctx.globalAlpha = 0.6;
+    const ringT = t / 1800;
+    ctx.strokeStyle = c.accent; ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.ellipse(0, -R*0.88, R*0.35, R*0.1, ringT, 0, Math.PI*2);
+    ctx.stroke();
+    // 旋转星星
+    for (let i = 0; i < 4; i++) {
+      const angle = ringT + i * Math.PI/2;
+      const sx = Math.cos(angle)*R*0.35;
+      const sy = -R*0.88 + Math.sin(angle)*R*0.1;
+      ctx.save(); ctx.translate(sx, sy); ctx.scale(R*0.015, R*0.015);
+      ctx.fillStyle = c.accent;
+      drawStar(ctx, 0, 0, 4, 8, 4); ctx.fill();
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  ctx.restore(); // end wobble
+}
+
 function drawStar(ctx, cx, cy, spikes, outerR, innerR) {
   let rot = (Math.PI / 2) * 3;
   const step = Math.PI / spikes;
@@ -2036,17 +3093,17 @@ function updateHomeUI() {
   if (!G) return;
   document.getElementById('homeCoins').textContent = G.coins;
   document.getElementById('homeGems').textContent = G.gems;
-  const streakEl = document.getElementById('streakText');
-  if (streakEl) streakEl.textContent = '连续登录 ' + (G.streak || 1) + ' 天！继续保持～';
+  const streakEl = document.getElementById('streakChip');
+  if (streakEl) streakEl.textContent = '🔥' + (G.streak || 1);
   if (!G.currentPetId || !G.pets[G.currentPetId]) return;
   const pet = G.pets[G.currentPetId];
   const petDef = CONFIG.pets.find(p => p.id === G.currentPetId);
   if (!petDef) return;
   document.getElementById('petNameBadge').textContent = pet.name;
   document.getElementById('petLevelBadge').textContent = 'Lv.' + pet.level + ' · ' + petDef.stages[pet.stage].name;
-  setStatBar('statHunger', 'statHungerVal', pet.hunger);
-  setStatBar('statHappy',  'statHappyVal',  pet.happy);
-  setStatBar('statEnergy', 'statEnergyVal', pet.energy);
+  setStatVal('statHunger', pet.hunger);
+  setStatVal('statHappy',  pet.happy);
+  setStatVal('statEnergy', pet.energy);
   const expForNext = 50 + pet.level * 20;
   document.getElementById('expBarFill').style.width = Math.min(100, (pet.exp / expForNext) * 100) + '%';
   document.getElementById('expBarNext').textContent = pet.exp + '/' + expForNext;
@@ -2055,6 +3112,7 @@ function updateHomeUI() {
   // update speech bubble
   updatePetSpeech();
   drawPet('petCanvas', G.currentPetId, pet.stage);
+  updatePetGlow();
   if (!animFrame) animatePet();
 }
 
@@ -2066,11 +3124,34 @@ function animatePet() {
   animFrame = requestAnimationFrame(animatePet);
 }
 
+function updatePetGlow() {
+  const glowColors = {
+    kitten: 'rgba(255,110,180,0.2)', puppy: 'rgba(255,179,71,0.2)',
+    bearbear: 'rgba(212,149,106,0.2)', bunny: 'rgba(192,132,252,0.2)',
+    fox: 'rgba(255,140,66,0.2)', penguin: 'rgba(79,195,247,0.2)',
+    totoro: 'rgba(138,155,168,0.2)',
+    valentine: 'rgba(255,110,180,0.28)',
+    jjcup: 'rgba(255,179,198,0.25)',
+    valentine: 'rgba(255,110,180,0.3)',
+  };
+  const el = document.getElementById('petBgGlow');
+  if (el && G.currentPetId) {
+    const col = glowColors[G.currentPetId] || 'rgba(255,110,180,0.2)';
+    el.style.background = 'radial-gradient(circle, ' + col.replace('0.2','0.25') + ' 0%, transparent 70%)';
+  }
+}
+
 function setStatBar(fillId, valId, value) {
   const pct = Math.max(0, Math.min(100, value));
-  document.getElementById(fillId).style.width = pct + '%';
-  document.getElementById(valId).textContent = Math.round(pct);
-  document.getElementById(fillId).style.opacity = pct < 20 ? '0.6' : '1';
+  const el = document.getElementById(fillId);
+  if (el) { el.style.width = pct + '%'; el.style.opacity = pct < 20 ? '0.6' : '1'; }
+  const valEl = document.getElementById(valId);
+  if (valEl) valEl.textContent = Math.round(pct);
+}
+function setStatVal(fillId, value) {
+  const pct = Math.max(0, Math.min(100, value));
+  const el = document.getElementById(fillId);
+  if (el) { el.style.width = pct + '%'; el.style.opacity = pct < 20 ? '0.55' : '1'; }
 }
 
 /* ── 图鉴 ── */
@@ -2079,46 +3160,83 @@ function renderLibrary() {
   const allPets = CONFIG.pets;
   const unlocked = G.petLibrary.length;
   document.getElementById('libCount').textContent = unlocked + '/' + allPets.length + ' 已解锁';
-  grid.innerHTML = allPets.flatMap(petDef =>
-    petDef.stages.map((stage, si) => {
-      const isUnlocked = G.petLibrary.includes(petDef.id) || !petDef.locked;
-      const isCurrent = G.currentPetId === petDef.id && si === (G.pets[petDef.id]?.stage || 0);
-      const cls = 'lib-card' + (isUnlocked ? ' unlocked' : ' locked') + (isCurrent ? ' active-pet' : '');
-      const canvasId = 'lib-canvas-' + petDef.id + '-' + si;
-      return '<div class="' + cls + '" onclick="selectActivePet(\'' + petDef.id + '\')">'
-        + '<div class="lib-canvas-wrap">'
-        + (isUnlocked
-            ? '<canvas id="' + canvasId + '" width="64" height="64" style="image-rendering:pixelated"></canvas>'
-            : '<div style="font-size:32px;line-height:64px;text-align:center">🔒</div>')
-        + '</div>'
-        + '<div class="lib-name">' + (isUnlocked ? petDef.name : '???') + '</div>'
-        + '<div class="lib-stage">' + (isUnlocked ? stage.name : '未解锁') + '</div></div>';
-    })
-  ).join('');
-  // draw mini pets on canvases
+  // Hook banner
+  const locked = allPets.length - unlocked;
+  const banner = document.getElementById('libHookBanner');
+  const hookEl = document.getElementById('libHookText');
+  if (banner && hookEl) {
+    if (locked > 0) {
+      const hooks = [
+        '还有 ' + locked + ' 只神秘生物藏在这颗星球上... 🌍',
+        '探索地图、完成故事、配对繁殖，都可能遇见新伙伴 ✨',
+        '每只宠物都有3个进化形态，你见过最终形态吗？ 💫',
+      ];
+      hookEl.textContent = hooks[Math.floor(Date.now()/10000) % hooks.length];
+      banner.style.display = 'block';
+    } else {
+      banner.style.display = 'none';
+    }
+  }
+  // Mystery library — show current stage only, hide future evolutions
+  const hintTexts = {
+    locked: ['探索地图可能遇见', '配对繁殖可能孵出', '连续登录7天解锁', '完成故事剧情解锁', '高级版专属'],
+  };
+  grid.innerHTML = allPets.map(petDef => {
+    const isUnlocked = G.petLibrary.includes(petDef.id) || !petDef.locked;
+    const isCurrent  = G.currentPetId === petDef.id;
+    const curStage   = isCurrent ? (G.pets[petDef.id]?.stage || 0) : 0;
+    const petLevel   = isCurrent ? (G.pets[petDef.id]?.level || 1) : 0;
+    const cls = 'lib-card' + (isUnlocked ? ' unlocked' : ' locked') + (isCurrent ? ' active-pet' : '');
+
+    if (!isUnlocked) {
+      // Mystery card — silhouette + hook
+      const hintIdx = allPets.indexOf(petDef) % hintTexts.locked.length;
+      return '<div class="' + cls + ' mystery-card" onclick="selectActivePet(\'' + petDef.id + '\')">'
+        + '<div class="mystery-silhouette">?</div>'
+        + '<div class="lib-name mystery-name">未知生物</div>'
+        + '<div class="mystery-hint">' + hintTexts.locked[hintIdx] + '</div>'
+        + '</div>';
+    }
+
+    // Unlocked — show current stage, tease next
+    const stage = petDef.stages[curStage];
+    const hasNext = curStage < petDef.stages.length - 1;
+    const nextStage = petDef.stages[curStage + 1];
+    const expForNext = 50 + petLevel * 20;
+
+    return '<div class="' + cls + '" onclick="selectActivePet(\'' + petDef.id + '\')">'
+      + '<div class="lib-canvas-wrap">'
+      + '<canvas id="lib-canvas-' + petDef.id + '" width="80" height="80" style="image-rendering:pixelated"></canvas>'
+      + '</div>'
+      + '<div class="lib-name">' + petDef.name + '</div>'
+      + '<div class="lib-stage">' + stage.name + '</div>'
+      + (isCurrent && hasNext
+          ? '<div class="lib-evo-tease">✨ 进化成<br><span style=\"color:var(--accent)\">???</span></div>'
+          : '')
+      + (isCurrent ? '<div style="font-size:9px;color:var(--accent);margin-top:2px">▶ 当前</div>' : '')
+      + '</div>';
+  }).join('');
+
+  // draw mini pets (unlocked only)
   allPets.forEach(petDef => {
-    petDef.stages.forEach((stage, si) => {
-      const isUnlocked = G.petLibrary.includes(petDef.id) || !petDef.locked;
-      if (!isUnlocked) return;
-      const canvasId = 'lib-canvas-' + petDef.id + '-' + si;
-      const canvas = document.getElementById(canvasId);
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const W = 64, H = 64;
-      ctx.clearRect(0, 0, W, H);
-      const c = CONFIG.petColors[petDef.id] || CONFIG.petColors.kitten;
-      const cx = W/2, cy = H/2 + 4;
-      const R = 16 * (si === 0 ? 0.75 : si === 1 ? 1.0 : 1.2);
-      // shadow
-      ctx.save(); ctx.beginPath();
-      ctx.ellipse(cx, cy + R + 4, R*0.6, 4, 0, 0, Math.PI*2);
-      ctx.fillStyle = 'rgba(0,0,0,0.15)'; ctx.fill(); ctx.restore();
-      // draw the pet at small scale
-      if (petDef.id === 'kitten') drawKitten(ctx, cx, cy, R, R/30, c, si, 0, 0);
-      else if (petDef.id === 'puppy') drawPuppy(ctx, cx, cy, R, R/30, c, si, 0, 0);
-      else if (petDef.id === 'bearbear') drawBear(ctx, cx, cy, R, R/30, c, si, 0);
-      else if (petDef.id === 'bunny') drawBunny(ctx, cx, cy, R, R/30, c, si, 0, 0);
-    });
+    const isUnlocked = G.petLibrary.includes(petDef.id) || !petDef.locked;
+    if (!isUnlocked) return;
+    const si = G.currentPetId === petDef.id ? (G.pets[petDef.id]?.stage || 0) : 0;
+    const canvas = document.getElementById('lib-canvas-' + petDef.id);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, 80, 80);
+    const c = CONFIG.petColors[petDef.id] || CONFIG.petColors.kitten;
+    const cx = 40, cy = 44, R = 20;
+    if (petDef.id === 'kitten')    drawKitten(ctx, cx, cy, R, 0.6, c, si, 0, 0);
+    else if (petDef.id === 'puppy')     drawPuppy(ctx, cx, cy, R, 0.6, c, si, 0, 0);
+    else if (petDef.id === 'bearbear')  drawBear(ctx, cx, cy, R, 0.6, c, si, 0);
+    else if (petDef.id === 'bunny')     drawBunny(ctx, cx, cy, R, 0.6, c, si, 0, 0);
+    else if (petDef.id === 'fox')       drawFox(ctx, cx, cy, R, 0.6, c, si, 0, 0);
+    else if (petDef.id === 'penguin')   drawPenguin(ctx, cx, cy, R, 0.6, c, si, 0);
+    else if (petDef.id === 'totoro')    drawTotoro(ctx, cx, cy, R, 0.6, c, si, 0);
+    else if (petDef.id === 'valentine') drawValentine(ctx, cx, cy, R, 0.6, c, si, 0);
+    else if (petDef.id === 'jjcup')     drawJJCup(ctx, cx, cy, R, 0.6, c, si, 0);
   });
 }
 
@@ -2377,16 +3495,18 @@ function onboardNext(choiceIdx) {
 function renderEggGrid() {
   document.getElementById('eggGrid').innerHTML = CONFIG.pets.map(pet =>
     '<div class="egg-card' + (pet.locked ? ' locked' : '') + '" id="egg-' + pet.id + '" onclick="selectEgg(\'' + pet.id + '\',' + pet.locked + ')">'
-    + '<canvas id="eggc-' + pet.id + '" width="72" height="72" style="image-rendering:pixelated;display:block;margin:0 auto"></canvas>'
-    + '<div class="egg-name">' + pet.name + '</div>'
-    + '<div class="egg-personality">' + pet.personality + ' · ' + pet.personalityDesc + '</div></div>'
+    + (pet.locked
+        ? '<div style="width:60px;height:60px;margin:0 auto;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.05),transparent);border:2px dashed rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;color:rgba(255,255,255,0.2)">?</div>'
+        : '<canvas id="eggc-' + pet.id + '" width="60" height="60" style="image-rendering:pixelated;display:block;margin:0 auto"></canvas>')
+    + '<div class="egg-name">' + (pet.locked ? '???' : pet.name) + '</div>'
+    + '<div class="egg-personality">' + (pet.locked ? '🔒 高级版解锁' : pet.personality + ' · ' + pet.personalityDesc) + '</div></div>'
   ).join('');
   // draw mini pets
   CONFIG.pets.forEach(pet => {
     const canvas = document.getElementById('eggc-' + pet.id);
     if (!canvas) return;
     const c = CONFIG.petColors[pet.id] || CONFIG.petColors.kitten;
-    const cx = 36, cy = 38, R = 18;
+    const cx = 30, cy = 32, R = 15;
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, 72, 72);
     if (pet.locked) { ctx.globalAlpha = 0.35; }
@@ -2394,6 +3514,12 @@ function renderEggGrid() {
     else if (pet.id === 'puppy') drawPuppy(ctx, cx, cy, R, 0.6, c, 0, 0, 0);
     else if (pet.id === 'bearbear') drawBear(ctx, cx, cy, R, 0.6, c, 0, 0);
     else if (pet.id === 'bunny') drawBunny(ctx, cx, cy, R, 0.6, c, 0, 0, 0);
+    else if (pet.id === 'fox') drawFox(ctx, cx, cy, R, 0.6, c, 0, 0, 0);
+    else if (pet.id === 'penguin') drawPenguin(ctx, cx, cy, R, 0.6, c, 0, 0);
+    else if (pet.id === 'totoro') drawTotoro(ctx, cx, cy, R, 0.6, c, 0, 0);
+    else if (pet.id === 'valentine') drawValentine(ctx, cx, cy, R, 0.6, c, 0, 0);
+    else if (pet.id === 'jjcup') drawJJCup(ctx, cx, cy, R, 0.6, c, 0, 0);
+    else if (pet.id === 'valentine') drawValentine(ctx, cx, cy, R, 0.6, c, 0, 0);
     if (pet.locked) {
       ctx.globalAlpha = 1;
       ctx.font = '20px serif'; ctx.textAlign = 'center';
@@ -2403,7 +3529,11 @@ function renderEggGrid() {
 }
 
 function selectEgg(petId, isLocked) {
-  if (isLocked) { showToast('🔒 这只宠物需要高级版才能选择！'); return; }
+  if (isLocked) {
+    const petDef = CONFIG.pets.find(p => p.id === petId);
+    showToast('🔒 ' + (petDef?.name || '神秘宠物') + ' 需要高级版才能解锁！');
+    return;
+  }
   document.querySelectorAll('.egg-card').forEach(c => c.classList.remove('selected'));
   document.getElementById('egg-' + petId)?.classList.add('selected');
   selectedEggId = petId;
