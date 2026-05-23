@@ -164,13 +164,23 @@ html, body {
   font-size: 11px; text-align: center; color: var(--text3);
   margin-bottom: 24px;
 }
+.egg-select-header {
+  padding: 16px 20px 8px; flex-shrink: 0;
+}
+.egg-select-footer {
+  padding: 12px 20px 20px; flex-shrink: 0;
+  background: linear-gradient(to top, var(--bg) 70%, transparent);
+}
 .egg-grid {
   display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px; flex: 1;
+  gap: 10px; padding: 0 16px;
+  overflow-y: auto; flex: 1;
+  /* iOS momentum scroll */
+  -webkit-overflow-scrolling: touch;
 }
 .egg-card {
   background: var(--card); border: 2px solid var(--border);
-  border-radius: var(--r); padding: 12px 8px;
+  border-radius: var(--r); padding: 10px 6px;
   display: flex; flex-direction: column; align-items: center;
   cursor: pointer; transition: all 0.2s; position: relative;
 }
@@ -303,7 +313,7 @@ html, body {
 }
 .stats-bar { display: none; } /* replaced by stats-compact */
 .stats-compact {
-  display: flex; gap: 8px; padding: 0 16px 10px; flex-shrink: 0;
+  display: flex; gap: 8px; padding: 0 16px 8px; flex-shrink: 0;
 }
 .stat-pill {
   flex: 1; display: flex; align-items: center; gap: 5px;
@@ -371,6 +381,7 @@ html, body {
 .screen-header {
   display: flex; align-items: center; gap: 12px;
   padding: 16px 20px; border-bottom: 2px solid var(--border);
+  flex-shrink: 0;
 }
 .back-btn {
   font-size: 20px; cursor: pointer; padding: 4px;
@@ -378,7 +389,10 @@ html, body {
 .screen-title { font-size: 16px; color: var(--accent); letter-spacing: 2px; }
 .library-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 10px; padding: 12px; overflow-y: auto; flex: 1;
+  gap: 10px; padding: 12px;
+  overflow-y: auto; flex: 1;
+  -webkit-overflow-scrolling: touch;
+  align-content: start;
 }
 .lib-card {
   background: var(--card); border: 2px solid var(--border);
@@ -749,12 +763,12 @@ html, body {
 
 <!-- ===== EGG SELECT ===== -->
 <div id="egg-select" class="screen">
-  <div style="padding:20px 20px 0">
+  <div class="egg-select-header">
     <div class="egg-select-title">选择你的第一颗蛋</div>
     <div class="egg-select-sub">每种宠物都有独特的个性，选一个和你最像的吧～</div>
   </div>
-  <div class="egg-grid" id="eggGrid" style="padding:0 20px;flex:1;overflow-y:auto;"></div>
-  <div style="padding:16px 20px 20px">
+  <div class="egg-grid" id="eggGrid"></div>
+  <div class="egg-select-footer">
     <button class="egg-select-btn" id="eggSelectBtn" onclick="confirmEggSelect()">就选它了！🥚</button>
   </div>
 </div>
@@ -836,16 +850,16 @@ html, body {
 
 <!-- ===== LIBRARY ===== -->
 <div id="library" class="screen">
-  <div class="screen-header">
+  <div class="screen-header" style="flex-shrink:0">
     <div class="back-btn" onclick="showScreen('home')">←</div>
     <div class="screen-title">宠物图鉴</div>
     <div style="font-size:11px;color:var(--text3);margin-left:auto" id="libCount">0/0 已解锁</div>
   </div>
-  <div id="libHookBanner" style="margin:0 12px 8px;background:linear-gradient(135deg,#2d1b4e,#3d1a3a);border:1px solid rgba(255,110,180,0.3);border-radius:12px;padding:10px 14px;font-size:11px;color:var(--text2);line-height:1.7;display:none">
+  <div id="libHookBanner" style="margin:0 12px 8px;background:linear-gradient(135deg,#2d1b4e,#3d1a3a);border:1px solid rgba(255,110,180,0.3);border-radius:12px;padding:10px 14px;font-size:11px;color:var(--text2);line-height:1.7;display:none;flex-shrink:0">
     <span id="libHookText"></span>
-  </div>'''
+  </div>
   <div class="library-grid" id="libraryGrid"></div>
-  <div style="padding:12px 20px;border-top:2px solid var(--border)">
+  <div style="padding:12px 20px;border-top:1px solid var(--border);flex-shrink:0;background:var(--bg)">
     <button class="breed-btn" style="width:100%;padding:14px" onclick="showScreen('breed-screen')">💕 去配对繁殖</button>
   </div>
 </div>
@@ -864,7 +878,7 @@ html, body {
     <div class="map-info-title" id="mapAreaTitle">神秘草丛</div>
     <div class="map-info-text" id="mapAreaText">这片草丛里藏着各种神奇的东西，说不定能找到稀有的蛋！</div>
   </div>
-  <button class="map-explore-btn" id="mapExploreBtn" onclick="doExplore()">🔍 探索这里！</button>
+  <button class="map-explore-btn" id="mapExploreBtn" onclick="doExplore()" style="flex-shrink:0">🔍 探索这里！</button>
 </div>
 
 <!-- ===== TODO ===== -->
@@ -875,8 +889,8 @@ html, body {
     <div style="font-size:11px;color:var(--text3);margin-left:auto" id="todoCount">0 件事</div>
   </div>
   <div style="padding:12px 20px 0;font-size:11px;color:var(--text3)">完成待办可以给宠物增加经验值哦 ✨</div>
-  <div class="todo-list" id="todoList"></div>
-  <div class="todo-add-row">
+  <div class="todo-list" id="todoList" style="-webkit-overflow-scrolling:touch"></div>
+  <div class="todo-add-row" style="flex-shrink:0">
     <input class="todo-input" id="todoInput" type="text" placeholder="添加一件事..." maxlength="30" />
     <button class="todo-add-btn" onclick="addTodo()">+</button>
   </div>
@@ -937,7 +951,7 @@ html, body {
     <div class="back-btn" onclick="showScreen('home')">←</div>
     <div class="screen-title">星际商店</div>
   </div>
-  <div style="overflow-y:auto;flex:1">
+  <div style="overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch">
     <div class="shop-premium-banner" id="premiumBanner">
       <div class="shop-premium-title">✨ 萌芽星 高级版</div>
       <div class="shop-premium-price">¥1 <span style="font-size:14px;color:var(--text3)">/月</span></div>
