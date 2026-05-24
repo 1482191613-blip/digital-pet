@@ -1275,6 +1275,93 @@ const CONFIG = {
       ],
       hungerDecay: 1, happyDecay: 1, energyDecay: 1,
     },
+    {
+      id: 'jiaojiaozi',
+      name: '饺饺子',
+      personality: '搞怪',
+      personalityDesc: '脚掌饺子融合体，魔性口头禅自带梗感，蹦蹦跳跳超活泼！',
+      catchphrase: '下一站，职校！',
+      locked: false,
+      stages: [
+        { name: '小饺崽',   emoji: '🥟', expNeeded: 100 },
+        { name: '跳跳饺',   emoji: '🦶', expNeeded: 300 },
+        { name: '饺王驾到', emoji: '✨', expNeeded: 999999 },
+      ],
+      greetings: [
+        '下一站，下一站，下下一站职校！主人你来啦！',
+        '冲冲冲，目标直奔职校站点咯～',
+        '赶路不停歇，职校就在前方啦！',
+        '脚步不停，快乐前行就完事！',
+        '沿途风景再好，也不忘奔赴目的地！',
+      ],
+      surprises: ['🥟', '🦶', '✨', '🚌', '💨', '🎯', '🏃'],
+      extraLines: [
+        '下一站，下一站，下下一站职校！',
+        '（晃晃脚丫）蹦蹦跳跳登场咯！',
+        '冲冲冲，职校站点就在前方！',
+        '脚步不停，快乐前行就完事～',
+        '（蹦了个高）哈哈哈到站啦！',
+      ],
+      hungerDecay: 1, happyDecay: 2, energyDecay: 2,
+    },
+    {
+      id: 'suanyubao',
+      name: '酸雨宝',
+      personality: '憨萌',
+      personalityDesc: '黝黑可爱的娜塔莎风娃娃，粉色斜框眼镜，出场自带小雨特效！',
+      catchphrase: '妆容可不能花掉呀！',
+      locked: false,
+      stages: [
+        { name: '小雨宝',   emoji: '🌧️', expNeeded: 100 },
+        { name: '美妆雨精', emoji: '💄', expNeeded: 300 },
+        { name: '酸雨女王', emoji: '👓', expNeeded: 999999 },
+      ],
+      greetings: [
+        '雨天出门，妆容可不能花掉呀！主人早！',
+        '酸酸甜甜，我就是最美酸雨宝！',
+        '下雨也挡不住我臭美咯～',
+        '眼镜戴好，颜值稳稳在线！',
+        '脑子懵懵，美丽不能掉队！',
+      ],
+      surprises: ['🌧️', '💄', '👓', '💅', '✨', '🌈', '💕'],
+      extraLines: [
+        '妆容可不能花掉呀！（摸摸脸）',
+        '酸酸甜甜，我就是最美酸雨宝！',
+        '（调整眼镜）颜值稳稳在线～',
+        '淅沥小雨下，照样美美哒！',
+        '脑子懵懵的...但是好看！',
+      ],
+      hungerDecay: 1, happyDecay: 1, energyDecay: 1,
+    },
+    {
+      id: 'zhenzi',
+      name: '桢子',
+      personality: '妩媚',
+      personalityDesc: '泳装妩媚女子，细长眼睛配胡须，反差萌十足，话术一流！',
+      catchphrase: '乖乖留下来陪陪我呀～',
+      locked: false,
+      stages: [
+        { name: '小桢子',   emoji: '🌊', expNeeded: 100 },
+        { name: '魅惑精灵', emoji: '💜', expNeeded: 300 },
+        { name: '桢界女王', emoji: '👑', expNeeded: 999999 },
+      ],
+      greetings: [
+        '乖乖留下来陪陪我呀～主人来了！',
+        '这般模样，可入你的眼？',
+        '别急着离开，再多聊片刻嘛～',
+        '眼底风情，可要仔细瞧好咯！',
+        '心动一瞬，便别轻易脱身～',
+      ],
+      surprises: ['💜', '🌊', '👑', '✨', '💫', '🌸', '💕'],
+      extraLines: [
+        '乖乖留下来陪陪我呀～',
+        '（眯起细长眼）这般模样，可入你的眼？',
+        '别急着离开，再多聊片刻嘛～',
+        '顺着心意，相伴相伴可好？',
+        '（轻抚胡须）心动了吗？',
+      ],
+      hungerDecay: 1, happyDecay: 2, energyDecay: 1,
+    },
   ],
 
   /* ── 食物定义 ── */
@@ -1420,6 +1507,9 @@ const CONFIG = {
     totoro:    { body: '#8A9BA8', fur: '#6B7C8A', eye: '#2D3A4A', shine: '#FFF', blush: '#C8D8E0', accent: '#A8FF78', nose: '#4A5A6A', inner: '#C8D8E0' },
     valentine: { body: '#FF6EB4', fur: '#FF4488', eye: '#5C0030', shine: '#FFF', blush: '#FFB3D4', accent: '#FFD700', nose: '#C0005A', inner: '#FFE0EF' },
     jjcup:     { body: '#FFB3C6', fur: '#FF8FAB', eye: '#5C1A2E', shine: '#FFF', blush: '#FFCCD5', accent: '#FF6EB4', nose: '#FF4D6D', inner: '#FFE8EE' },
+    jiaojiaozi: { body: '#FFFAF0', fur: '#F0E8D0', eye: '#2D1A00', shine: '#FFF', blush: '#FFD6B0', accent: '#FFB347', nose: '#C87840', inner: '#FFF5E0' },
+    suanyubao:  { body: '#3A2A1A', fur: '#2A1A0A', eye: '#FFF', shine: '#AAD4FF', blush: '#FF9999', accent: '#FF6EB4', nose: '#FF4488', inner: '#5A3A2A' },
+    zhenzi:     { body: '#E8C8F0', fur: '#C8A0D8', eye: '#3D1A5C', shine: '#FFF', blush: '#FFB3D4', accent: '#9B59B6', nose: '#7D3C98', inner: '#F5E0FF' },
   },
 };
 
@@ -1887,6 +1977,9 @@ function drawPet(canvasId, petId, stage) {
   else if (petId === 'totoro') drawTotoro(ctx, cx, cy, R, s, c, stage, frame);
   else if (petId === 'valentine') drawValentine(ctx, cx, cy, R, s, c, stage, frame);
   else if (petId === 'jjcup') drawJJCup(ctx, cx, cy, R, s, c, stage, frame);
+  else if (petId === 'jiaojiaozi') drawJiaoJiaoZi(ctx, cx, cy, R, s, c, stage, frame);
+  else if (petId === 'suanyubao') drawSuanYuBao(ctx, cx, cy, R, s, c, stage, frame);
+  else if (petId === 'zhenzi') drawZhenZi(ctx, cx, cy, R, s, c, stage, frame);
   else drawKitten(ctx, cx, cy, R, s, c, stage, frame, tailWag);
 }
 
@@ -2430,193 +2523,6 @@ function drawTotoro(ctx, cx, cy, R, s, c, stage, frame) {
 }
 
 /* ══════════════════════════════════════
-   👠 VALENTINE — 华伦天捷
-   谄媚拟人高跟鞋宠物
-══════════════════════════════════════ */
-function drawValentine(ctx, cx, cy, R, s, c, stage, frame) {
-  const t = Date.now();
-  const sway = Math.sin(t / 700) * 0.06;   // 身体轻摇
-  const wink = Math.floor(t / 3000) % 8 === 0; // 偶尔眨眼
-
-  // ── 高跟鞋（在身体下方） ──
-  const shoeY = cy + R + 2;
-  ctx.save(); ctx.translate(cx, shoeY); ctx.rotate(sway * 0.5);
-  // 鞋跟
-  ctx.fillStyle = c.accent;
-  ctx.beginPath();
-  ctx.moveTo(R*0.1, 0); ctx.lineTo(R*0.18, R*0.35); ctx.lineTo(R*0.28, R*0.35); ctx.lineTo(R*0.22, 0);
-  ctx.closePath(); ctx.fill();
-  // 鞋底
-  ctx.fillStyle = c.fur;
-  ctx.beginPath(); ctx.roundRect(-R*0.38, -R*0.08, R*0.56, R*0.18, R*0.06); ctx.fill();
-  // 鞋面
-  ctx.fillStyle = c.body;
-  ctx.beginPath();
-  ctx.moveTo(-R*0.38, -R*0.08);
-  ctx.bezierCurveTo(-R*0.38, -R*0.38, R*0.1, -R*0.38, R*0.18, -R*0.08);
-  ctx.lineTo(R*0.18, 0); ctx.lineTo(-R*0.38, 0); ctx.closePath(); ctx.fill();
-  // 鞋面高光
-  ctx.save(); ctx.globalAlpha = 0.35;
-  ctx.fillStyle = '#FFF';
-  ctx.beginPath(); ctx.ellipse(-R*0.1, -R*0.2, R*0.12, R*0.07, -0.3, 0, Math.PI*2); ctx.fill();
-  ctx.restore();
-  // 蝴蝶结装饰
-  ctx.fillStyle = c.accent;
-  ctx.beginPath(); ctx.ellipse(-R*0.28, -R*0.16, R*0.1, R*0.07, -0.5, 0, Math.PI*2); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(-R*0.28, -R*0.16, R*0.1, R*0.07, 0.5, 0, Math.PI*2); ctx.fill();
-  fillCircle(ctx, -R*0.28, -R*0.16, R*0.04, '#FFF');
-  ctx.restore();
-
-  // ── 腿（细长拟人腿） ──
-  ctx.save(); ctx.strokeStyle = c.inner; ctx.lineWidth = R*0.18; ctx.lineCap = 'round';
-  ctx.beginPath(); ctx.moveTo(cx - R*0.15, cy + R*0.85); ctx.lineTo(cx - R*0.12, shoeY - R*0.05); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(cx + R*0.15, cy + R*0.85); ctx.lineTo(cx + R*0.1, shoeY - R*0.05); ctx.stroke();
-  ctx.restore();
-
-  // ── 裙子 ──
-  ctx.save(); ctx.translate(cx, cy + R*0.5); ctx.rotate(sway);
-  const skirtGrad = ctx.createLinearGradient(0, -R*0.3, 0, R*0.4);
-  skirtGrad.addColorStop(0, c.body); skirtGrad.addColorStop(1, c.fur);
-  ctx.beginPath();
-  ctx.moveTo(-R*0.45, -R*0.3);
-  ctx.bezierCurveTo(-R*0.6, 0, -R*0.75, R*0.3, -R*0.55, R*0.4);
-  ctx.lineTo(R*0.55, R*0.4);
-  ctx.bezierCurveTo(R*0.75, R*0.3, R*0.6, 0, R*0.45, -R*0.3);
-  ctx.closePath(); ctx.fillStyle = skirtGrad; ctx.fill();
-  // 裙摆蕾丝
-  ctx.save(); ctx.globalAlpha = 0.4;
-  for (let i = -3; i <= 3; i++) {
-    ctx.beginPath();
-    ctx.arc(i * R*0.18, R*0.38, R*0.08, 0, Math.PI);
-    ctx.fillStyle = '#FFF'; ctx.fill();
-  }
-  ctx.restore();
-  ctx.restore();
-
-  // ── 身体 ──
-  ctx.save(); ctx.translate(cx, cy); ctx.rotate(sway);
-  drawBodyGrad(ctx, 0, 0, R*0.72, c);
-  ctx.restore();
-
-  // ── 手臂（小短手，stage1+有手持玫瑰） ──
-  ctx.save(); ctx.translate(cx - R*0.72, cy - R*0.1); ctx.rotate(-0.3 + sway);
-  fillEllipse(ctx, 0, 0, R*0.16, R*0.32, c.inner, 0.2);
-  ctx.restore();
-  ctx.save(); ctx.translate(cx + R*0.72, cy - R*0.1); ctx.rotate(0.3 - sway);
-  fillEllipse(ctx, 0, 0, R*0.16, R*0.32, c.inner, -0.2);
-  if (stage >= 1) {
-    // 手持玫瑰
-    ctx.strokeStyle = '#2D8A00'; ctx.lineWidth = 1.5; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(0, R*0.32); ctx.lineTo(0, -R*0.2); ctx.stroke();
-    fillCircle(ctx, 0, -R*0.28, R*0.12, '#FF2255');
-    fillCircle(ctx, -R*0.06, -R*0.22, R*0.07, '#FF4477');
-  }
-  ctx.restore();
-
-  // ── 头 ──
-  ctx.save(); ctx.translate(cx, cy - R*0.72); ctx.rotate(sway * 0.5);
-  fillCircle(ctx, 0, 0, R*0.42, c.body);
-  // 刘海
-  ctx.fillStyle = c.fur;
-  ctx.beginPath();
-  ctx.ellipse(0, -R*0.28, R*0.38, R*0.22, 0, Math.PI, Math.PI*2);
-  ctx.fill();
-  // 发型（波浪卷发）
-  for (let i = -2; i <= 2; i++) {
-    ctx.beginPath();
-    ctx.arc(i * R*0.18, -R*0.38, R*0.14, Math.PI, Math.PI*2);
-    ctx.fillStyle = c.fur; ctx.fill();
-  }
-  // 腮红
-  drawBlush(ctx, -R*0.3, R*0.08, R*0.18, R*0.11, c);
-  drawBlush(ctx, R*0.3, R*0.08, R*0.18, R*0.11, c);
-  // 眼睛（大眼睛，stage1+有睫毛）
-  if (wink) {
-    // 眨眼
-    ctx.save(); ctx.strokeStyle = c.eye; ctx.lineWidth = 2; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.arc(-R*0.18, -R*0.06, R*0.12, 0.1, Math.PI - 0.1); ctx.stroke();
-    ctx.beginPath(); ctx.arc(R*0.18, -R*0.06, R*0.12, 0.1, Math.PI - 0.1); ctx.stroke();
-    ctx.restore();
-  } else {
-    fillCircle(ctx, -R*0.18, -R*0.06, R*0.13, c.eye);
-    fillCircle(ctx, R*0.18, -R*0.06, R*0.13, c.eye);
-    fillCircle(ctx, -R*0.18 + R*0.05, -R*0.06 - R*0.05, R*0.055, c.shine);
-    fillCircle(ctx, R*0.18 + R*0.05, -R*0.06 - R*0.05, R*0.055, c.shine);
-    // 睫毛
-    if (stage >= 1) {
-      ctx.save(); ctx.strokeStyle = c.eye; ctx.lineWidth = 1.5; ctx.lineCap = 'round';
-      [[-R*0.28,-R*0.16,-0.5],[-R*0.18,-R*0.19,0],[-R*0.08,-R*0.16,0.5]].forEach(([ex,ey,rot]) => {
-        ctx.save(); ctx.translate(ex, ey); ctx.rotate(rot);
-        ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0,-R*0.1); ctx.stroke();
-        ctx.restore();
-      });
-      [[R*0.08,-R*0.16,-0.5],[R*0.18,-R*0.19,0],[R*0.28,-R*0.16,0.5]].forEach(([ex,ey,rot]) => {
-        ctx.save(); ctx.translate(ex, ey); ctx.rotate(rot);
-        ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0,-R*0.1); ctx.stroke();
-        ctx.restore();
-      });
-      ctx.restore();
-    }
-  }
-  // 嘴巴（性感小嘴）
-  ctx.fillStyle = c.nose;
-  ctx.beginPath(); ctx.ellipse(0, R*0.12, R*0.1, R*0.06, 0, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle = '#FFF'; ctx.globalAlpha = 0.4;
-  ctx.beginPath(); ctx.ellipse(-R*0.03, R*0.1, R*0.04, R*0.025, 0, 0, Math.PI*2); ctx.fill();
-  ctx.globalAlpha = 1;
-  ctx.restore();
-
-  // ── stage 专属配件 ──
-  if (stage === 0) {
-    // 头上小蝴蝶结
-    ctx.save(); ctx.translate(cx + R*0.28, cy - R*1.08);
-    ctx.fillStyle = c.accent;
-    ctx.beginPath(); ctx.ellipse(-R*0.12, 0, R*0.12, R*0.08, -0.4, 0, Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.ellipse(R*0.12, 0, R*0.12, R*0.08, 0.4, 0, Math.PI*2); ctx.fill();
-    fillCircle(ctx, 0, 0, R*0.05, '#FFF');
-    ctx.restore();
-  } else if (stage === 1) {
-    // 小皇冠 + 爱心
-    ctx.save(); ctx.translate(cx, cy - R*1.1);
-    ctx.fillStyle = c.accent;
-    ctx.beginPath();
-    ctx.moveTo(-R*0.28, R*0.06); ctx.lineTo(-R*0.28, -R*0.06);
-    ctx.lineTo(-R*0.14, -R*0.18); ctx.lineTo(0, -R*0.06);
-    ctx.lineTo(R*0.14, -R*0.18); ctx.lineTo(R*0.28, -R*0.06);
-    ctx.lineTo(R*0.28, R*0.06); ctx.closePath(); ctx.fill();
-    // 爱心
-    ctx.fillStyle = '#FF2255';
-    ctx.beginPath();
-    ctx.moveTo(0, R*0.22);
-    ctx.bezierCurveTo(-R*0.22, 0, -R*0.28, R*0.1, 0, R*0.28);
-    ctx.bezierCurveTo(R*0.28, R*0.1, R*0.22, 0, 0, R*0.22);
-    ctx.fill();
-    ctx.restore();
-  } else {
-    // 爱神光环 + 飞翔小翅膀
-    ctx.save(); ctx.translate(cx, cy - R*1.15);
-    ctx.strokeStyle = c.accent; ctx.lineWidth = 2.5;
-    ctx.beginPath(); ctx.ellipse(0, 0, R*0.38, R*0.1, 0, 0, Math.PI*2); ctx.stroke();
-    ctx.restore();
-    // 翅膀
-    ctx.save(); ctx.translate(cx - R*0.85, cy - R*0.2); ctx.globalAlpha = 0.7;
-    ctx.fillStyle = '#FFE0EF';
-    ctx.beginPath(); ctx.ellipse(0, 0, R*0.35, R*0.22, 0.4, 0, Math.PI*2); ctx.fill();
-    ctx.restore();
-    ctx.save(); ctx.translate(cx + R*0.85, cy - R*0.2); ctx.globalAlpha = 0.7;
-    ctx.fillStyle = '#FFE0EF';
-    ctx.beginPath(); ctx.ellipse(0, 0, R*0.35, R*0.22, -0.4, 0, Math.PI*2); ctx.fill();
-    ctx.restore();
-    // 飘散爱心
-    ctx.save(); ctx.globalAlpha = 0.5 + Math.sin(t/600)*0.3;
-    ctx.fillStyle = '#FF2255'; ctx.font = (R*0.3) + 'px serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('💕', cx + R*1.1, cy - R*0.6);
-    ctx.restore();
-  }
-}
-
-/* ══════════════════════════════════════
    👠 VALENTINE — 高跟鞋拟人宠物
 ══════════════════════════════════════ */
 function drawValentine(ctx, cx, cy, R, s, c, stage, frame) {
@@ -3030,6 +2936,446 @@ function drawStar(ctx, cx, cy, spikes, outerR, innerR) {
 }
 
 
+/* ══════════════════════════════════════
+   🥟 JIAOJIAOZI — 饺饺子
+   脚掌饺子融合体，魔性搞怪宠物
+══════════════════════════════════════ */
+function drawJiaoJiaoZi(ctx, cx, cy, R, s, c, stage, frame) {
+  const t = Date.now();
+  const bounce = Math.abs(Math.sin(t / 400)) * R * 0.06; // 蹦蹦跳跳
+  const sway = Math.sin(t / 500) * 0.05;
+
+  ctx.save();
+  ctx.translate(cx, cy - bounce);
+  ctx.rotate(sway);
+
+  // ── 饺子主体（胖乎乎的饺子形）──
+  const dumpGrad = ctx.createRadialGradient(-R*0.2, -R*0.2, R*0.05, 0, 0, R*0.9);
+  dumpGrad.addColorStop(0, c.inner);
+  dumpGrad.addColorStop(0.5, c.body);
+  dumpGrad.addColorStop(1, c.fur);
+  ctx.beginPath();
+  ctx.ellipse(0, R*0.1, R*0.72, R*0.55, 0, 0, Math.PI*2);
+  ctx.fillStyle = dumpGrad;
+  ctx.fill();
+
+  // 饺子褶皱（顶部捏合纹路）
+  ctx.save();
+  ctx.strokeStyle = c.fur;
+  ctx.lineWidth = R*0.04;
+  ctx.lineCap = 'round';
+  for (let i = -3; i <= 3; i++) {
+    const px = i * R*0.1;
+    ctx.beginPath();
+    ctx.moveTo(px, -R*0.42);
+    ctx.bezierCurveTo(px - R*0.04, -R*0.52, px + R*0.04, -R*0.52, px, -R*0.42);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // 顶部捏合脊（饺子封口）
+  ctx.save();
+  ctx.strokeStyle = c.fur;
+  ctx.lineWidth = R*0.07;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(-R*0.38, -R*0.42);
+  ctx.bezierCurveTo(-R*0.2, -R*0.58, R*0.2, -R*0.58, R*0.38, -R*0.42);
+  ctx.stroke();
+  ctx.restore();
+
+  // 脚掌纹路（底部）
+  ctx.save();
+  ctx.globalAlpha = 0.25;
+  ctx.strokeStyle = c.fur;
+  ctx.lineWidth = R*0.03;
+  // 脚趾弧线
+  for (let i = -2; i <= 2; i++) {
+    ctx.beginPath();
+    ctx.arc(i * R*0.13, R*0.52, R*0.07, Math.PI, Math.PI*2);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // 脸（圆圆的）
+  const faceY = R*0.05;
+  // 腮红
+  ctx.save(); ctx.globalAlpha = 0.5;
+  fillEllipse(ctx, -R*0.28, faceY + R*0.1, R*0.16, R*0.1, c.blush);
+  fillEllipse(ctx, R*0.28, faceY + R*0.1, R*0.16, R*0.1, c.blush);
+  ctx.restore();
+  // 眼睛（黑豆大眼）
+  fillCircle(ctx, -R*0.2, faceY, R*0.11, c.eye);
+  fillCircle(ctx, R*0.2, faceY, R*0.11, c.eye);
+  fillCircle(ctx, -R*0.2 + R*0.04, faceY - R*0.04, R*0.045, c.shine);
+  fillCircle(ctx, R*0.2 + R*0.04, faceY - R*0.04, R*0.045, c.shine);
+  // 嘴（开心大嘴）
+  ctx.save(); ctx.strokeStyle = c.nose; ctx.lineWidth = 2.5; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.arc(0, faceY + R*0.14, R*0.14, 0.15, Math.PI-0.15); ctx.stroke();
+  ctx.restore();
+
+  // 小短手
+  fillEllipse(ctx, -R*0.78, R*0.05, R*0.12, R*0.18, c.body, 0.3);
+  fillEllipse(ctx, R*0.78, R*0.05, R*0.12, R*0.18, c.body, -0.3);
+
+  // 小短脚（脚掌形）
+  ctx.save();
+  ctx.fillStyle = c.body;
+  ctx.beginPath(); ctx.ellipse(-R*0.22, R*0.68, R*0.18, R*0.1, -0.2, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(R*0.22, R*0.68, R*0.18, R*0.1, 0.2, 0, Math.PI*2); ctx.fill();
+  ctx.restore();
+
+  // stage 专属配件
+  if (stage === 0) {
+    // 小站牌
+    ctx.save(); ctx.translate(-R*0.72, -R*0.55);
+    ctx.fillStyle = c.accent;
+    ctx.beginPath(); ctx.roundRect(-R*0.22, -R*0.18, R*0.44, R*0.28, R*0.06); ctx.fill();
+    ctx.fillStyle = '#FFF'; ctx.font = `bold ${R*0.14}px sans-serif`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('职校', 0, 0);
+    ctx.strokeStyle = c.fur; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(0, R*0.1); ctx.lineTo(0, R*0.35); ctx.stroke();
+    ctx.restore();
+  } else if (stage === 1) {
+    // 跳跃轨迹
+    ctx.save(); ctx.globalAlpha = 0.4;
+    ctx.strokeStyle = c.accent; ctx.lineWidth = 2; ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(-R*0.5, R*0.5);
+    ctx.bezierCurveTo(-R*0.3, -R*0.3, R*0.3, -R*0.3, R*0.5, R*0.5);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+  } else {
+    // 金色光环
+    ctx.save(); ctx.globalAlpha = 0.7;
+    ctx.strokeStyle = c.accent; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.ellipse(0, -R*0.75, R*0.35, R*0.1, 0, 0, Math.PI*2); ctx.stroke();
+    ctx.restore();
+  }
+
+  ctx.restore();
+}
+
+/* ══════════════════════════════════════
+   🌧️ SUANYUBAO — 酸雨宝
+   黝黑娜塔莎风娃娃，粉色斜框眼镜，出场带小雨特效
+══════════════════════════════════════ */
+function drawSuanYuBao(ctx, cx, cy, R, s, c, stage, frame) {
+  const t = Date.now();
+  const sway = Math.sin(t / 800) * 0.03;
+  const rainPhase = (t / 300) % 1;
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(sway);
+
+  // ── 小雨特效（环绕身体）──
+  ctx.save();
+  ctx.globalAlpha = 0.5;
+  ctx.strokeStyle = '#AAD4FF';
+  ctx.lineWidth = 1.5;
+  ctx.lineCap = 'round';
+  for (let i = 0; i < 8; i++) {
+    const angle = (i / 8) * Math.PI * 2;
+    const dist = R * 1.1;
+    const rx = Math.cos(angle) * dist;
+    const ry = Math.sin(angle) * dist;
+    const dropOffset = ((rainPhase + i * 0.125) % 1) * R * 0.3;
+    ctx.beginPath();
+    ctx.moveTo(rx, ry + dropOffset);
+    ctx.lineTo(rx - R*0.04, ry + dropOffset + R*0.12);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // ── 身体（矮墩墩圆润）──
+  const bodyGrad = ctx.createRadialGradient(-R*0.2, -R*0.2, R*0.05, 0, 0, R*0.85);
+  bodyGrad.addColorStop(0, c.inner);
+  bodyGrad.addColorStop(0.5, c.body);
+  bodyGrad.addColorStop(1, c.fur);
+  ctx.beginPath();
+  ctx.ellipse(0, R*0.05, R*0.62, R*0.72, 0, 0, Math.PI*2);
+  ctx.fillStyle = bodyGrad;
+  ctx.fill();
+
+  // ── 头（圆圆的）──
+  fillCircle(ctx, 0, -R*0.62, R*0.42, c.body);
+  // 短发
+  ctx.fillStyle = c.fur;
+  ctx.beginPath();
+  ctx.ellipse(0, -R*0.88, R*0.4, R*0.2, 0, Math.PI, Math.PI*2);
+  ctx.fill();
+  // 刘海
+  ctx.beginPath();
+  ctx.ellipse(-R*0.15, -R*0.72, R*0.18, R*0.12, -0.3, 0, Math.PI*2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(R*0.1, -R*0.74, R*0.15, R*0.1, 0.2, 0, Math.PI*2);
+  ctx.fill();
+
+  // 腮红
+  ctx.save(); ctx.globalAlpha = 0.55;
+  fillEllipse(ctx, -R*0.28, -R*0.55, R*0.16, R*0.1, c.blush);
+  fillEllipse(ctx, R*0.28, -R*0.55, R*0.16, R*0.1, c.blush);
+  ctx.restore();
+
+  // 眼睛（细长眼，娜塔莎风）
+  ctx.save();
+  ctx.fillStyle = c.eye;
+  ctx.beginPath(); ctx.ellipse(-R*0.18, -R*0.64, R*0.12, R*0.07, -0.1, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(R*0.18, -R*0.64, R*0.12, R*0.07, 0.1, 0, Math.PI*2); ctx.fill();
+  ctx.restore();
+  fillCircle(ctx, -R*0.18 + R*0.05, -R*0.64 - R*0.02, R*0.035, c.shine);
+  fillCircle(ctx, R*0.18 + R*0.05, -R*0.64 - R*0.02, R*0.035, c.shine);
+
+  // 精致眼妆（眼影）
+  ctx.save(); ctx.globalAlpha = 0.4;
+  fillEllipse(ctx, -R*0.18, -R*0.68, R*0.14, R*0.06, c.accent);
+  fillEllipse(ctx, R*0.18, -R*0.68, R*0.14, R*0.06, c.accent);
+  ctx.restore();
+
+  // 嘴（小嘴）
+  ctx.save(); ctx.strokeStyle = c.nose; ctx.lineWidth = 2; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.arc(0, -R*0.52, R*0.1, 0.2, Math.PI-0.2); ctx.stroke();
+  ctx.restore();
+
+  // 粉色斜框眼镜（标志性）
+  ctx.save();
+  ctx.strokeStyle = '#FF6EB4'; ctx.lineWidth = R*0.04; ctx.lineCap = 'round';
+  // 左镜框（斜的）
+  ctx.save(); ctx.translate(-R*0.18, -R*0.64); ctx.rotate(-0.15);
+  ctx.beginPath(); ctx.roundRect(-R*0.14, -R*0.1, R*0.28, R*0.18, R*0.04); ctx.stroke();
+  ctx.restore();
+  // 右镜框
+  ctx.save(); ctx.translate(R*0.18, -R*0.64); ctx.rotate(-0.15);
+  ctx.beginPath(); ctx.roundRect(-R*0.14, -R*0.1, R*0.28, R*0.18, R*0.04); ctx.stroke();
+  ctx.restore();
+  // 鼻梁
+  ctx.beginPath(); ctx.moveTo(-R*0.04, -R*0.64); ctx.lineTo(R*0.04, -R*0.64); ctx.stroke();
+  ctx.restore();
+
+  // 小手
+  fillEllipse(ctx, -R*0.7, R*0.05, R*0.12, R*0.18, c.body, 0.3);
+  fillEllipse(ctx, R*0.7, R*0.05, R*0.12, R*0.18, c.body, -0.3);
+
+  // 小脚
+  ctx.fillStyle = c.body;
+  ctx.beginPath(); ctx.ellipse(-R*0.2, R*0.78, R*0.16, R*0.09, -0.15, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(R*0.2, R*0.78, R*0.16, R*0.09, 0.15, 0, Math.PI*2); ctx.fill();
+
+  // stage 专属
+  if (stage === 0) {
+    // 小雨伞
+    ctx.save(); ctx.translate(R*0.65, -R*0.55);
+    ctx.strokeStyle = c.accent; ctx.lineWidth = R*0.05; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(0, R*0.4); ctx.lineTo(0, -R*0.1); ctx.stroke();
+    ctx.fillStyle = c.accent;
+    ctx.beginPath(); ctx.arc(0, -R*0.1, R*0.28, Math.PI, Math.PI*2); ctx.fill();
+    ctx.save(); ctx.globalAlpha = 0.3; ctx.fillStyle = '#FFF';
+    ctx.beginPath(); ctx.arc(-R*0.08, -R*0.15, R*0.1, Math.PI, Math.PI*2); ctx.fill();
+    ctx.restore();
+    ctx.restore();
+  } else if (stage === 1) {
+    // 化妆镜
+    ctx.save(); ctx.translate(-R*0.72, -R*0.4);
+    ctx.strokeStyle = c.accent; ctx.lineWidth = R*0.05;
+    ctx.beginPath(); ctx.arc(0, 0, R*0.22, 0, Math.PI*2); ctx.stroke();
+    ctx.save(); ctx.globalAlpha = 0.3; ctx.fillStyle = '#AAD4FF';
+    ctx.beginPath(); ctx.arc(0, 0, R*0.18, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+    ctx.restore();
+  } else {
+    // 彩虹光环
+    ctx.save(); ctx.globalAlpha = 0.6;
+    const colors = ['#FF6EB4','#FFB347','#7EE8FA','#A8FF78'];
+    colors.forEach((col, i) => {
+      ctx.strokeStyle = col; ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.ellipse(0, -R*1.05, R*(0.28 + i*0.06), R*(0.08 + i*0.02), 0, 0, Math.PI*2);
+      ctx.stroke();
+    });
+    ctx.restore();
+  }
+
+  ctx.restore();
+}
+
+/* ══════════════════════════════════════
+   💜 ZHENZI — 桢子
+   泳装妩媚女子，细长眼+胡须，反差萌
+══════════════════════════════════════ */
+function drawZhenZi(ctx, cx, cy, R, s, c, stage, frame) {
+  const t = Date.now();
+  const sway = Math.sin(t / 900) * 0.04;
+  const wink = Math.floor(t / 4000) % 6 === 0;
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(sway);
+
+  // ── 身体（泳装曼妙身形）──
+  const bodyGrad = ctx.createRadialGradient(-R*0.2, -R*0.1, R*0.05, 0, 0, R*0.85);
+  bodyGrad.addColorStop(0, c.inner);
+  bodyGrad.addColorStop(0.5, c.body);
+  bodyGrad.addColorStop(1, c.fur);
+  ctx.beginPath();
+  ctx.ellipse(0, R*0.1, R*0.52, R*0.72, 0, 0, Math.PI*2);
+  ctx.fillStyle = bodyGrad;
+  ctx.fill();
+
+  // 泳装（比基尼上衣）
+  ctx.save();
+  ctx.fillStyle = c.accent;
+  ctx.beginPath();
+  ctx.moveTo(-R*0.38, -R*0.18);
+  ctx.bezierCurveTo(-R*0.42, -R*0.38, -R*0.1, -R*0.42, 0, -R*0.32);
+  ctx.bezierCurveTo(R*0.1, -R*0.42, R*0.42, -R*0.38, R*0.38, -R*0.18);
+  ctx.bezierCurveTo(R*0.2, -R*0.08, -R*0.2, -R*0.08, -R*0.38, -R*0.18);
+  ctx.fill();
+  // 泳装下装
+  ctx.beginPath();
+  ctx.moveTo(-R*0.42, R*0.28);
+  ctx.bezierCurveTo(-R*0.45, R*0.1, -R*0.2, R*0.05, 0, R*0.08);
+  ctx.bezierCurveTo(R*0.2, R*0.05, R*0.45, R*0.1, R*0.42, R*0.28);
+  ctx.bezierCurveTo(R*0.3, R*0.42, -R*0.3, R*0.42, -R*0.42, R*0.28);
+  ctx.fill();
+  ctx.restore();
+
+  // ── 头（狭长脸型）──
+  ctx.save();
+  ctx.fillStyle = c.body;
+  ctx.beginPath();
+  ctx.ellipse(0, -R*0.72, R*0.35, R*0.45, 0, 0, Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+
+  // 头发（柔美长发）
+  ctx.save();
+  ctx.fillStyle = c.fur;
+  // 左侧长发
+  ctx.beginPath();
+  ctx.moveTo(-R*0.32, -R*1.1);
+  ctx.bezierCurveTo(-R*0.55, -R*0.8, -R*0.65, -R*0.2, -R*0.5, R*0.3);
+  ctx.bezierCurveTo(-R*0.38, R*0.35, -R*0.32, R*0.1, -R*0.32, -R*1.1);
+  ctx.fill();
+  // 右侧长发
+  ctx.beginPath();
+  ctx.moveTo(R*0.32, -R*1.1);
+  ctx.bezierCurveTo(R*0.55, -R*0.8, R*0.65, -R*0.2, R*0.5, R*0.3);
+  ctx.bezierCurveTo(R*0.38, R*0.35, R*0.32, R*0.1, R*0.32, -R*1.1);
+  ctx.fill();
+  // 刘海
+  ctx.beginPath();
+  ctx.ellipse(0, -R*1.08, R*0.32, R*0.18, 0, Math.PI, Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+
+  // 腮红
+  ctx.save(); ctx.globalAlpha = 0.45;
+  fillEllipse(ctx, -R*0.24, -R*0.65, R*0.14, R*0.09, c.blush);
+  fillEllipse(ctx, R*0.24, -R*0.65, R*0.14, R*0.09, c.blush);
+  ctx.restore();
+
+  // 眼睛（细长狭长眼）
+  if (wink) {
+    ctx.save(); ctx.strokeStyle = c.eye; ctx.lineWidth = 2.5; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.arc(-R*0.16, -R*0.74, R*0.1, 0.1, Math.PI-0.1); ctx.stroke();
+    ctx.beginPath(); ctx.arc(R*0.16, -R*0.74, R*0.1, 0.1, Math.PI-0.1); ctx.stroke();
+    ctx.restore();
+  } else {
+    ctx.save();
+    ctx.fillStyle = c.eye;
+    ctx.beginPath(); ctx.ellipse(-R*0.16, -R*0.74, R*0.13, R*0.07, -0.1, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(R*0.16, -R*0.74, R*0.13, R*0.07, 0.1, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+    fillCircle(ctx, -R*0.16 + R*0.05, -R*0.74 - R*0.02, R*0.035, c.shine);
+    fillCircle(ctx, R*0.16 + R*0.05, -R*0.74 - R*0.02, R*0.035, c.shine);
+    // 睫毛（妩媚）
+    ctx.save(); ctx.strokeStyle = c.eye; ctx.lineWidth = 1.8; ctx.lineCap = 'round';
+    [[-R*0.26,-R*0.8,-0.4],[-R*0.16,-R*0.82,0],[-R*0.06,-R*0.8,0.4]].forEach(([ex,ey,rot]) => {
+      ctx.save(); ctx.translate(ex, ey); ctx.rotate(rot);
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0,-R*0.1); ctx.stroke();
+      ctx.restore();
+    });
+    [[R*0.06,-R*0.8,-0.4],[R*0.16,-R*0.82,0],[R*0.26,-R*0.8,0.4]].forEach(([ex,ey,rot]) => {
+      ctx.save(); ctx.translate(ex, ey); ctx.rotate(rot);
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0,-R*0.1); ctx.stroke();
+      ctx.restore();
+    });
+    ctx.restore();
+  }
+
+  // 鼻子（修长立体）
+  ctx.save(); ctx.strokeStyle = c.nose; ctx.lineWidth = 1.5; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(-R*0.04, -R*0.68); ctx.lineTo(0, -R*0.6); ctx.lineTo(R*0.04, -R*0.68); ctx.stroke();
+  ctx.restore();
+
+  // 嘴（妩媚小嘴）
+  ctx.fillStyle = c.nose;
+  ctx.beginPath(); ctx.ellipse(0, -R*0.54, R*0.09, R*0.055, 0, 0, Math.PI*2); ctx.fill();
+
+  // 胡须（反差萌标志！）
+  ctx.save();
+  ctx.strokeStyle = c.fur; ctx.lineWidth = 1.5; ctx.lineCap = 'round';
+  ctx.globalAlpha = 0.8;
+  // 左胡须
+  [[-R*0.35,-R*0.58,-0.1],[-R*0.35,-R*0.54,0],[-R*0.35,-R*0.5,0.1]].forEach(([wx,wy,rot]) => {
+    ctx.save(); ctx.translate(wx, wy); ctx.rotate(rot);
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-R*0.22, 0); ctx.stroke();
+    ctx.restore();
+  });
+  // 右胡须
+  [[R*0.35,-R*0.58,0.1],[R*0.35,-R*0.54,0],[R*0.35,-R*0.5,-0.1]].forEach(([wx,wy,rot]) => {
+    ctx.save(); ctx.translate(wx, wy); ctx.rotate(rot);
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(R*0.22, 0); ctx.stroke();
+    ctx.restore();
+  });
+  ctx.restore();
+
+  // 小手（纤细）
+  fillEllipse(ctx, -R*0.62, R*0.0, R*0.1, R*0.2, c.body, 0.25);
+  fillEllipse(ctx, R*0.62, R*0.0, R*0.1, R*0.2, c.body, -0.25);
+
+  // 小脚
+  ctx.fillStyle = c.body;
+  ctx.beginPath(); ctx.ellipse(-R*0.18, R*0.82, R*0.15, R*0.09, -0.15, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(R*0.18, R*0.82, R*0.15, R*0.09, 0.15, 0, Math.PI*2); ctx.fill();
+
+  // stage 专属
+  if (stage === 0) {
+    // 小贝壳发夹
+    ctx.save(); ctx.translate(R*0.28, -R*1.12);
+    ctx.fillStyle = c.accent;
+    ctx.beginPath(); ctx.arc(0, 0, R*0.1, Math.PI, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(0, 0, R*0.1, 0, Math.PI); ctx.fill();
+    ctx.restore();
+  } else if (stage === 1) {
+    // 魅惑光晕
+    ctx.save(); ctx.globalAlpha = 0.35;
+    const haloGrad = ctx.createRadialGradient(0, -R*0.72, R*0.1, 0, -R*0.72, R*0.6);
+    haloGrad.addColorStop(0, c.accent);
+    haloGrad.addColorStop(1, 'transparent');
+    ctx.fillStyle = haloGrad;
+    ctx.beginPath(); ctx.arc(0, -R*0.72, R*0.6, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+  } else {
+    // 紫色光环 + 飘散爱心
+    ctx.save(); ctx.globalAlpha = 0.7;
+    ctx.strokeStyle = c.accent; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.ellipse(0, -R*1.22, R*0.38, R*0.1, 0, 0, Math.PI*2); ctx.stroke();
+    ctx.restore();
+    ctx.save(); ctx.globalAlpha = 0.5 + Math.sin(t/700)*0.3;
+    ctx.fillStyle = c.accent; ctx.font = (R*0.28) + 'px serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('💜', R*1.05, -R*0.5);
+    ctx.restore();
+  }
+
+  ctx.restore();
+}
+
 /* ── 口头禅 & 惊喜系统 ── */
 let speechTimer = null;
 let surpriseTimer = null;
@@ -3146,7 +3492,9 @@ function updatePetGlow() {
     totoro: 'rgba(138,155,168,0.2)',
     valentine: 'rgba(255,110,180,0.28)',
     jjcup: 'rgba(255,179,198,0.25)',
-    valentine: 'rgba(255,110,180,0.3)',
+    jiaojiaozi: 'rgba(255,240,200,0.25)',
+    suanyubao: 'rgba(120,200,255,0.25)',
+    zhenzi: 'rgba(180,120,220,0.28)',
   };
   const el = document.getElementById('petBgGlow');
   if (el && G.currentPetId) {
@@ -3251,6 +3599,9 @@ function renderLibrary() {
     else if (petDef.id === 'totoro')    drawTotoro(ctx, cx, cy, R, 0.6, c, si, 0);
     else if (petDef.id === 'valentine') drawValentine(ctx, cx, cy, R, 0.6, c, si, 0);
     else if (petDef.id === 'jjcup')     drawJJCup(ctx, cx, cy, R, 0.6, c, si, 0);
+    else if (petDef.id === 'jiaojiaozi') drawJiaoJiaoZi(ctx, cx, cy, R, 0.6, c, si, 0);
+    else if (petDef.id === 'suanyubao')  drawSuanYuBao(ctx, cx, cy, R, 0.6, c, si, 0);
+    else if (petDef.id === 'zhenzi')     drawZhenZi(ctx, cx, cy, R, 0.6, c, si, 0);
   });
 }
 
@@ -3533,7 +3884,9 @@ function renderEggGrid() {
     else if (pet.id === 'totoro') drawTotoro(ctx, cx, cy, R, 0.6, c, 0, 0);
     else if (pet.id === 'valentine') drawValentine(ctx, cx, cy, R, 0.6, c, 0, 0);
     else if (pet.id === 'jjcup') drawJJCup(ctx, cx, cy, R, 0.6, c, 0, 0);
-    else if (pet.id === 'valentine') drawValentine(ctx, cx, cy, R, 0.6, c, 0, 0);
+    else if (pet.id === 'jiaojiaozi') drawJiaoJiaoZi(ctx, cx, cy, R, 0.6, c, 0, 0);
+    else if (pet.id === 'suanyubao')  drawSuanYuBao(ctx, cx, cy, R, 0.6, c, 0, 0);
+    else if (pet.id === 'zhenzi')     drawZhenZi(ctx, cx, cy, R, 0.6, c, 0, 0);
     if (pet.locked) {
       ctx.globalAlpha = 1;
       ctx.font = '20px serif'; ctx.textAlign = 'center';
