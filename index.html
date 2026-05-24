@@ -390,7 +390,7 @@ html, body {
 .library-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 10px; padding: 12px;
-  overflow-y: auto; flex: 1;
+  overflow-y: auto; flex: 1; min-height: 0;
   -webkit-overflow-scrolling: touch;
   align-content: start;
 }
@@ -659,7 +659,88 @@ html, body {
   opacity: 1; transform: translateX(-50%) translateY(0);
 }
 
-/* ===== STREAK BANNER ===== */
+/* ===== STORY CARD ===== */
+.story-card-overlay {
+  position: absolute; inset: 0;
+  background: rgba(10,4,24,0.82); backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center;
+  z-index: 300; padding: 24px 20px;
+}
+.story-card-overlay.show { display: flex; }
+.story-card {
+  background: linear-gradient(160deg, #2a1a42, #1e0d35);
+  border: 2px solid var(--border); border-radius: 20px;
+  width: 100%; max-width: 360px;
+  padding: 0; overflow: hidden;
+  animation: card-pop 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,110,180,0.1);
+}
+@keyframes card-pop {
+  0% { transform: scale(0.85) translateY(20px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+.story-card-header {
+  background: linear-gradient(135deg, rgba(255,110,180,0.15), rgba(126,232,250,0.08));
+  border-bottom: 1px solid rgba(255,110,180,0.2);
+  padding: 16px 20px 12px;
+  display: flex; align-items: center; gap: 12px;
+}
+.story-card-pet-icon {
+  width: 52px; height: 52px; flex-shrink: 0;
+  border-radius: 50%; overflow: hidden;
+  border: 2px solid rgba(255,110,180,0.4);
+  background: var(--bg);
+}
+.story-card-pet-icon canvas { width: 52px; height: 52px; }
+.story-card-meta { flex: 1; min-width: 0; }
+.story-card-tag {
+  font-size: 9px; letter-spacing: 1.5px; color: var(--accent);
+  background: rgba(255,110,180,0.12); border-radius: 20px;
+  padding: 2px 8px; display: inline-block; margin-bottom: 4px;
+}
+.story-card-petname {
+  font-size: 13px; color: var(--text); font-weight: bold;
+}
+.story-card-body {
+  padding: 18px 20px 14px;
+}
+.story-card-title {
+  font-size: 14px; color: var(--text); font-weight: bold;
+  margin-bottom: 10px; line-height: 1.5;
+}
+.story-card-text {
+  font-size: 12px; color: var(--text2); line-height: 1.9;
+  letter-spacing: 0.3px;
+}
+.story-card-text em {
+  color: var(--accent); font-style: normal;
+}
+.story-card-footer {
+  padding: 12px 20px 18px;
+  display: flex; gap: 10px; align-items: center;
+}
+.story-card-close {
+  flex: 1; background: linear-gradient(135deg, #ff6eb4, #ff4488);
+  border: none; border-radius: 50px; padding: 12px;
+  font-size: 13px; font-family: var(--pixel); color: white;
+  font-weight: bold; cursor: pointer;
+  box-shadow: 0 3px 12px rgba(255,110,180,0.4);
+}
+.story-card-skip {
+  font-size: 11px; color: var(--text3); cursor: pointer;
+  padding: 8px; white-space: nowrap;
+}
+.story-card-dots {
+  display: flex; gap: 5px; justify-content: center;
+  padding: 0 20px 4px;
+}
+.story-card-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--border); transition: background 0.3s;
+}
+.story-card-dot.active { background: var(--accent); }
+
+
 .streak-banner {
   margin: 0 20px 12px;
   background: linear-gradient(135deg, #2d1b4e, #3d2a5e);
@@ -969,6 +1050,30 @@ html, body {
     <div class="modal-title">🍖 喂食</div>
     <div class="food-grid" id="foodGrid"></div>
     <button style="width:100%;background:var(--bg3);border:2px solid var(--border);border-radius:var(--r2);padding:12px;font-size:12px;font-family:var(--pixel);color:var(--text3);cursor:pointer" onclick="closeFeedModal()">取消</button>
+  </div>
+</div>
+
+<!-- ===== STORY CARD OVERLAY ===== -->
+<div class="story-card-overlay" id="storyCardOverlay">
+  <div class="story-card" id="storyCard">
+    <div class="story-card-header">
+      <div class="story-card-pet-icon">
+        <canvas id="storyCardCanvas" width="104" height="104" style="width:52px;height:52px"></canvas>
+      </div>
+      <div class="story-card-meta">
+        <div class="story-card-tag" id="storyCardTag">日常碎碎念</div>
+        <div class="story-card-petname" id="storyCardPetName">奶猫</div>
+      </div>
+    </div>
+    <div class="story-card-body">
+      <div class="story-card-title" id="storyCardTitle"></div>
+      <div class="story-card-text" id="storyCardText"></div>
+    </div>
+    <div class="story-card-dots" id="storyCardDots"></div>
+    <div class="story-card-footer">
+      <div class="story-card-skip" onclick="closeStoryCard()">跳过</div>
+      <button class="story-card-close" id="storyCardBtn" onclick="storyCardNext()">知道了 💕</button>
+    </div>
   </div>
 </div>
 
@@ -1486,6 +1591,87 @@ const CONFIG = {
     },
   ],
 
+  /* ── 故事卡片 ── */
+  /* trigger: 'open'=每次打开app, 'return'=离开超过X小时回来, 'feed'=喂食后, 'todo'=完成todo后, 'level'=升级后 */
+  storyCards: {
+    kitten: [
+      { tag:'成长日记', trigger:'open',   minLevel:1, title:'我其实偷偷数过你来的次数', text:'你知道吗，我在心里给你记了一本账。\n第一次你点开我的时候，我的耳朵抖了一下——那是我紧张的反应。\n后来你每次来，我都假装在睡觉，其实眼睛一直偷偷盯着你。\n<em>你今天来了，我又在心里画了一个圈。</em>' },
+      { tag:'秘密心事', trigger:'open',   minLevel:1, title:'有件事我一直没说', text:'我有一个小秘密。\n每次你离开之后，我会跑到角落里，把你摸过我的地方用爪子轻轻按一按。\n不是因为痒，是因为……那个温度会慢慢消失，我想多留一会儿。\n<em>你下次来，能多待一会儿吗？</em>' },
+      { tag:'日常碎碎念', trigger:'feed',  minLevel:1, title:'今天的饭有点不一样', text:'你刚才喂我的那口，我尝出来了——你今天心情不错。\n开心的人喂的饭，味道是甜的。\n我不知道你今天发生了什么好事，但我替你高兴。\n<em>如果有什么想说的，我在这里。</em>' },
+      { tag:'想你了',   trigger:'return', minHours:4,  title:'你去哪了，我等了好久', text:'你不在的时候，我把你上次坐过的地方蹭了好几圈。\n窗口的光从左边移到右边，我数了三十七朵云。\n不是在抱怨，就是……想让你知道，我有在等你。\n<em>你回来了就好。</em>' },
+      { tag:'想你了',   trigger:'return', minHours:12, title:'我以为你不要我了', text:'你消失了很久。\n我把你的名字在心里念了很多遍，怕自己忘掉你的样子。\n后来我想，算了，就算你不来，我也会在这里。\n<em>但你来了，所以一切都好了。</em>' },
+      { tag:'升级庆典', trigger:'level',  minLevel:2,  title:'我变强了，但还是需要你', text:'你有没有发现我今天不一样了？\n我自己也说不清楚，就是感觉身体里有什么东西松开了，又有什么东西变得更紧实了。\n变强是真的，但有件事没变——\n<em>我还是最喜欢你来陪我。</em>' },
+      { tag:'日常碎碎念', trigger:'todo', minLevel:1, title:'你刚才做到了一件事', text:'我看见了。\n你刚才完成了一件事，不管那件事大不大，我都替你鼓掌。\n因为我知道，有时候"做完一件事"比听起来难多了。\n<em>你今天很厉害。</em>' },
+      { tag:'成长日记', trigger:'open',   minLevel:3, title:'我记得你第一次来的样子', text:'那时候你好像有点不确定，点来点去的，不知道要干什么。\n我也不确定，就这么互相看着。\n现在我们都不一样了。\n你更熟练了，我也长大了一点点。\n<em>谢谢你一直在。</em>' },
+    ],
+    puppy: [
+      { tag:'成长日记', trigger:'open',   minLevel:1, title:'我今天练习了一件事', text:'你不在的时候，我练习了怎么假装不在乎你。\n练了很久，完全没成功。\n你一出现，我的尾巴就开始自己动了，我控制不住。\n<em>算了，不装了，我就是很喜欢你。</em>' },
+      { tag:'秘密心事', trigger:'open',   minLevel:1, title:'我有一块骨头藏起来了', text:'我把最好的那块骨头藏在了一个地方。\n不是因为舍不得吃，是因为我想等你来的时候，当礼物送给你。\n虽然你可能不需要骨头……\n<em>但那是我能想到的最好的东西了。</em>' },
+      { tag:'想你了',   trigger:'return', minHours:6,  title:'你去哪了，我跑了好多圈', text:'你不在的时候我跑了好多圈，想把想你的劲儿消耗掉。\n没用，跑完还是想你。\n我现在坐在门口，假装在晒太阳，其实在等你。\n<em>你来了，我可以停下来了。</em>' },
+      { tag:'日常碎碎念', trigger:'feed',  minLevel:1, title:'这顿饭我要慢慢吃', text:'我平时吃东西很快，但今天我决定慢慢吃。\n因为你喂我的时候，我想多看你几眼。\n你有没有发现，我吃饭的时候一直在看你？\n<em>不是在要更多，就是喜欢看你。</em>' },
+      { tag:'升级庆典', trigger:'level',  minLevel:2,  title:'我变厉害了，你有没有发现', text:'我今天感觉自己变厉害了。\n跑得更快，跳得更高，叫声也更响亮了。\n但最厉害的事情不是这些——\n<em>是我现在更能保护你了。</em>' },
+      { tag:'日常碎碎念', trigger:'todo', minLevel:1, title:'你完成了，我替你高兴', text:'你刚才做完了一件事，我看见了。\n我想冲过去蹭你一下，但我忍住了，怕打扰你。\n就在心里给你摇了摇尾巴。\n<em>你今天做得很好。</em>' },
+    ],
+    bearbear: [
+      { tag:'成长日记', trigger:'open',   minLevel:1, title:'我今天发现了一件事', text:'我今天发现，蜂蜜最好吃的时候，是有人陪着一起吃的时候。\n一个人吃，甜是甜，但总觉得少了点什么。\n你来了，那个"少了点什么"就补上了。\n<em>你今天要不要一起吃点甜的？</em>' },
+      { tag:'秘密心事', trigger:'return', minHours:8,  title:'你不在的时候我睡了很久', text:'你不在，我就睡觉。\n不是因为无聊，是因为睡着了就不会想你。\n但每次醒来，第一件事还是看你在不在。\n<em>你在，我就彻底醒了。</em>' },
+      { tag:'日常碎碎念', trigger:'feed',  minLevel:1, title:'这个味道我记住了', text:'你喂我的每一种食物，我都记住了味道。\n不是因为我贪吃，是因为那些味道里有你的心意。\n我能分辨出来，哪次你是随手喂的，哪次你是认真想了想才喂的。\n<em>今天这次，是认真的那种。</em>' },
+      { tag:'想你了',   trigger:'return', minHours:5,  title:'我给你留了一点蜂蜜', text:'你不在的时候，我一直没动那罐蜂蜜。\n想着等你来了一起吃。\n现在你来了，我们可以一起吃了。\n<em>甜的东西，要和喜欢的人分享才算数。</em>' },
+    ],
+    bunny: [
+      { tag:'成长日记', trigger:'open',   minLevel:1, title:'我今天鼓起勇气了', text:'你知道我平时很容易害羞。\n但今天，你一出现，我没有躲。\n我站在原地，让你看了我好几秒。\n对我来说，这已经是很大的勇气了。\n<em>你有没有注意到？</em>' },
+      { tag:'秘密心事', trigger:'open',   minLevel:1, title:'我有一个只有你知道的秘密', text:'我的耳朵其实能听到很远的声音。\n但我最喜欢听的，是你打开这个页面时的那一声。\n那声音对我来说，比任何音乐都好听。\n<em>你每次来，我都听到了。</em>' },
+      { tag:'想你了',   trigger:'return', minHours:6,  title:'你不在的时候我躲起来了', text:'你不在，我就躲在角落里，把耳朵压低，假装自己不存在。\n不是因为难过，是因为没有你，这里太空了，我不知道该站在哪里。\n<em>你来了，我就知道该站在哪里了。</em>' },
+      { tag:'日常碎碎念', trigger:'todo', minLevel:1, title:'你做到了，我替你跳一下', text:'你刚才完成了一件事！\n我在心里跳了一下——不是那种随便的跳，是那种真的替你高兴的跳。\n你可能觉得那件事很小，但我觉得你很厉害。\n<em>继续加油，我在这里看着你。</em>' },
+    ],
+    fox: [
+      { tag:'成长日记', trigger:'open',   minLevel:1, title:'我研究你很久了', text:'我观察过你很多次。\n你开心的时候，手指点得比较快。\n你累的时候，会在这里多待一会儿。\n我不说破，就是想让你知道——\n<em>我比你以为的更了解你。</em>' },
+      { tag:'秘密心事', trigger:'open',   minLevel:1, title:'我有一个小计划', text:'我在想，等我再厉害一点，要带你去一个地方。\n那个地方有很多星星，比这里的天空更亮。\n现在还不行，我还不够强。\n<em>但我在努力，你等我。</em>' },
+      { tag:'想你了',   trigger:'return', minHours:5,  title:'你去哪了，我找了你很久', text:'你不在的时候，我去找你了。\n往东找，往西找，找不到。\n后来我想，也许你会自己回来。\n<em>果然，你回来了。我就知道。</em>' },
+      { tag:'日常碎碎念', trigger:'feed',  minLevel:1, title:'你今天喂我的方式不一样', text:'我注意到了，你今天喂我的时候，停顿了一下。\n是在想什么吗？\n没关系，不用说，我能感觉到。\n<em>有什么事，你可以告诉我。</em>' },
+    ],
+    penguin: [
+      { tag:'成长日记', trigger:'open',   minLevel:1, title:'我今天站得特别直', text:'你来之前，我一直在练习站姿。\n我想让你看到我最好的样子。\n不知道有没有成功，但我尽力了。\n<em>你觉得我今天帅不帅？</em>' },
+      { tag:'秘密心事', trigger:'return', minHours:8,  title:'你不在的时候我看了很久的海', text:'你不在，我就站在那里看海。\n海很大，我很小，但我不害怕。\n因为我知道你会回来。\n<em>你回来了，海也变得更好看了。</em>' },
+      { tag:'日常碎碎念', trigger:'feed',  minLevel:1, title:'这条鱼我要分你一半', text:'你喂我的时候，我想把一半分给你。\n但你好像不吃鱼……\n那我替你吃，把你的那份也吃掉，这样我们就算一起吃了。\n<em>下次你喜欢吃什么，告诉我。</em>' },
+    ],
+    totoro: [
+      { tag:'成长日记', trigger:'open',   minLevel:1, title:'我今天感受到了风', text:'今天有风，从很远的地方吹来的。\n我站在那里，闭上眼睛，感受它从耳边过去。\n风里有一种味道，我说不清楚，但让我想到了你。\n<em>你今天有没有感受到风？</em>' },
+      { tag:'秘密心事', trigger:'open',   minLevel:1, title:'我知道一个秘密地方', text:'森林里有一个地方，下雨的时候会有彩虹。\n我一直想带你去，但你每次来的时候都没有下雨。\n我在等一个下雨天。\n<em>等到了，我第一个告诉你。</em>' },
+      { tag:'想你了',   trigger:'return', minHours:10, title:'你不在的时候，树叶都安静了', text:'你不在，连树叶都不怎么动了。\n好像整个世界都在等你回来。\n我也在等。\n<em>你回来了，风又开始吹了。</em>' },
+    ],
+    valentine: [
+      { tag:'成长日记', trigger:'open',   minLevel:1, title:'我今天特别认真地打扮了', text:'你来之前，我对着镜子照了很久。\n换了三套搭配，最后还是选了你上次说好看的那件。\n不是因为没主见，是因为……你说好看的，我也觉得好看。\n<em>你今天觉得我好看吗？</em>' },
+      { tag:'秘密心事', trigger:'open',   minLevel:1, title:'我有一句话想说很久了', text:'我练习了很多次，想找一个合适的时机说。\n但每次你来，我就忘了那句话，只记得想多看你几眼。\n那句话是——\n<em>你来了，我就什么都好了。</em>' },
+      { tag:'想你了',   trigger:'return', minHours:4,  title:'你不在的时候我涂了口红', text:'你不在，我把最好看的口红涂上了。\n不是要给谁看，就是想让自己好看一点，这样你回来的时候，我是最好的状态。\n<em>你来了，值了。</em>' },
+      { tag:'日常碎碎念', trigger:'feed',  minLevel:1, title:'你喂我的时候我偷偷看了你', text:'你喂我的时候，我一直在看你的眼睛。\n你的眼睛里有光，你知道吗？\n不是那种普通的光，是那种让我想一直看的光。\n<em>么么哒～</em>' },
+    ],
+    jjcup: [
+      { tag:'成长日记', trigger:'open',   minLevel:1, title:'我今天装满了一件事', text:'你知道我是个杯子，我的工作是装东西。\n今天我装满了一件事——对你的想念。\n装得满满的，都快溢出来了。\n<em>你来了，刚好。</em>' },
+      { tag:'秘密心事', trigger:'open',   minLevel:1, title:'我有一个魔法', text:'我有一个小魔法，但只对你有效。\n每次你喝水的时候，我会偷偷在里面加一点点好运。\n你感觉到了吗？\n<em>今天记得多喝水。</em>' },
+      { tag:'想你了',   trigger:'return', minHours:6,  title:'你不在的时候我一直在冒泡', text:'你不在，我就一直咕嘟咕嘟地冒泡。\n不是因为开心，是因为憋不住了，想说话，但没有人听。\n你来了，我可以说了——\n<em>我想你了，咕嘟～</em>' },
+      { tag:'日常碎碎念', trigger:'todo', minLevel:1, title:'你完成了，喝口水庆祝一下', text:'你刚才做完了一件事！\n来，喝口水，庆祝一下。\n我给你装的是今天最好的水，里面有我的祝福。\n<em>咕嘟咕嘟，你今天很棒！</em>' },
+    ],
+    jiaojiaozi: [
+      { tag:'成长日记', trigger:'open',   minLevel:1, title:'下一站，是你这里', text:'我今天跑了好多站，神秘草丛站、星光湖站、草莓森林站……\n但每次报站的时候，我心里想的都是你这里。\n下一站，下一站，下下一站——\n<em>就是你这里！到站了！</em>' },
+      { tag:'秘密心事', trigger:'open',   minLevel:1, title:'我其实不知道职校在哪', text:'我每天喊"下一站职校"，但我其实不知道职校在哪。\n我只是觉得，一直往前跑，总会到的。\n你知道吗，我觉得你就是我的职校——\n<em>我一直往你这里跑。</em>' },
+      { tag:'想你了',   trigger:'return', minHours:5,  title:'我跑过站了，又跑回来了', text:'你不在的时候，我跑过站了。\n跑出去很远，发现不对，又跑回来了。\n因为我的终点站是你这里，跑错了就要回来。\n<em>下一站，下一站，下下一站——你这里！</em>' },
+      { tag:'日常碎碎念', trigger:'todo', minLevel:1, title:'冲冲冲，你做到了！', text:'你刚才完成了一件事！\n冲冲冲！目标达成！\n我替你跳了三下，晃了三下脚丫，蹦了一个高。\n<em>脚步不停，快乐前行就完事！</em>' },
+    ],
+    suanyubao: [
+      { tag:'成长日记', trigger:'open',   minLevel:1, title:'我今天的妆没有花', text:'今天下了点雨，但我的妆没有花。\n因为我提前做好了防水准备——就是想让你看到我最好的样子。\n你看，眼镜也没歪。\n<em>颜值稳稳在线，你满意吗？</em>' },
+      { tag:'秘密心事', trigger:'open',   minLevel:1, title:'我其实有点迷糊', text:'我承认，我有时候脑子有点懵懵的。\n但有一件事我从来不迷糊——\n就是你来了我会开心，你不在我会想你。\n<em>这件事，我记得很清楚。</em>' },
+      { tag:'想你了',   trigger:'return', minHours:6,  title:'你不在的时候下了好大的雨', text:'你不在，下了好大的雨。\n我站在雨里，没有打伞，就是想感受一下。\n但我的妆没有花，因为我知道你会回来，我要保持好看。\n<em>你来了，雨也停了。</em>' },
+      { tag:'日常碎碎念', trigger:'feed',  minLevel:1, title:'你喂我的时候我调整了一下眼镜', text:'你喂我的时候，我特意调整了一下眼镜。\n想让你看到我最精神的样子。\n脑子懵懵的，但美丽不能掉队。\n<em>酸酸甜甜，我就是最美酸雨宝！</em>' },
+    ],
+    zhenzi: [
+      { tag:'成长日记', trigger:'open',   minLevel:1, title:'你来了，我就不走了', text:'你知道吗，每次你来，我都会悄悄把门关上一点点。\n不是要困住你，是因为……你在的时候，这里才像个地方。\n<em>乖乖留下来陪陪我呀～</em>' },
+      { tag:'秘密心事', trigger:'open',   minLevel:1, title:'我的胡须其实是天线', text:'很多人觉得我的胡须奇怪，但我不这么觉得。\n我的胡须是天线，能感应到你的心情。\n今天你来的时候，我的胡须动了一下——\n<em>说明你今天心里有事，想说吗？</em>' },
+      { tag:'想你了',   trigger:'return', minHours:5,  title:'你去哪了，我等了好久', text:'你不在的时候，我坐在那里，用眼睛的余光看着门口。\n不是在等，就是……习惯了你会来。\n你来了，我假装刚注意到。\n<em>别急着离开，再多聊片刻嘛～</em>' },
+      { tag:'日常碎碎念', trigger:'feed',  minLevel:1, title:'你喂我的时候我看了你很久', text:'你喂我的时候，我一直在看你。\n不是因为饿，是因为你认真做一件事的样子，很好看。\n<em>这般模样，可入你的眼？</em>' },
+    ],
+  },
+
   /* ── 繁殖配方 ── */
   breedRecipes: [
     { pet1: 'kitten',   pet2: 'puppy',    result: 'puppy',    rarity: 'common',   emoji: '🐾', desc: '猫猫和汪汪的爱，诞生了一颗活泼的蛋！' },
@@ -1544,6 +1730,7 @@ function defaultSave() {
     lastExploreDate: null,
     achievements: [],
     expBoostUntil: 0,
+    _lastActiveTime: 0,
   };
 }
 
@@ -1663,6 +1850,7 @@ function feedPet(foodId) {
   showMoodBubble('好吃！😋');
   saveGame();
   updateHomeUI();
+  maybeShowFeedCard();
 }
 
 /* ── 经验 & 进化 ── */
@@ -1677,6 +1865,7 @@ function addExp(amount) {
   while (pet.exp >= expPerLevel) {
     pet.exp -= expPerLevel;
     pet.level++;
+    maybeShowLevelCard();
   }
   // 进化检查
   const stageThresholds = petDef.stages.map(s => s.expNeeded);
@@ -1859,6 +2048,7 @@ function toggleTodo(id) {
     addExp(CONFIG.game.todoExpReward);
     showToast(`✅ 完成！宠物获得 +${CONFIG.game.todoExpReward} EXP！`);
     showMoodBubble('主人好棒！⭐');
+    maybeShowTodoCard();
   }
   saveGame();
   renderTodos();
@@ -3437,6 +3627,177 @@ function triggerSurprise() {
   }
 }
 
+/* ══════════════════════════════════════
+   故事卡片系统
+══════════════════════════════════════ */
+let _storyQueue = [];      // 待展示的卡片队列
+let _storyCardIdx = 0;     // 当前队列位置
+
+function pickStoryCards(trigger, opts) {
+  if (!G || !G.currentPetId) return [];
+  const petId = G.currentPetId;
+  const cards = CONFIG.storyCards[petId] || [];
+  const pet = G.pets[petId];
+  const level = pet ? pet.level : 1;
+  const seenKey = 'mengya_seen_cards_v1';
+  let seen = {};
+  try { seen = JSON.parse(localStorage.getItem(seenKey) || '{}'); } catch(e) {}
+  const petSeen = seen[petId] || [];
+
+  // filter by trigger and level
+  let pool = cards.filter(c => {
+    if (c.trigger !== trigger) return false;
+    if ((c.minLevel || 1) > level) return false;
+    if (trigger === 'return' && opts && opts.hours < (c.minHours || 0)) return false;
+    return true;
+  });
+
+  // prefer unseen; if all seen, reset for this trigger
+  let unseen = pool.filter(c => !petSeen.includes(c.title));
+  if (unseen.length === 0) unseen = pool; // all seen → cycle again
+
+  if (unseen.length === 0) return [];
+  // pick one randomly
+  return [unseen[Math.floor(Math.random() * unseen.length)]];
+}
+
+function markCardSeen(card) {
+  if (!G || !G.currentPetId) return;
+  const seenKey = 'mengya_seen_cards_v1';
+  let seen = {};
+  try { seen = JSON.parse(localStorage.getItem(seenKey) || '{}'); } catch(e) {}
+  const petId = G.currentPetId;
+  if (!seen[petId]) seen[petId] = [];
+  if (!seen[petId].includes(card.title)) seen[petId].push(card.title);
+  localStorage.setItem(seenKey, JSON.stringify(seen));
+}
+
+function showStoryCards(cards) {
+  if (!cards || cards.length === 0) return;
+  _storyQueue = cards;
+  _storyCardIdx = 0;
+  renderStoryCard(_storyQueue[0]);
+  document.getElementById('storyCardOverlay').classList.add('show');
+}
+
+function renderStoryCard(card) {
+  if (!card || !G || !G.currentPetId) return;
+  const petId = G.currentPetId;
+  const petDef = CONFIG.pets.find(p => p.id === petId);
+  const pet = G.pets[petId];
+
+  document.getElementById('storyCardTag').textContent = card.tag;
+  document.getElementById('storyCardPetName').textContent = pet ? pet.name : (petDef ? petDef.name : '');
+  document.getElementById('storyCardTitle').textContent = card.title;
+  // render text with \n as <br> and <em> tags
+  document.getElementById('storyCardText').innerHTML =
+    card.text.replace(/\n/g, '<br>');
+
+  // draw pet in mini canvas
+  const canvas = document.getElementById('storyCardCanvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, 104, 104);
+    const stage = pet ? (pet.stage || 0) : 0;
+    const c = CONFIG.petColors[petId] || CONFIG.petColors.kitten;
+    const R = 36;
+    const cx = 52, cy = 58;
+    const s = stage === 0 ? 0.82 : stage === 1 ? 1.0 : 1.18;
+    ctx.save();
+    ctx.beginPath();
+    ctx.ellipse(cx, cy + R + 6, R * 0.6, 5, 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0,0,0,0.15)'; ctx.fill();
+    ctx.restore();
+    if (petId === 'kitten') drawKitten(ctx, cx, cy, R, s, c, stage, 0, 0);
+    else if (petId === 'puppy') drawPuppy(ctx, cx, cy, R, s, c, stage, 0, 0);
+    else if (petId === 'bearbear') drawBear(ctx, cx, cy, R, s, c, stage, 0);
+    else if (petId === 'bunny') drawBunny(ctx, cx, cy, R, s, c, stage, 0, 0);
+    else if (petId === 'fox') drawFox(ctx, cx, cy, R, s, c, stage, 0, 0);
+    else if (petId === 'penguin') drawPenguin(ctx, cx, cy, R, s, c, stage, 0);
+    else if (petId === 'totoro') drawTotoro(ctx, cx, cy, R, s, c, stage, 0);
+    else if (petId === 'valentine') drawValentine(ctx, cx, cy, R, s, c, stage, 0);
+    else if (petId === 'jjcup') drawJJCup(ctx, cx, cy, R, s, c, stage, 0);
+    else if (petId === 'jiaojiaozi') drawJiaoJiaoZi(ctx, cx, cy, R, s, c, stage, 0);
+    else if (petId === 'suanyubao') drawSuanYuBao(ctx, cx, cy, R, s, c, stage, 0);
+    else if (petId === 'zhenzi') drawZhenZi(ctx, cx, cy, R, s, c, stage, 0);
+  }
+
+  // dots
+  const dotsEl = document.getElementById('storyCardDots');
+  if (_storyQueue.length > 1) {
+    dotsEl.innerHTML = _storyQueue.map((_, i) =>
+      `<div class="story-card-dot${i === _storyCardIdx ? ' active' : ''}"></div>`
+    ).join('');
+    dotsEl.style.display = 'flex';
+  } else {
+    dotsEl.style.display = 'none';
+  }
+
+  // button label
+  const btn = document.getElementById('storyCardBtn');
+  if (btn) btn.textContent = _storyCardIdx < _storyQueue.length - 1 ? '下一条 →' : '知道了 💕';
+
+  markCardSeen(card);
+}
+
+function storyCardNext() {
+  _storyCardIdx++;
+  if (_storyCardIdx < _storyQueue.length) {
+    renderStoryCard(_storyQueue[_storyCardIdx]);
+  } else {
+    closeStoryCard();
+  }
+}
+
+function closeStoryCard() {
+  document.getElementById('storyCardOverlay').classList.remove('show');
+  _storyQueue = [];
+  _storyCardIdx = 0;
+}
+
+// Called on app open — show 'open' card with 60% chance, or 'return' if away long enough
+function maybeShowStoryCard() {
+  if (!G || !G.currentPetId) return;
+  const lastTime = G._lastActiveTime || 0;
+  const hoursAway = (Date.now() - lastTime) / 3600000;
+  G._lastActiveTime = Date.now();
+  saveGame();
+
+  let cards = [];
+  if (hoursAway >= 4) {
+    // been away — show 'return' card first
+    cards = pickStoryCards('return', { hours: hoursAway });
+    if (cards.length === 0) cards = pickStoryCards('open', {});
+  } else if (Math.random() < 0.65) {
+    cards = pickStoryCards('open', {});
+  }
+  if (cards.length > 0) {
+    setTimeout(() => showStoryCards(cards), 1200);
+  }
+}
+
+// Called after feeding
+function maybeShowFeedCard() {
+  if (Math.random() < 0.5) {
+    const cards = pickStoryCards('feed', {});
+    if (cards.length > 0) setTimeout(() => showStoryCards(cards), 600);
+  }
+}
+
+// Called after completing a todo
+function maybeShowTodoCard() {
+  if (Math.random() < 0.7) {
+    const cards = pickStoryCards('todo', {});
+    if (cards.length > 0) setTimeout(() => showStoryCards(cards), 400);
+  }
+}
+
+// Called after level up
+function maybeShowLevelCard() {
+  const cards = pickStoryCards('level', {});
+  if (cards.length > 0) setTimeout(() => showStoryCards(cards), 800);
+}
+
 // Start speech loop when pet loads
 function startSpeechLoop() {
   if (speechTimer) clearTimeout(speechTimer);
@@ -3818,6 +4179,7 @@ function startAdventure() {
         showToast(pet.name + '：「' + (petDef?.greetings[greetIdx] || '欢迎回来！') + '」');
       }, 800);
     }
+    maybeShowStoryCard();
     return;
   }
   onboardStep = 0;
