@@ -1838,6 +1838,64 @@ const CONFIG = {
       ],
       hungerDecay: 1, happyDecay: 2, energyDecay: 1,
     },
+    {
+      id: 'chunChun',
+      name: '春春',
+      personality: '仗义',
+      personalityDesc: '资深研发工程师，你的直属主管，软萌憨厚外表下藏着极强的技术实力，待人随和没架子。',
+      catchphrase: '走，完事我请你吃辣椒炒肉',
+      locked: false,
+      stages: [
+        { name: '实习春春',   emoji: '👨‍💻', expNeeded: 100 },
+        { name: '高级春春',   emoji: '🔴', expNeeded: 300 },
+        { name: '架构师春春', emoji: '🏆', expNeeded: 999999 },
+      ],
+      greetings: [
+        '走，完事我请你吃辣椒炒肉！',
+        '别愁，问题我来捋，完事请你吃辣椒炒肉！',
+        '辛苦了，下班安排一顿辣椒炒肉！',
+        '这个需求不难，我帮你捋捋思路。',
+        '有啥卡住的尽管说，一起搞定！',
+      ],
+      surprises: ['🔴', '💻', '🍖', '⚡', '🛠️', '💡', '🤝'],
+      extraLines: [
+        '走，完事我请你吃辣椒炒肉！',
+        '别愁，问题我来捋！',
+        '辛苦了，马上下班！',
+        '（摸摸寸头）这个方案可以，我来review一下。',
+        '没事的，bug都能修！',
+      ],
+      hungerDecay: 1, happyDecay: 1, energyDecay: 1,
+    },
+    {
+      id: 'taiyanxue',
+      name: '太阳穴',
+      personality: '舒缓',
+      personalityDesc: '暖橙明黄太阳造型，专属辅助精灵，能舒缓疲惫、放松紧绷，安抚一切身体负面状态。',
+      catchphrase: '紧绷太久啦，歇一歇吧',
+      locked: false,
+      stages: [
+        { name: '小太阳',   emoji: '🌤️', expNeeded: 100 },
+        { name: '暖阳',     emoji: '☀️', expNeeded: 300 },
+        { name: '太阳神',   emoji: '🌞', expNeeded: 999999 },
+      ],
+      greetings: [
+        '紧绷太久啦，歇一歇吧。',
+        '交给我，帮你舒缓一下。',
+        '不必硬扛，放松片刻就好。',
+        '稍作休整，恢复状态咯。',
+        '有我在，慢慢来。',
+      ],
+      surprises: ['☀️', '🌤️', '✨', '💛', '🌸', '🌊', '💆'],
+      extraLines: [
+        '紧绷太久啦，歇一歇吧。',
+        '交给我，帮你舒缓一下。',
+        '不必硬扛，放松片刻就好。',
+        '（温柔光晕）稍作休整，恢复状态咯。',
+        '有我在，不用担心。',
+      ],
+      hungerDecay: 1, happyDecay: 1, energyDecay: 1,
+    },
   ],
 
   /* ── 食物定义 ── */
@@ -2041,6 +2099,19 @@ const CONFIG = {
       { tag:'想你了',   trigger:'return', minHours:5,  title:'你去哪了，我等了好久', text:'你不在的时候，我坐在那里，用眼睛的余光看着门口。\n不是在等，就是……习惯了你会来。\n你来了，我假装刚注意到。\n<em>别急着离开，再多聊片刻嘛～</em>' },
       { tag:'日常碎碎念', trigger:'feed',  minLevel:1, title:'你喂我的时候我看了你很久', text:'你喂我的时候，我一直在看你。\n不是因为饿，是因为你认真做一件事的样子，很好看。\n<em>这般模样，可入你的眼？</em>' },
     ],
+    chunChun: [
+      { tag:'工位日记', trigger:'open',   minLevel:1, title:'我其实早就注意到你了', text:'你刚来那天，我在工位上假装看代码，其实一直在观察你。\n新人嘛，总是有点紧张，但你眼神里有股劲儿——我喜欢这个。\n后来我就想，这人以后肯定能搞事情。\n<em>走，完事我请你吃辣椒炒肉。</em>' },
+      { tag:'技术心得', trigger:'open',   minLevel:1, title:'有个bug我帮你捋了一下', text:'你昨天那个问题，我下班后想了想。\n其实不是你的逻辑错了，是上游数据结构的问题，我在注释里写了思路。\n不用谢，遇到问题一起扛，这才叫团队。\n<em>别愁，问题我来捋，完事请你吃辣椒炒肉。</em>' },
+      { tag:'下班时光', trigger:'feed',   minLevel:1, title:'今天辛苦了', text:'看你今天一直盯着屏幕，眼睛都红了。\n代码可以明天再写，人不能垮。\n我订了个位子，就附近那家，辣椒炒肉管够。\n<em>辛苦了，下班安排一顿辣椒炒肉。</em>' },
+      { tag:'深夜加班', trigger:'return', minHours:4, title:'你去哪了，我找你半天', text:'下午开会没看到你，以为你溜了。\n后来才知道你去处理线上问题了，一个人扛着，也不说一声。\n下次这种事叫我，我来帮你捋，你别一个人硬撑。\n<em>有我在呢。</em>' },
+      { tag:'成长记录', trigger:'level',  minLevel:2, title:'你进步很快，我看到了', text:'你刚来的时候，写的代码我要改一半。\n现在嘛……我基本不用动了，有时候你的方案比我想的还好。\n这种感觉挺好的，带出来一个能打的人。\n<em>走，今天的辣椒炒肉算我庆功宴。</em>' },
+    ],
+    taiyanxue: [
+      { tag:'轻声提醒', trigger:'open',   minLevel:1, title:'你今天绷得有点紧', text:'我感应到了。\n你的肩膀从早上就没放下来过，眉头也皱着。\n不用说什么，我就在这里，你感觉到了吗——那一点点暖。\n<em>紧绷太久啦，歇一歇吧。</em>' },
+      { tag:'无声陪伴', trigger:'open',   minLevel:1, title:'不必说话，我懂', text:'有些疲惫，说不出口。\n没关系，我不需要你解释，也不需要你表现得很好。\n就这样待着，让我的光晕慢慢散开来。\n<em>交给我，帮你舒缓一下。</em>' },
+      { tag:'喂食后', trigger:'feed',     minLevel:1, title:'吃东西的时候放松一点', text:'你刚才吃东西的速度太快了。\n慢一点，味道才能尝到，身体才能真的补充到能量。\n我在旁边，不用赶，没有什么比你现在更重要。\n<em>不必硬扛，放松片刻就好。</em>' },
+      { tag:'深夜守护', trigger:'return', minHours:4, title:'你回来了，我一直在', text:'你不在的时候，我把光调暗了一点，等你。\n不知道你去哪了，也不问，只是想让你回来的时候，这里还是暖的。\n<em>稍作休整，恢复状态咯。</em>' },
+    ],
   },
 
   /* ── 繁殖配方 ── */
@@ -2067,6 +2138,8 @@ const CONFIG = {
     jiaojiaozi: { body: '#FFFAF0', fur: '#F0E8D0', eye: '#2D1A00', shine: '#FFF', blush: '#FFD6B0', accent: '#FFB347', nose: '#C87840', inner: '#FFF5E0' },
     suanyubao:  { body: '#3A2A1A', fur: '#2A1A0A', eye: '#FFF', shine: '#AAD4FF', blush: '#FF9999', accent: '#FF6EB4', nose: '#FF4488', inner: '#5A3A2A' },
     zhenzi:     { body: '#E8C8F0', fur: '#C8A0D8', eye: '#3D1A5C', shine: '#FFF', blush: '#FFB3D4', accent: '#9B59B6', nose: '#7D3C98', inner: '#F5E0FF' },
+    chunChun:   { body: '#FFF0F0', fur: '#F5C8C8', eye: '#3D1A1A', shine: '#FFF', blush: '#FFB3B3', accent: '#E53935', nose: '#C62828', inner: '#FFE0E0' },
+    taiyanxue:  { body: '#FFD54F', fur: '#FFB300', eye: '#4A3000', shine: '#FFF', blush: '#FFCC80', accent: '#FF8F00', nose: '#E65100', inner: '#FFF8E1' },
   },
 };
 
@@ -2541,6 +2614,8 @@ function drawPet(canvasId, petId, stage) {
   else if (petId === 'jiaojiaozi') drawJiaoJiaoZi(ctx, cx, cy, R, s, c, stage, frame);
   else if (petId === 'suanyubao') drawSuanYuBao(ctx, cx, cy, R, s, c, stage, frame);
   else if (petId === 'zhenzi') drawZhenZi(ctx, cx, cy, R, s, c, stage, frame);
+  else if (petId === 'chunChun') drawChunChun(ctx, cx, cy, R, s, c, stage, frame);
+  else if (petId === 'taiyanxue') drawTaiYanXue(ctx, cx, cy, R, s, c, stage, frame);
   else drawKitten(ctx, cx, cy, R, s, c, stage, frame, tailWag);
 }
 
@@ -3937,6 +4012,178 @@ function drawZhenZi(ctx, cx, cy, R, s, c, stage, frame) {
   ctx.restore();
 }
 
+/* ══════════════════════════════════════
+   春春 — 圆润软萌工程师，红色系，寸头，右下角小黑痣
+══════════════════════════════════════ */
+function drawChunChun(ctx, cx, cy, R, s, c, stage, frame) {
+  const t = Date.now();
+  const bob = frame === 0 ? 0 : -2;
+  ctx.save();
+  ctx.translate(cx, cy + bob);
+
+  // 身体（圆润胖胖）
+  drawBodyGrad(ctx, 0, 0, R, c);
+
+  // 红色上衣
+  ctx.save();
+  ctx.fillStyle = c.accent;
+  ctx.beginPath();
+  ctx.ellipse(0, R*0.35, R*0.72, R*0.45, 0, 0, Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+
+  // 腮红
+  drawBlush(ctx, -R*0.42, R*0.05, R*0.18, R*0.1, c);
+  drawBlush(ctx, R*0.42, R*0.05, R*0.18, R*0.1, c);
+
+  // 眼睛（细长小眼）
+  ctx.save();
+  ctx.fillStyle = c.eye;
+  ctx.beginPath(); ctx.ellipse(-R*0.22, -R*0.18, R*0.14, R*0.07, 0, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(R*0.22, -R*0.18, R*0.14, R*0.07, 0, 0, Math.PI*2); ctx.fill();
+  ctx.restore();
+  fillCircle(ctx, -R*0.18, -R*0.2, R*0.03, c.shine);
+  fillCircle(ctx, R*0.26, -R*0.2, R*0.03, c.shine);
+
+  // 鼻子
+  fillCircle(ctx, 0, -R*0.04, R*0.055, c.nose);
+
+  // 嘴巴（微笑）
+  ctx.save();
+  ctx.strokeStyle = c.eye; ctx.lineWidth = 2; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.arc(0, R*0.08, R*0.14, 0.2, Math.PI - 0.2); ctx.stroke();
+  ctx.restore();
+
+  // 右下角小黑痣（标志性特征）
+  fillCircle(ctx, R*0.18, R*0.18, R*0.04, '#1A0A0A');
+
+  // 寸头
+  ctx.save();
+  ctx.fillStyle = c.fur;
+  ctx.beginPath();
+  ctx.ellipse(0, -R*0.88, R*0.62, R*0.22, 0, Math.PI, Math.PI*2);
+  ctx.fill();
+  // 寸头纹理
+  ctx.strokeStyle = c.eye; ctx.lineWidth = 1; ctx.globalAlpha = 0.3;
+  for (let i = -3; i <= 3; i++) {
+    ctx.beginPath();
+    ctx.moveTo(i * R*0.1, -R*0.88);
+    ctx.lineTo(i * R*0.1, -R*1.05);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // 小手
+  fillEllipse(ctx, -R*0.68, R*0.1, R*0.12, R*0.22, c.body, 0.3);
+  fillEllipse(ctx, R*0.68, R*0.1, R*0.12, R*0.22, c.body, -0.3);
+
+  // 小脚
+  ctx.fillStyle = c.body;
+  ctx.beginPath(); ctx.ellipse(-R*0.2, R*0.85, R*0.16, R*0.1, -0.1, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(R*0.2, R*0.85, R*0.16, R*0.1, 0.1, 0, Math.PI*2); ctx.fill();
+
+  // stage 专属
+  if (stage >= 1) {
+    // 工牌
+    ctx.save();
+    ctx.fillStyle = '#FFF'; ctx.globalAlpha = 0.9;
+    ctx.fillRect(-R*0.18, R*0.18, R*0.36, R*0.22);
+    ctx.fillStyle = c.accent; ctx.font = `bold ${R*0.12}px sans-serif`;
+    ctx.textAlign = 'center'; ctx.globalAlpha = 1;
+    ctx.fillText('DEV', 0, R*0.34);
+    ctx.restore();
+  }
+  if (stage >= 2) {
+    // 光环（架构师）
+    ctx.save(); ctx.globalAlpha = 0.6;
+    ctx.strokeStyle = c.accent; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.ellipse(0, -R*1.18, R*0.4, R*0.1, 0, 0, Math.PI*2); ctx.stroke();
+    ctx.restore();
+  }
+
+  ctx.restore();
+}
+
+/* ══════════════════════════════════════
+   太阳穴 — 暖橙明黄太阳，叉号嘴，柔和光晕
+══════════════════════════════════════ */
+function drawTaiYanXue(ctx, cx, cy, R, s, c, stage, frame) {
+  const t = Date.now();
+  const pulse = Math.sin(t / 800) * 0.06;
+  const bob = frame === 0 ? 0 : -2;
+  ctx.save();
+  ctx.translate(cx, cy + bob);
+
+  // 外层光晕
+  ctx.save();
+  ctx.globalAlpha = 0.18 + pulse;
+  const glow = ctx.createRadialGradient(0, 0, R*0.6, 0, 0, R*1.5);
+  glow.addColorStop(0, c.accent);
+  glow.addColorStop(1, 'transparent');
+  ctx.fillStyle = glow;
+  ctx.beginPath(); ctx.arc(0, 0, R*1.5, 0, Math.PI*2); ctx.fill();
+  ctx.restore();
+
+  // 太阳光芒
+  ctx.save();
+  ctx.fillStyle = c.fur;
+  ctx.globalAlpha = 0.7;
+  const rays = 8;
+  for (let i = 0; i < rays; i++) {
+    ctx.save();
+    ctx.rotate((Math.PI * 2 / rays) * i + t/3000);
+    ctx.beginPath();
+    ctx.moveTo(0, -R*0.92);
+    ctx.lineTo(-R*0.1, -R*1.18);
+    ctx.lineTo(R*0.1, -R*1.18);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+  ctx.restore();
+
+  // 主体（圆形太阳）
+  const g = ctx.createRadialGradient(-R*0.25, -R*0.25, R*0.05, 0, 0, R);
+  g.addColorStop(0, '#FFF9C4');
+  g.addColorStop(0.5, c.body);
+  g.addColorStop(1, c.fur);
+  ctx.beginPath(); ctx.arc(0, 0, R, 0, Math.PI*2);
+  ctx.fillStyle = g; ctx.fill();
+
+  // 眼睛（简约圆点）
+  fillCircle(ctx, -R*0.25, -R*0.15, R*0.1, c.eye);
+  fillCircle(ctx, R*0.25, -R*0.15, R*0.1, c.eye);
+  fillCircle(ctx, -R*0.21, -R*0.19, R*0.04, c.shine);
+  fillCircle(ctx, R*0.29, -R*0.19, R*0.04, c.shine);
+
+  // 嘴部叉号（封闭交叉，标志性特征）
+  ctx.save();
+  ctx.strokeStyle = c.eye; ctx.lineWidth = R*0.07; ctx.lineCap = 'round';
+  ctx.globalAlpha = 0.85;
+  // 叉号
+  ctx.beginPath(); ctx.moveTo(-R*0.14, R*0.12); ctx.lineTo(R*0.14, R*0.32); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(R*0.14, R*0.12); ctx.lineTo(-R*0.14, R*0.32); ctx.stroke();
+  ctx.restore();
+
+  // stage 专属
+  if (stage >= 1) {
+    // 小星星点缀
+    ctx.save(); ctx.fillStyle = '#FFF'; ctx.globalAlpha = 0.8;
+    ctx.font = `${R*0.22}px serif`; ctx.textAlign = 'center';
+    ctx.fillText('✨', R*0.85, -R*0.5);
+    ctx.restore();
+  }
+  if (stage >= 2) {
+    // 双层光环
+    ctx.save(); ctx.globalAlpha = 0.5;
+    ctx.strokeStyle = c.accent; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(0, 0, R*1.25, 0, Math.PI*2); ctx.stroke();
+    ctx.restore();
+  }
+
+  ctx.restore();
+}
+
 /* ── 口头禅 & 惊喜系统 ── */
 let speechTimer = null;
 let surpriseTimer = null;
@@ -4091,6 +4338,8 @@ function renderStoryCard(card) {
     else if (petId === 'jiaojiaozi') drawJiaoJiaoZi(ctx, cx, cy, R, s, c, stage, 0);
     else if (petId === 'suanyubao') drawSuanYuBao(ctx, cx, cy, R, s, c, stage, 0);
     else if (petId === 'zhenzi') drawZhenZi(ctx, cx, cy, R, s, c, stage, 0);
+    else if (petId === 'chunChun') drawChunChun(ctx, cx, cy, R, s, c, stage, 0);
+    else if (petId === 'taiyanxue') drawTaiYanXue(ctx, cx, cy, R, s, c, stage, 0);
   }
 
   // dots
@@ -4334,6 +4583,8 @@ function renderLibrary() {
     else if (petDef.id === 'jiaojiaozi') drawJiaoJiaoZi(ctx, cx, cy, R, 0.6, c, si, 0);
     else if (petDef.id === 'suanyubao')  drawSuanYuBao(ctx, cx, cy, R, 0.6, c, si, 0);
     else if (petDef.id === 'zhenzi')     drawZhenZi(ctx, cx, cy, R, 0.6, c, si, 0);
+    else if (petDef.id === 'chunChun')   drawChunChun(ctx, cx, cy, R, 0.6, c, si, 0);
+    else if (petDef.id === 'taiyanxue')  drawTaiYanXue(ctx, cx, cy, R, 0.6, c, si, 0);
   });
 }
 
@@ -4620,6 +4871,8 @@ function renderEggGrid() {
     else if (pet.id === 'jiaojiaozi') drawJiaoJiaoZi(ctx, cx, cy, R, 0.6, c, 0, 0);
     else if (pet.id === 'suanyubao')  drawSuanYuBao(ctx, cx, cy, R, 0.6, c, 0, 0);
     else if (pet.id === 'zhenzi')     drawZhenZi(ctx, cx, cy, R, 0.6, c, 0, 0);
+    else if (pet.id === 'chunChun')   drawChunChun(ctx, cx, cy, R, 0.6, c, 0, 0);
+    else if (pet.id === 'taiyanxue')  drawTaiYanXue(ctx, cx, cy, R, 0.6, c, 0, 0);
     if (pet.locked) {
       ctx.globalAlpha = 1;
       ctx.font = '20px serif'; ctx.textAlign = 'center';
@@ -4685,10 +4938,10 @@ const CHAT_PETS = [
   { petId: 'cat_naimao',   gameId: 'kitten', name: '奶猫',     emoji: '🐱', locked: false },
   { petId: 'dog_chai',     gameId: 'puppy',  name: '柴犬',     emoji: '🐕', locked: false },
   { petId: 'lock_1',       gameId: null,     name: '???',      emoji: '🥚', locked: true,  hint: '完成3次对话解锁' },
-  { petId: 'fox_xiaohuli', gameId: 'fox',    name: '小狐狸',   emoji: '🦊', locked: false },
-  { petId: 'penguin',      gameId: 'penguin',name: '企鹅',     emoji: '🐧', locked: false },
-  { petId: 'lock_2',       gameId: null,     name: '???',      emoji: '🥚', locked: true,  hint: '与5个伙伴对话解锁' },
-  { petId: 'lock_3',       gameId: null,     name: '???',      emoji: '🥚', locked: true,  hint: '深夜12点后解锁' },
+  { petId: 'fox_xiaohuli', gameId: 'fox',       name: '小狐狸',   emoji: '🦊', locked: false },
+  { petId: 'penguin',      gameId: 'penguin',   name: '企鹅',     emoji: '🐧', locked: false },
+  { petId: 'chunChun',     gameId: 'chunChun',  name: '春春',     emoji: '🔴', locked: false },
+  { petId: 'taiyanxue',    gameId: 'taiyanxue', name: '太阳穴',   emoji: '☀️', locked: false },
   { petId: 'hualun',       gameId: 'valentine',   name: '华伦天捷', emoji: '🦋', locked: false },
   { petId: 'jiejie',       gameId: 'jjcup',       name: '杰杰杯',   emoji: '🏆', locked: false },
   { petId: 'jiaozi',       gameId: 'jiaojiaozi',  name: '饺子子',   emoji: '🥟', locked: false },
@@ -4816,6 +5069,8 @@ function getLocalWelcome(petId) {
     jiaozi:       '下一站，下一站，就是你这里！',
     suanyu:       '妆容可不能花掉呀！主人你来啦～',
     zhenzi:       '乖乖留下来陪陪我呀～',
+    chunChun:     '走，完事我请你吃辣椒炒肉！有啥问题尽管说！',
+    taiyanxue:    '紧绷太久啦，歇一歇吧，有我在。',
   };
   return texts[petId] || '你好呀，很高兴见到你！';
 }
