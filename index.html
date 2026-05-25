@@ -1072,6 +1072,8 @@ html, body {
   font-size: 14px; font-family: var(--pixel); color: var(--text);
   outline: none; resize: none; max-height: 90px; min-height: 38px;
   line-height: 1.4; overflow-y: auto; transition: border-color 0.15s;
+  -webkit-user-select: text; user-select: text;
+  pointer-events: auto; touch-action: manipulation;
 }
 .chat-room-input:focus { border-color: var(--accent); }
 .chat-room-input::placeholder { color: var(--text3); }
@@ -1420,7 +1422,7 @@ html, body {
     </div>
     <div class="chat-sheet-messages" id="chatSheetMessages"></div>
     <div class="chat-sheet-input-area">
-      <textarea class="chat-room-input" id="chatSheetInput" placeholder="说点什么…" rows="1"></textarea>
+      <textarea class="chat-room-input" id="chatSheetInput" placeholder="说点什么…" rows="1" x5-page="true" x5-resizable="true"></textarea>
       <button class="chat-room-send" id="chatSheetSend">➤</button>
     </div>
   </div>
@@ -4781,6 +4783,11 @@ function openChatSheet(petId) {
   renderAllChatMsgs();
 
   document.getElementById('chatSheet').classList.add('show');
+  // 微信内置浏览器需要延迟 focus 才能唤起键盘
+  setTimeout(() => {
+    const inp = document.getElementById('chatSheetInput');
+    if (inp) inp.focus();
+  }, 400);
   chatFetchWelcome(pet);
 }
 
