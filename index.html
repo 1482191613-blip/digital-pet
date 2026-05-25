@@ -339,7 +339,7 @@ html, body {
 
 .quick-actions {
   display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 8px; padding: 0 16px 12px; flex-shrink: 0;
+  gap: 8px; padding: 0 16px 8px; flex-shrink: 0;
 }
 .qa-btn {
   background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
@@ -351,6 +351,26 @@ html, body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
 }
 .qa-btn:active { transform: scale(0.93); box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+/* 聊天大按钮 */
+.chat-cta-row {
+  padding: 0 16px 12px; flex-shrink: 0;
+}
+.chat-cta-btn {
+  position: relative; width: 100%;
+  background: linear-gradient(135deg, #7c3aed, #c026d3);
+  border: none; border-radius: 16px; padding: 13px 0;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  cursor: pointer; font-family: var(--pixel); font-size: 14px;
+  color: #fff; letter-spacing: 1px;
+  box-shadow: 0 4px 16px rgba(124,58,237,0.45);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.chat-cta-btn:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(124,58,237,0.3); }
+.chat-cta-dot {
+  position: absolute; top: -4px; right: -4px;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: #ff3b3b; border: 2px solid var(--bg);
+}
 .qa-btn .qa-icon { font-size: 24px; }
 .qa-btn .qa-label { font-size: 9px; color: var(--text3); letter-spacing: 0.5px; }
 
@@ -812,6 +832,305 @@ html, body {
 }
 .evo-text { font-size: 18px; color: var(--accent); letter-spacing: 3px; text-align: center; }
 .evo-sub { font-size: 12px; color: var(--text2); }
+
+/* ===== LIB-CARD 聊天按钮 ===== */
+.lib-chat-btn {
+  position: relative;
+  background: linear-gradient(135deg, var(--accent), #c026d3);
+  border: none; border-radius: 8px; padding: 5px 0;
+  font-size: 10px; font-family: var(--pixel); color: #fff;
+  cursor: pointer; width: 100%; margin-top: 4px;
+  letter-spacing: 0.5px; display: flex; align-items: center;
+  justify-content: center; gap: 3px;
+  box-shadow: 0 2px 8px rgba(176,106,255,0.4);
+  transition: transform 0.1s, opacity 0.15s;
+}
+.lib-chat-btn:active { transform: scale(0.95); opacity: 0.85; }
+.lib-chat-dot {
+  position: absolute; top: -4px; right: -4px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: #ff3b3b; border: 1.5px solid var(--bg);
+  display: block; flex-shrink: 0;
+}
+
+/* ===== CHAT SHEET (半屏弹窗) ===== */
+#chatSheet {
+  position: absolute; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.65); backdrop-filter: blur(4px);
+  display: none; align-items: flex-end; justify-content: center;
+}
+#chatSheet.show { display: flex; }
+.chat-sheet-panel {
+  width: 100%; max-width: 420px;
+  height: 72vh;
+  background: var(--bg2);
+  border-radius: var(--r) var(--r) 0 0;
+  border: 2px solid var(--border); border-bottom: none;
+  display: flex; flex-direction: column;
+  animation: slide-up 0.3s ease;
+  overflow: hidden;
+}
+.chat-sheet-drag {
+  padding: 8px 0 0; text-align: center; flex-shrink: 0;
+}
+.chat-sheet-handle {
+  width: 36px; height: 4px; background: var(--border);
+  border-radius: 2px; display: inline-block;
+}
+.chat-sheet-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px 10px; border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.chat-sheet-pet-name { font-size: 14px; color: var(--text); font-weight: 900; letter-spacing: 1px; }
+.chat-sheet-pet-status {
+  font-size: 10px; color: var(--accent3);
+  display: flex; align-items: center; gap: 4px; margin-top: 2px;
+}
+.chat-sheet-close {
+  font-size: 18px; cursor: pointer; padding: 4px;
+  color: var(--text3); transition: color 0.15s; flex-shrink: 0;
+  line-height: 1;
+}
+.chat-sheet-close:hover { color: var(--text); }
+.chat-sheet-messages {
+  flex: 1; overflow-y: auto; padding: 12px 14px 8px;
+  display: flex; flex-direction: column; gap: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+.chat-sheet-messages::-webkit-scrollbar { width: 3px; }
+.chat-sheet-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.chat-sheet-input-area {
+  flex-shrink: 0; padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+  background: var(--bg2); border-top: 1px solid var(--border);
+  display: flex; gap: 8px; align-items: flex-end;
+}
+
+/* ===== CHAT DEX (宠物图鉴选择页) ===== */
+#chat-dex { background: var(--bg); }
+.chat-dex-header {
+  padding: 16px 20px 10px; border-bottom: 2px solid var(--border);
+  flex-shrink: 0; display: flex; align-items: center; gap: 12px;
+}
+.chat-dex-title { font-size: 16px; color: var(--accent); letter-spacing: 2px; }
+.chat-dex-sub { font-size: 10px; color: var(--text3); margin-top: 2px; }
+.chat-dex-grid-wrap {
+  flex: 1; overflow-y: auto; padding: 12px 10px 20px;
+  -webkit-overflow-scrolling: touch;
+}
+.chat-dex-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+}
+.chat-pet-card {
+  background: var(--card); border: 2px solid var(--border);
+  border-radius: var(--r2); padding: 12px 8px 10px;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  min-height: 108px;
+}
+.chat-pet-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,110,180,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.chat-pet-card.unlocked:active { transform: scale(0.94); }
+.chat-pet-card.unlocked:hover {
+  border-color: var(--accent); box-shadow: 0 0 14px var(--shadow);
+}
+.chat-pet-card.locked {
+  opacity: 0.45; cursor: not-allowed; filter: grayscale(0.5);
+}
+.chat-pet-card.locked:active { transform: none; }
+.chat-pet-card.chat-selected {
+  border-color: var(--accent); box-shadow: 0 0 16px var(--shadow);
+  background: var(--card2);
+}
+.chat-pet-card.chat-selected::after {
+  content: '💬'; position: absolute; top: 5px; right: 6px; font-size: 11px;
+}
+.chat-card-num {
+  position: absolute; top: 5px; left: 7px;
+  font-size: 9px; color: var(--text3);
+  background: rgba(0,0,0,0.35); border-radius: 4px; padding: 1px 4px;
+}
+.chat-card-emoji { font-size: 30px; line-height: 1; }
+.chat-card-name { font-size: 11px; color: var(--text2); font-weight: 700; letter-spacing: 0.5px; text-align: center; }
+.chat-card-lock { font-size: 16px; margin-top: 2px; }
+.chat-card-hint { font-size: 9px; color: var(--text3); text-align: center; line-height: 1.4; padding: 0 2px; }
+.chat-pet-card.unlocked .chat-card-name { color: var(--text); }
+
+/* ===== CHAT ROOM ===== */
+#chat-room { background: var(--bg); }
+.chat-room-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px 10px; border-bottom: 2px solid var(--border);
+  flex-shrink: 0; background: var(--bg);
+}
+.chat-room-back {
+  font-size: 20px; cursor: pointer; padding: 4px; flex-shrink: 0;
+}
+.chat-room-pet-info { flex: 1; min-width: 0; }
+.chat-room-pet-name { font-size: 15px; color: var(--text); font-weight: 900; letter-spacing: 1px; }
+.chat-room-pet-status {
+  font-size: 10px; color: var(--accent3); letter-spacing: 1px;
+  display: flex; align-items: center; gap: 4px; margin-top: 2px;
+}
+.chat-status-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent4); box-shadow: 0 0 5px var(--accent4);
+  animation: pulse-btn 2s ease-in-out infinite;
+}
+.chat-room-pet-emoji { font-size: 26px; flex-shrink: 0; }
+
+.chat-room-messages {
+  flex: 1; overflow-y: auto; padding: 14px 14px 8px;
+  display: flex; flex-direction: column; gap: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+.chat-room-messages::-webkit-scrollbar { width: 3px; }
+.chat-room-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* Message rows */
+.cmsg-row {
+  display: flex; align-items: flex-end; gap: 8px;
+  animation: cmsg-in 0.22s ease-out;
+}
+@keyframes cmsg-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.cmsg-row.cuser { flex-direction: row-reverse; }
+.cmsg-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--card2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.cmsg-content { max-width: 74%; display: flex; flex-direction: column; gap: 2px; }
+.cmsg-row.cuser .cmsg-content { align-items: flex-end; }
+.cmsg-sender { font-size: 10px; color: var(--text3); padding: 0 4px; letter-spacing: 0.5px; }
+.cmsg-bubble {
+  padding: 9px 13px; border-radius: 14px;
+  font-size: 13px; line-height: 1.65; word-break: break-word; white-space: pre-wrap;
+}
+.cmsg-row.cpet .cmsg-bubble {
+  background: var(--card2); border: 1px solid var(--border);
+  border-bottom-left-radius: 4px; color: var(--text);
+}
+.cmsg-row.cuser .cmsg-bubble {
+  background: linear-gradient(135deg, #3d1f6e, #2d1050);
+  border: 1px solid var(--accent);
+  border-bottom-right-radius: 4px; color: var(--text);
+}
+.cmsg-time { font-size: 9px; color: var(--text3); padding: 0 4px; }
+
+/* Typing indicator */
+.ctyping-row {
+  display: flex; align-items: flex-end; gap: 8px;
+}
+.ctyping-bubble {
+  display: flex; align-items: center; gap: 4px;
+  padding: 9px 13px; background: var(--card2);
+  border: 1px solid var(--border); border-radius: 14px; border-bottom-left-radius: 4px;
+}
+.ctyping-dot {
+  width: 5px; height: 5px; border-radius: 50%; background: var(--text3);
+  animation: ctyping 1.2s ease-in-out infinite;
+}
+.ctyping-dot:nth-child(2) { animation-delay: 0.2s; }
+.ctyping-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes ctyping {
+  0%,60%,100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* Menu buttons row */
+.cmenu-row {
+  display: flex; gap: 7px; flex-wrap: wrap; padding: 2px 0;
+}
+.cmenu-btn {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 18px; padding: 7px 13px;
+  font-size: 12px; font-family: var(--pixel); color: var(--accent3);
+  cursor: pointer; letter-spacing: 0.5px; white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.cmenu-btn:active { transform: scale(0.95); background: var(--bg3); }
+.cmenu-btn:hover { border-color: var(--accent); color: var(--text); }
+.cmenu-btn.cused { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+
+/* Input area */
+.chat-room-input-area {
+  flex-shrink: 0; padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+  background: var(--bg); border-top: 1px solid var(--border);
+  display: flex; gap: 8px; align-items: flex-end;
+}
+.chat-room-input {
+  flex: 1; background: var(--card); border: 2px solid var(--border);
+  border-radius: 18px; padding: 9px 14px;
+  font-size: 14px; font-family: var(--pixel); color: var(--text);
+  outline: none; resize: none; max-height: 90px; min-height: 38px;
+  line-height: 1.4; overflow-y: auto; transition: border-color 0.15s;
+}
+.chat-room-input:focus { border-color: var(--accent); }
+.chat-room-input::placeholder { color: var(--text3); }
+.chat-room-send {
+  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent), #c026d3);
+  border: none; cursor: pointer; font-size: 15px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 10px var(--shadow); transition: transform 0.1s, opacity 0.15s;
+}
+.chat-room-send:active { transform: scale(0.9); }
+.chat-room-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Welcome modal */
+.cwelcome-overlay {
+  position: absolute; inset: 0; z-index: 100;
+  background: rgba(0,0,0,0.72); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px; animation: fade-in-c 0.2s ease;
+}
+@keyframes fade-in-c { from { opacity: 0; } to { opacity: 1; } }
+.cwelcome-box {
+  background: linear-gradient(160deg, var(--bg2), var(--bg));
+  border: 2px solid var(--border); border-radius: 20px;
+  padding: 26px 20px 20px; width: 100%; max-width: 340px;
+  box-shadow: 0 8px 40px var(--shadow);
+  animation: cwelcome-up 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes cwelcome-up {
+  from { opacity: 0; transform: translateY(28px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.cwelcome-emoji { font-size: 46px; text-align: center; margin-bottom: 10px; }
+.cwelcome-name {
+  font-size: 17px; font-weight: 900; letter-spacing: 3px;
+  text-align: center; color: var(--accent); margin-bottom: 12px;
+}
+.cwelcome-text {
+  font-size: 13px; color: var(--text2); line-height: 1.8;
+  text-align: center; margin-bottom: 18px; white-space: pre-wrap;
+}
+.cwelcome-menu-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.cwelcome-menu-btn {
+  background: var(--card2); border: 2px solid var(--border);
+  border-radius: 12px; padding: 11px 14px;
+  font-size: 13px; font-family: var(--pixel); color: var(--text);
+  cursor: pointer; text-align: left; display: flex; align-items: center; gap: 8px;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.cwelcome-menu-btn::before { content: '▸'; color: var(--accent3); }
+.cwelcome-menu-btn:active { transform: scale(0.97); background: var(--bg3); }
+.cwelcome-menu-btn:hover { border-color: var(--accent); }
+.cwelcome-skip {
+  width: 100%; background: transparent; border: 1px solid var(--border);
+  border-radius: 10px; padding: 9px; font-size: 11px;
+  font-family: var(--pixel); color: var(--text3); cursor: pointer;
+  letter-spacing: 1px; transition: border-color 0.15s, color 0.15s;
+}
+.cwelcome-skip:hover { border-color: var(--border2); color: var(--text2); }
 </style>
 </head>
 <body>
@@ -918,12 +1237,18 @@ html, body {
     <div class="qa-btn" onclick="petSleep()"><div class="qa-icon">💤</div><div class="qa-label">休息</div></div>
     <div class="qa-btn" onclick="showScreen('story-screen')"><div class="qa-icon">📖</div><div class="qa-label">故事</div></div>
   </div>
+  <!-- 聊天入口 -->
+  <div class="chat-cta-row">
+    <button class="chat-cta-btn" onclick="openChatSheetFromHome()">
+      <span class="chat-cta-dot"></span>
+      💬 和它聊聊天
+    </button>
+  </div>
 
   <!-- 今日问候（小字弱化） -->
   <div class="home-greeting" id="homeGreeting" style="display:none"></div>
   <div class="bottom-nav">
     <div class="nav-btn active" onclick="showScreen('home')"><div class="nav-icon">🏠</div><div class="nav-label">主页</div></div>
-    <div class="nav-btn" onclick="showScreen('map-screen')"><div class="nav-icon">🗺️</div><div class="nav-label">地图</div></div>
     <div class="nav-btn" onclick="showScreen('todo-screen')"><div class="nav-icon">✅</div><div class="nav-label">待办</div></div>
     <div class="nav-btn" onclick="showScreen('library')"><div class="nav-icon">📚</div><div class="nav-label">图鉴</div></div>
     <div class="nav-btn" onclick="showScreen('shop-screen')"><div class="nav-icon">🛍️</div><div class="nav-label">商店</div></div>
@@ -1075,6 +1400,49 @@ html, body {
       <div class="story-card-skip" onclick="closeStoryCard()">跳过</div>
       <button class="story-card-close" id="storyCardBtn" onclick="storyCardNext()">知道了 💕</button>
     </div>
+  </div>
+</div>
+
+<!-- ===== CHAT SHEET (半屏聊天弹窗) ===== -->
+<div id="chatSheet" onclick="closeChatSheet(event)">
+  <div class="chat-sheet-panel" id="chatSheetPanel">
+    <div class="chat-sheet-drag"><div class="chat-sheet-handle"></div></div>
+    <div class="chat-sheet-header">
+      <div style="flex:1;min-width:0">
+        <div class="chat-sheet-pet-name" id="chatSheetPetName">—</div>
+        <div class="chat-sheet-pet-status">
+          <span class="chat-status-dot"></span>
+          <span>在线 · 随时陪你</span>
+        </div>
+      </div>
+      <div id="chatSheetPetEmoji" style="font-size:24px;flex-shrink:0;margin-right:6px">🌱</div>
+      <div class="chat-sheet-close" onclick="closeChatSheet()">✕</div>
+    </div>
+    <div class="chat-sheet-messages" id="chatSheetMessages"></div>
+    <div class="chat-sheet-input-area">
+      <textarea class="chat-room-input" id="chatSheetInput" placeholder="说点什么…" rows="1"></textarea>
+      <button class="chat-room-send" id="chatSheetSend">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHAT ROOM ===== -->
+<div id="chat-room" class="screen">
+  <div class="chat-room-header">
+    <div class="chat-room-back" onclick="showScreen('chat-dex');renderChatDex()">←</div>
+    <div class="chat-room-pet-info">
+      <div class="chat-room-pet-name" id="chatRoomPetName">—</div>
+      <div class="chat-room-pet-status">
+        <span class="chat-status-dot"></span>
+        <span>在线 · 随时陪你</span>
+      </div>
+    </div>
+    <div class="chat-room-pet-emoji" id="chatRoomPetEmoji">🌱</div>
+  </div>
+  <div class="chat-room-messages" id="chatRoomMessages"></div>
+  <div class="chat-room-input-area">
+    <textarea class="chat-room-input" id="chatRoomInput" placeholder="说点什么…" rows="1"></textarea>
+    <button class="chat-room-send" id="chatRoomSend">➤</button>
   </div>
 </div>
 
@@ -2086,7 +2454,7 @@ function showScreen(id) {
   const target = document.getElementById(id);
   if (target) target.classList.add('active');
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const navMap = { home: 0, 'map-screen': 1, 'todo-screen': 2, library: 3, 'shop-screen': 4 };
+  const navMap = { home: 0, 'todo-screen': 1, library: 2, 'shop-screen': 3 };
   if (navMap[id] !== undefined) {
     document.querySelectorAll('.nav-btn')[navMap[id]]?.classList.add('active');
   }
@@ -4299,8 +4667,428 @@ function startGameTick() {
 /* ── 入口 ── */
 window.addEventListener('DOMContentLoaded', () => {
   generateSplashStars();
+  initChatRoomEvents();
 });
 document.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+
+/* ============================================================
+   聊天系统 — Chat Dex + Chat Room
+   与 Cloudflare Worker 后端对接，支持长期记忆
+   ============================================================ */
+
+const CHAT_API = 'https://cool-bonus-a4c9.aa1482191613.workers.dev/';
+
+/* 宠物图鉴定义（对应后端 petId） */
+const CHAT_PETS = [
+  { petId: 'cat_naimao',   gameId: 'kitten', name: '奶猫',     emoji: '🐱', locked: false },
+  { petId: 'dog_chai',     gameId: 'puppy',  name: '柴犬',     emoji: '🐕', locked: false },
+  { petId: 'lock_1',       gameId: null,     name: '???',      emoji: '🥚', locked: true,  hint: '完成3次对话解锁' },
+  { petId: 'fox_xiaohuli', gameId: 'fox',    name: '小狐狸',   emoji: '🦊', locked: false },
+  { petId: 'penguin',      gameId: 'penguin',name: '企鹅',     emoji: '🐧', locked: false },
+  { petId: 'lock_2',       gameId: null,     name: '???',      emoji: '🥚', locked: true,  hint: '与5个伙伴对话解锁' },
+  { petId: 'lock_3',       gameId: null,     name: '???',      emoji: '🥚', locked: true,  hint: '深夜12点后解锁' },
+  { petId: 'hualun',       gameId: null,     name: '华伦天捷', emoji: '🦋', locked: false },
+  { petId: 'jiejie',       gameId: null,     name: '杰杰杯',   emoji: '🏆', locked: false },
+  { petId: 'jiaozi',       gameId: null,     name: '饺子子',   emoji: '🥟', locked: false },
+  { petId: 'suanyu',       gameId: null,     name: '酸雨宝',   emoji: '🌧️', locked: false },
+  { petId: 'zhenzi',       gameId: 'zhenzi', name: '桢子',     emoji: '🌿', locked: false },
+];
+
+/* ── sessionId 持久化（全局唯一，跨宠物共用） ── */
+function getChatSessionId() {
+  let sid = localStorage.getItem('mya_chat_session');
+  if (!sid) {
+    sid = 'mya_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+    localStorage.setItem('mya_chat_session', sid);
+  }
+  return sid;
+}
+
+/* ── 本地聊天缓存（每个宠物独立，最多60条） ── */
+function getChatCache(petId) {
+  try { return JSON.parse(localStorage.getItem('mya_chatcache_' + petId) || '[]'); }
+  catch { return []; }
+}
+function saveChatCache(petId, msgs) {
+  try { localStorage.setItem('mya_chatcache_' + petId, JSON.stringify(msgs.slice(-60))); }
+  catch {}
+}
+function appendChatCache(petId, msg) {
+  const cache = getChatCache(petId);
+  cache.push(msg);
+  saveChatCache(petId, cache);
+}
+
+/* ── 当前聊天状态 ── */
+const CHAT_STATE = {
+  petId: localStorage.getItem('mya_last_chat_pet') || null,
+  sending: false,
+  msgs: [],
+};
+
+/* ── 渲染聊天图鉴选择页 ── */
+function renderChatDex() {
+  const grid = document.getElementById('chatDexGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  CHAT_PETS.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'chat-pet-card ' + (p.locked ? 'locked' : 'unlocked') +
+      (CHAT_STATE.petId === p.petId ? ' chat-selected' : '');
+    card.innerHTML = `
+      <span class="chat-card-num">#${String(i + 1).padStart(2, '0')}</span>
+      <span class="chat-card-emoji">${p.emoji}</span>
+      ${p.locked
+        ? `<span class="chat-card-lock">🔒</span><span class="chat-card-hint">${p.hint}</span>`
+        : `<span class="chat-card-name">${p.name}</span>`}
+    `;
+    if (!p.locked) {
+      card.addEventListener('click', () => enterChatRoom(p));
+    }
+    grid.appendChild(card);
+  });
+}
+
+/* ── 打开聊天图鉴 ── */
+function openChatDex() {
+  renderChatDex();
+  showScreen('chat-dex');
+}
+
+/* ── 从主页聊天按钮打开（使用当前激活宠物） ── */
+function openChatSheetFromHome() {
+  const gameId = G.currentPetId;
+  if (!gameId) { showToast('先孵化一只宠物吧！'); return; }
+  // 用 gameId 找到对应的聊天宠物
+  const chatPet = CHAT_PETS.find(p => p.gameId === gameId);
+  if (!chatPet) { showToast('该宠物暂不支持聊天'); return; }
+  openChatSheet(chatPet.petId);
+}
+
+/* ── 打开聊天半屏弹窗（从图鉴卡片聊天按钮调用） ── */
+function openChatSheet(petId) {
+  const pet = CHAT_PETS.find(p => p.petId === petId);
+  if (!pet || pet.locked) return;
+
+  CHAT_STATE.petId = petId;
+  localStorage.setItem('mya_last_chat_pet', petId);
+
+  document.getElementById('chatSheetPetName').textContent = pet.name;
+  document.getElementById('chatSheetPetEmoji').textContent = pet.emoji;
+
+  // 加载本地缓存消息
+  CHAT_STATE.msgs = getChatCache(petId);
+  renderAllChatMsgs();
+
+  document.getElementById('chatSheet').classList.add('show');
+  chatFetchWelcome(pet);
+}
+
+/* ── 关闭聊天半屏弹窗 ── */
+function closeChatSheet(e) {
+  if (!e || e.target === document.getElementById('chatSheet')) {
+    document.getElementById('chatSheet').classList.remove('show');
+  }
+}
+
+/* ── 进入聊天室 ── */
+function enterChatRoom(pet) {
+  CHAT_STATE.petId = pet.petId;
+  localStorage.setItem('mya_last_chat_pet', pet.petId);
+
+  document.getElementById('chatRoomPetName').textContent = pet.name;
+  document.getElementById('chatRoomPetEmoji').textContent = pet.emoji;
+
+  // 加载本地缓存
+  CHAT_STATE.msgs = getChatCache(pet.petId);
+  renderAllChatMsgs();
+
+  showScreen('chat-room');
+  renderChatDex(); // 更新选中高亮
+
+  // 拉取欢迎/历史
+  chatFetchWelcome(pet);
+}
+
+/* ── 渲染全部消息 ── */
+function renderAllChatMsgs() {
+  const c = document.getElementById('chatSheetMessages');
+  c.innerHTML = '';
+  CHAT_STATE.msgs.forEach(m => renderChatMsgNode(m, false));
+  chatScrollBottom();
+}
+
+/* ── 渲染单条消息节点 ── */
+function renderChatMsgNode(msg, animate) {
+  const c = document.getElementById('chatSheetMessages');
+
+  if (msg.type === 'menu') {
+    const row = document.createElement('div');
+    row.className = 'cmenu-row';
+    (msg.items || []).forEach(item => {
+      const btn = document.createElement('button');
+      btn.className = 'cmenu-btn' + (msg.used ? ' cused' : '');
+      btn.textContent = item.name;
+      if (!msg.used) {
+        btn.addEventListener('click', () => {
+          row.querySelectorAll('.cmenu-btn').forEach(b => b.classList.add('cused'));
+          const userMsg = { type: 'text', role: 'user', text: item.name, time: Date.now() };
+          CHAT_STATE.msgs.push(userMsg);
+          saveChatCache(CHAT_STATE.petId, CHAT_STATE.msgs);
+          renderChatMsgNode(userMsg, true);
+          chatSendMenu(item);
+        });
+      }
+      row.appendChild(btn);
+    });
+    c.appendChild(row);
+    if (animate) chatScrollBottom();
+    return;
+  }
+
+  const row = document.createElement('div');
+  const isPet = msg.role !== 'user';
+  row.className = 'cmsg-row ' + (isPet ? 'cpet' : 'cuser');
+  if (!animate) row.style.animation = 'none';
+
+  const pet = CHAT_PETS.find(p => p.petId === CHAT_STATE.petId);
+  const avatarEmoji = isPet ? (pet ? pet.emoji : '🌱') : '🧑';
+  const timeStr = msg.time
+    ? new Date(msg.time).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
+    : '';
+
+  row.innerHTML = `
+    <div class="cmsg-avatar">${avatarEmoji}</div>
+    <div class="cmsg-content">
+      ${isPet ? `<span class="cmsg-sender">${msg.sender || (pet ? pet.name : '宠物')}</span>` : ''}
+      <div class="cmsg-bubble">${chatEscapeHtml(msg.text)}</div>
+      <span class="cmsg-time">${timeStr}</span>
+    </div>
+  `;
+  c.appendChild(row);
+  if (animate) chatScrollBottom();
+}
+
+function chatEscapeHtml(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function chatScrollBottom() {
+  const c = document.getElementById('chatSheetMessages');
+  if (c) requestAnimationFrame(() => { c.scrollTop = c.scrollHeight; });
+}
+
+/* ── 打字动画 ── */
+function chatShowTyping() {
+  const c = document.getElementById('chatSheetMessages');
+  const row = document.createElement('div');
+  row.id = 'chatTypingRow';
+  row.className = 'ctyping-row';
+  const pet = CHAT_PETS.find(p => p.petId === CHAT_STATE.petId);
+  row.innerHTML = `
+    <div class="cmsg-avatar">${pet ? pet.emoji : '🌱'}</div>
+    <div class="ctyping-bubble">
+      <div class="ctyping-dot"></div>
+      <div class="ctyping-dot"></div>
+      <div class="ctyping-dot"></div>
+    </div>
+  `;
+  c.appendChild(row);
+  chatScrollBottom();
+}
+function chatHideTyping() {
+  const el = document.getElementById('chatTypingRow');
+  if (el) el.remove();
+}
+
+/* ── 禁用/启用输入 ── */
+function chatSetSending(v) {
+  CHAT_STATE.sending = v;
+  const btn = document.getElementById('chatSheetSend');
+  const inp = document.getElementById('chatSheetInput');
+  if (btn) btn.disabled = v;
+  if (inp) inp.disabled = v;
+}
+
+/* ── API 调用 ── */
+async function chatCallAPI(payload) {
+  const res = await fetch(CHAT_API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  return res.json();
+}
+
+/* ── 欢迎/初始加载 ── */
+async function chatFetchWelcome(pet) {
+  chatSetSending(true);
+  chatShowTyping();
+  try {
+    const data = await chatCallAPI({
+      sessionId: getChatSessionId(),
+      petId: pet.petId,
+      isFirstLoad: true,
+      selectMenuId: null,
+      inputText: null,
+    });
+    chatHideTyping();
+    if (data.type === 'welcome') {
+      chatShowWelcomeModal(data, pet);
+    } else if (data.type === 'chat') {
+      chatHandleReply(data, pet);
+    }
+  } catch (e) {
+    chatHideTyping();
+    showToast('连接失败，请稍后重试');
+  } finally {
+    chatSetSending(false);
+  }
+}
+
+/* ── 欢迎弹窗 ── */
+function chatShowWelcomeModal(data, pet) {
+  const existing = document.getElementById('chatWelcomeModal');
+  if (existing) existing.remove();
+
+  const overlay = document.createElement('div');
+  overlay.className = 'cwelcome-overlay';
+  overlay.id = 'chatWelcomeModal';
+
+  const menuHTML = (data.menuList || []).map(item =>
+    `<button class="cwelcome-menu-btn" data-id="${item.id}" data-name="${chatEscapeHtml(item.name)}">${chatEscapeHtml(item.name)}</button>`
+  ).join('');
+
+  overlay.innerHTML = `
+    <div class="cwelcome-box">
+      <div class="cwelcome-emoji">${pet.emoji}</div>
+      <div class="cwelcome-name">${chatEscapeHtml(data.petName || pet.name)}</div>
+      <div class="cwelcome-text">${chatEscapeHtml(data.welcomeText || '')}</div>
+      <div class="cwelcome-menu-list">${menuHTML}</div>
+      <button class="cwelcome-skip" id="cwelcomeSkip">跳过，直接聊天 →</button>
+    </div>
+  `;
+
+  document.getElementById('app').appendChild(overlay);
+
+  overlay.querySelectorAll('.cwelcome-menu-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const itemId = parseInt(btn.dataset.id);
+      const itemName = btn.dataset.name;
+      chatCloseWelcome();
+      const userMsg = { type: 'text', role: 'user', text: itemName, time: Date.now() };
+      CHAT_STATE.msgs.push(userMsg);
+      saveChatCache(CHAT_STATE.petId, CHAT_STATE.msgs);
+      renderChatMsgNode(userMsg, true);
+      chatSendMenu({ id: itemId, name: itemName });
+    });
+  });
+
+  document.getElementById('cwelcomeSkip').addEventListener('click', chatCloseWelcome);
+  overlay.addEventListener('click', e => { if (e.target === overlay) chatCloseWelcome(); });
+}
+
+function chatCloseWelcome() {
+  const m = document.getElementById('chatWelcomeModal');
+  if (m) m.remove();
+}
+
+/* ── 发送开局按钮选择 ── */
+async function chatSendMenu(item) {
+  const pet = CHAT_PETS.find(p => p.petId === CHAT_STATE.petId);
+  chatSetSending(true);
+  chatShowTyping();
+  try {
+    const data = await chatCallAPI({
+      sessionId: getChatSessionId(),
+      petId: CHAT_STATE.petId,
+      isFirstLoad: false,
+      selectMenuId: item.id,
+      inputText: null,
+    });
+    chatHideTyping();
+    chatHandleReply(data, pet);
+  } catch (e) {
+    chatHideTyping();
+    showToast('发送失败，请重试');
+  } finally {
+    chatSetSending(false);
+  }
+}
+
+/* ── 发送文本消息 ── */
+async function chatSendText(text) {
+  const pet = CHAT_PETS.find(p => p.petId === CHAT_STATE.petId);
+  const userMsg = { type: 'text', role: 'user', text, time: Date.now() };
+  CHAT_STATE.msgs.push(userMsg);
+  saveChatCache(CHAT_STATE.petId, CHAT_STATE.msgs);
+  renderChatMsgNode(userMsg, true);
+
+  chatSetSending(true);
+  chatShowTyping();
+  try {
+    const data = await chatCallAPI({
+      sessionId: getChatSessionId(),
+      petId: CHAT_STATE.petId,
+      isFirstLoad: false,
+      selectMenuId: null,
+      inputText: text,
+    });
+    chatHideTyping();
+    chatHandleReply(data, pet);
+  } catch (e) {
+    chatHideTyping();
+    showToast('发送失败，请重试');
+  } finally {
+    chatSetSending(false);
+  }
+}
+
+/* ── 处理后端 chat 回复 ── */
+function chatHandleReply(data, pet) {
+  if (data.type === 'chat') {
+    const msg = {
+      type: 'text', role: 'pet',
+      sender: data.petName || (pet ? pet.name : '宠物'),
+      text: data.reply,
+      time: Date.now(),
+    };
+    CHAT_STATE.msgs.push(msg);
+    saveChatCache(CHAT_STATE.petId, CHAT_STATE.msgs);
+    renderChatMsgNode(msg, true);
+  }
+}
+
+/* ── 输入框事件绑定（DOMContentLoaded 后执行） ── */
+function initChatRoomEvents() {
+  const sendBtn = document.getElementById('chatSheetSend');
+  const input = document.getElementById('chatSheetInput');
+
+  sendBtn.addEventListener('click', doChatSend);
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      doChatSend();
+    }
+  });
+  input.addEventListener('input', function () {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 90) + 'px';
+  });
+}
+
+function doChatSend() {
+  if (CHAT_STATE.sending) return;
+  const input = document.getElementById('chatSheetInput');
+  const text = (input.value || '').trim();
+  if (!text) return;
+  input.value = '';
+  input.style.height = 'auto';
+  chatSendText(text);
+}
 </script>
 </body>
 </html>
