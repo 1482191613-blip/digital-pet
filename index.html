@@ -4966,7 +4966,7 @@ function chatShowWelcomeModal(data, pet) {
     <div class="cwelcome-box">
       <div class="cwelcome-emoji">${pet.emoji}</div>
       <div class="cwelcome-name">${chatEscapeHtml(data.petName || pet.name)}</div>
-      <div class="cwelcome-text">${chatEscapeHtml(data.welcomeText || '')}</div>
+      <div class="cwelcome-text">${chatEscapeHtml(data.reply || data.welcomeText || '')}</div>
       <div class="cwelcome-menu-list">${menuHTML}</div>
       <button class="cwelcome-skip" id="cwelcomeSkip">跳过，直接聊天 →</button>
     </div>
@@ -4976,7 +4976,7 @@ function chatShowWelcomeModal(data, pet) {
 
   overlay.querySelectorAll('.cwelcome-menu-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const itemId = parseInt(btn.dataset.id);
+      const itemId = btn.dataset.id;
       const itemName = btn.dataset.name;
       chatCloseWelcome();
       const userMsg = { type: 'text', role: 'user', text: itemName, time: Date.now() };
