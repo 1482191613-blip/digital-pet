@@ -4689,10 +4689,10 @@ const CHAT_PETS = [
   { petId: 'penguin',      gameId: 'penguin',name: '企鹅',     emoji: '🐧', locked: false },
   { petId: 'lock_2',       gameId: null,     name: '???',      emoji: '🥚', locked: true,  hint: '与5个伙伴对话解锁' },
   { petId: 'lock_3',       gameId: null,     name: '???',      emoji: '🥚', locked: true,  hint: '深夜12点后解锁' },
-  { petId: 'hualun',       gameId: null,     name: '华伦天捷', emoji: '🦋', locked: false },
-  { petId: 'jiejie',       gameId: null,     name: '杰杰杯',   emoji: '🏆', locked: false },
-  { petId: 'jiaozi',       gameId: null,     name: '饺子子',   emoji: '🥟', locked: false },
-  { petId: 'suanyu',       gameId: null,     name: '酸雨宝',   emoji: '🌧️', locked: false },
+  { petId: 'hualun',       gameId: 'valentine',   name: '华伦天捷', emoji: '🦋', locked: false },
+  { petId: 'jiejie',       gameId: 'jjcup',       name: '杰杰杯',   emoji: '🏆', locked: false },
+  { petId: 'jiaozi',       gameId: 'jiaojiaozi',  name: '饺子子',   emoji: '🥟', locked: false },
+  { petId: 'suanyu',       gameId: 'suanyubao',   name: '酸雨宝',   emoji: '🌧️', locked: false },
   { petId: 'zhenzi',       gameId: 'zhenzi', name: '桢子',     emoji: '🌿', locked: false },
 ];
 
@@ -4788,7 +4788,14 @@ function openChatSheet(petId) {
     const inp = document.getElementById('chatSheetInput');
     if (inp) inp.focus();
   }, 400);
-  chatFetchWelcome(pet);
+  // 不在开屏自动调 API，避免卡住输入框
+  // 如果没有历史消息，显示一条本地欢迎语
+  if (CHAT_STATE.msgs.length === 0) {
+    const welcomeMsg = { type: 'text', role: 'pet', sender: pet.name, text: getLocalWelcome(pet.petId), time: Date.now() };
+    CHAT_STATE.msgs.push(welcomeMsg);
+    saveChatCache(petId, CHAT_STATE.msgs);
+    renderChatMsgNode(welcomeMsg, true);
+  }
 }
 
 /* ── 关闭聊天半屏弹窗 ── */
@@ -4796,6 +4803,21 @@ function closeChatSheet(e) {
   if (!e || e.target === document.getElementById('chatSheet')) {
     document.getElementById('chatSheet').classList.remove('show');
   }
+}
+
+function getLocalWelcome(petId) {
+  const texts = {
+    cat_naimao:   '喵～你来啦！快来陪我玩！',
+    dog_chai:     '汪汪！主人你来了！我好开心！',
+    fox_xiaohuli: '嘿嘿～你来了呀～',
+    penguin:      '咕噜～你来了，我一直等着你。',
+    hualun:       '么么哒～你来了，今天你特别好看哦！',
+    jiejie:       '咕嘟～有什么心事都可以告诉我哦。',
+    jiaozi:       '下一站，下一站，就是你这里！',
+    suanyu:       '妆容可不能花掉呀！主人你来啦～',
+    zhenzi:       '乖乖留下来陪陪我呀～',
+  };
+  return texts[petId] || '你好呀，很高兴见到你！';
 }
 
 /* ── 进入聊天室 ── */
@@ -4914,9 +4936,8 @@ function chatHideTyping() {
 function chatSetSending(v) {
   CHAT_STATE.sending = v;
   const btn = document.getElementById('chatSheetSend');
-  const inp = document.getElementById('chatSheetInput');
+  // 只禁用发送按钮，不禁用输入框，避免微信键盘消失
   if (btn) btn.disabled = v;
-  if (inp) inp.disabled = v;
 }
 
 /* ── API 调用 ── */
